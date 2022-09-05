@@ -1,6 +1,9 @@
-using Catalog.API;
+using Catalog.DataAccess;
+using Catalog.Infrastructure.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -21,6 +24,9 @@ namespace WebAPI {
 			webApplicationBuilder.Services.AddSwaggerGen();
 			webApplicationBuilder.Services.Configure<CatalogOptions>(
 				webApplicationBuilder.Configuration.GetSection(CatalogOptions.KEY));
+			webApplicationBuilder.Services.AddDbContext<CatalogContext>(options => {
+				options.UseSqlServer(webApplicationBuilder.Configuration.GetConnectionString("CatalogConnectionString"));
+			});
 		}
 
 		private static void ConfigureHttpRequestPipeline(WebApplication webApplication) {
