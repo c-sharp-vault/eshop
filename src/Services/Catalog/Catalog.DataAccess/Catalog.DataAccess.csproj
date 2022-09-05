@@ -11,7 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Catalog.API\Catalog.API.csproj" />
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
+
+   <ItemGroup>
+       <FrameworkReference Include="Microsoft.AspNetCore.App" />
+   </ItemGroup>
 
 </Project>
