@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
+      "projectUniqueName": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
       "projectName": "Catalog.Core",
-      "projectPath": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
+      "projectPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
       "packagesPath": "C:\\Users\\Fedex\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\obj\\",
+      "outputPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Fedex\\AppData\\Roaming\\NuGet\\NuGet.Config",
