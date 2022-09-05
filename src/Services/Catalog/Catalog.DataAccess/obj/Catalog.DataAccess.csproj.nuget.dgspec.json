@@ -1,17 +1,81 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj": {}
+    "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\Catalog.Core.csproj": {
+    "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.API\\Catalog.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
-        "projectName": "Catalog.Core",
-        "projectPath": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.API\\Catalog.API.csproj",
+        "projectName": "Catalog.API",
+        "projectPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.API\\Catalog.API.csproj",
         "packagesPath": "C:\\Users\\Fedex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\obj\\",
+        "outputPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Fedex\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\Catalog.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
+        "projectName": "Catalog.Core",
+        "projectPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\Catalog.Core.csproj",
+        "packagesPath": "C:\\Users\\Fedex\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fedex\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -59,14 +123,14 @@
         }
       }
     },
-    "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj": {
+    "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj",
         "projectName": "Catalog.DataAccess",
-        "projectPath": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj",
+        "projectPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.DataAccess\\Catalog.DataAccess.csproj",
         "packagesPath": "C:\\Users\\Fedex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.DataAccess\\obj\\",
+        "outputPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Fedex\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -83,8 +147,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\Catalog.Core.csproj": {
-                "projectPath": "C:\\Users\\Fedex\\source\\repos\\Catalog\\Catalog.Core\\Catalog.Core.csproj"
+              "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.API\\Catalog.API.csproj": {
+                "projectPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.API\\Catalog.API.csproj"
+              },
+              "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\Catalog.Core.csproj": {
+                "projectPath": "C:\\Users\\Fedex\\source\\repos\\eShop\\src\\Services\\Catalog\\Catalog.Core\\Catalog.Core.csproj"
               }
             }
           }
@@ -116,6 +183,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
