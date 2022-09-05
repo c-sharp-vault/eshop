@@ -1,13 +1,6 @@
 ﻿
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
-/.vs/*
-/src/Services/Catalog/Catalog.API/.vs/*
-/src/Services/Catalog/Catalog.API/.bin/*
-/src/Services/Catalog/Catalog.API/.obj/*
-/src/Services/Catalog/Catalog.Core/.vs/*
-/src/Services/Catalog/Catalog.Core/.bin/*
-/src/Services/Catalog/Catalog.Core/.obj/*
-/src/Services/Catalog/Catalog.DataAccess/.vs/*
-/src/Services/Catalog/Catalog.DataAccess/.bin/*
-/src/Services/Catalog/Catalog.DataAccess/.obj/*
+**/.vs/
+**/.bin/
+**/.obj/
