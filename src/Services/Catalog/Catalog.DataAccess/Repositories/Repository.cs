@@ -12,39 +12,43 @@ namespace Catalog.DataAccess.Repositories {
 			this._catalogContext = catalogContext;
 		}
 
-		public async Task<TEntity> Get(int id) {
+		public async Task<TEntity> GetAsync(int id) {
 			if (id == 0) throw new ArgumentNullException(nameof(id));
-			if (!Exists(id).Result) throw new RecordNotFoundException($"{nameof(TEntity)} with Id = {id} doesn't exist");
+			if (!ExistsAsync(id).Result) throw new RecordNotFoundException($"{nameof(TEntity)} with Id = {id} doesn't exist");
 			return await _catalogContext.Set<TEntity>().FindAsync(id);
 		}
 
-		public async Task<IEnumerable<TEntity>> GetAll() {
+		public async Task<IEnumerable<TEntity>> GetAllAsync() {
 			return await _catalogContext.Set<TEntity>().ToListAsync();
 		}
 
-		public async Task<bool> Exists(int id) {
+		public async Task<bool> AnyAsync() {
+			return (await _catalogContext.Set<TEntity>().AnyAsync());
+		}
+
+		public async Task<bool> ExistsAsync(int id) {
 			return (await _catalogContext.Set<TEntity>().FindAsync(id) != null);
 		}
 
-		public async Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> predicate) {
+		public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate) {
 			return await _catalogContext.Set<TEntity>().Where(predicate).ToListAsync();
 		}
 
-		public async void Add(TEntity entity) {
+		public async Task AddAsync(TEntity entity) {
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
 			await _catalogContext.Set<TEntity>().AddAsync(entity);
 		}
 
-		public async void AddRange(IEnumerable<TEntity> entities) {
+		public async Task AddRangeAsync(IEnumerable<TEntity> entities) {
 			if (!entities.Any()) throw new ArgumentException(nameof(entities));
 			await _catalogContext.Set<TEntity>().AddRangeAsync(entities);
 		}
 
-		public async void Remove(TEntity entity) {
+		public async Task RemoveAsync(TEntity entity) {
 			throw new NotImplementedException();
 		}
 
-		public async void RemoveRange(IEnumerable<TEntity> entities) {
+		public async Task RemoveRangeAsync(IEnumerable<TEntity> entities) {
 			throw new NotImplementedException();
 		}
 	}
