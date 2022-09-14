@@ -2,7 +2,11 @@
 
 namespace Catalog.DataAccess {
 	public interface IUnitOfWork {
-		public ICatalogItemRepository CatalogItemRepository { get; }
-		bool Complete();
+		ICatalogItemRepository CatalogItemRepository { get; }
+		ICatalogBrandRepository CatalogBrandRepository { get; }
+		ICatalogTypeRepository CatalogTypeRepository { get; }
+		Task MigrateAsync();
+		Task CompleteAsync();
+		Task DisposeAsync();
 	}
 }
