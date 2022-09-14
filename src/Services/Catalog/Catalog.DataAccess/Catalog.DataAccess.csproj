@@ -8,15 +8,25 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Catalog.API\Catalog.API.csproj" />
-    <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="Polly" Version="7.2.3" />
   </ItemGroup>
 
    <ItemGroup>
        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <Folder Include="SeedData\" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
+     <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
    </ItemGroup>
 
 </Project>
