@@ -18,7 +18,7 @@ namespace Catalog.Core.Models {
 			set { _brand = value; }
 		}
 
-		public CatalogBrand(String brand = "Default") {
+		public CatalogBrand(String brand = "Otra") {
 			this._brand = brand;
 		}
 	}
