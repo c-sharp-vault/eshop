@@ -8,13 +8,20 @@ namespace Catalog.DataAccess.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence(
+                name: "catalog_brand_hilo",
+                incrementBy: 10);
+
+            migrationBuilder.CreateSequence(
+                name: "catalog_item_hilo",
+                incrementBy: 10);
+
             migrationBuilder.CreateTable(
                 name: "CatalogBrands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,19 +45,17 @@ namespace Catalog.DataAccess.Migrations
                 name: "CatalogItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PictureFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PictureUri = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PictureFileName = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "placeholder.png"),
                     CatalogTypeId = table.Column<int>(type: "int", nullable: false),
                     CatalogBrandId = table.Column<int>(type: "int", nullable: false),
-                    AvailableStock = table.Column<int>(type: "int", nullable: false),
-                    RestockThreshold = table.Column<int>(type: "int", nullable: false),
-                    MaxStockThreshold = table.Column<int>(type: "int", nullable: false),
-                    OnReorder = table.Column<bool>(type: "bit", nullable: false)
+                    AvailableStock = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    RestockThreshold = table.Column<int>(type: "int", nullable: false, defaultValue: 10),
+                    MaxStockThreshold = table.Column<int>(type: "int", nullable: false, defaultValue: 1000),
+                    OnReorder = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -90,6 +95,12 @@ namespace Catalog.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "CatalogTypes");
+
+            migrationBuilder.DropSequence(
+                name: "catalog_brand_hilo");
+
+            migrationBuilder.DropSequence(
+                name: "catalog_item_hilo");
         }
     }
 }
