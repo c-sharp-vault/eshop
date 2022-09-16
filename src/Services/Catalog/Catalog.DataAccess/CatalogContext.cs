@@ -1,4 +1,5 @@
 ﻿using Catalog.Core.Models;
+using Catalog.DataAccess.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.DataAccess {
@@ -23,6 +24,12 @@ namespace Catalog.DataAccess {
 		public DbSet<CatalogType> CatalogTypes {
 			get { return _catalogTypes; }
 			set { _catalogTypes = value; }
+		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder) {
+			modelBuilder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
+			modelBuilder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
+			modelBuilder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
 		}
 	}
 }
