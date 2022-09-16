@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Catalog.Core.Models {
-	public class CatalogType : IEntity {
+﻿namespace Catalog.Core.Models {
+	public class CatalogType : IEntityType {
 		private int _id;
 		private String _type;
 
@@ -20,7 +14,7 @@ namespace Catalog.Core.Models {
 		}
 
 		public CatalogType(String type) {
-			this.Type = Type;
+			this._type = type;
 		}
 	}
 }
