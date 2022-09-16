@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Core", "Catalog.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.DataAccess", "Catalog.DataAccess\Catalog.DataAccess.csproj", "{D1473385-B235-42DE-ACFA-E5FC1ABA9865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Infrastructure", "Catalog.Infrastructure\Catalog.Infrastructure.csproj", "{C7717271-4129-4CDE-9633-795D3F6F680D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Infrastructure", "Catalog.Infrastructure\Catalog.Infrastructure.csproj", "{C7717271-4129-4CDE-9633-795D3F6F680D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
