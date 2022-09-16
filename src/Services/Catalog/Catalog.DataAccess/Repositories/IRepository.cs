@@ -2,7 +2,7 @@
 using Catalog.Core.Models;
 
 namespace Catalog.DataAccess.Repositories {
-	public interface IRepository<TEntity> where TEntity : class, IEntity {
+	public interface IRepository<TEntity> where TEntity : class, IEntityType {
 
 		// Read
 		Task<TEntity> GetAsync(int id);

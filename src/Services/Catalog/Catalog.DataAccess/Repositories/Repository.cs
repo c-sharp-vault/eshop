@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace Catalog.DataAccess.Repositories {
-	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity {
+	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntityType {
 
 		private readonly CatalogContext _catalogContext;
 
