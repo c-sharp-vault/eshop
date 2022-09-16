@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catalog.DataAccess.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    [Migration("20220916182223_InitialMigration")]
+    [Migration("20220916201017_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,9 @@ namespace Catalog.DataAccess.Migrations
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("catalog_item_hilo")
+                .IncrementsBy(10);
+
+            modelBuilder.HasSequence("catalog_type_hilo")
                 .IncrementsBy(10);
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogBrand", b =>
@@ -113,15 +116,16 @@ namespace Catalog.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "catalog_type_hilo");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CatalogTypes");
+                    b.ToTable("CatalogTypes", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogItem", b =>

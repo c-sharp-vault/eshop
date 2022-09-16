@@ -9,13 +9,9 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 
 			builder.HasKey(x => x.Id);
 
-			builder.Property(x => x.Id)
-				   .UseHiLo("catalog_brand_hilo")
-				   .IsRequired();
+			builder.Property(x => x.Id).UseHiLo("catalog_brand_hilo").IsRequired();
 
-			builder.Property(x => x.Brand)
-				   .IsRequired()
-				   .HasMaxLength(100);
+			builder.Property(x => x.Brand).IsRequired().HasMaxLength(100);
 		}
 	}
 }

@@ -27,6 +27,9 @@ namespace Catalog.DataAccess.Migrations
             modelBuilder.HasSequence("catalog_item_hilo")
                 .IncrementsBy(10);
 
+            modelBuilder.HasSequence("catalog_type_hilo")
+                .IncrementsBy(10);
+
             modelBuilder.Entity("Catalog.Core.Models.CatalogBrand", b =>
                 {
                     b.Property<int>("Id")
@@ -111,15 +114,16 @@ namespace Catalog.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "catalog_type_hilo");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CatalogTypes");
+                    b.ToTable("CatalogTypes", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogItem", b =>

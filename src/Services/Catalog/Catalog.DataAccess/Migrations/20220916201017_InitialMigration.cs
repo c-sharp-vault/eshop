@@ -16,6 +16,10 @@ namespace Catalog.DataAccess.Migrations
                 name: "catalog_item_hilo",
                 incrementBy: 10);
 
+            migrationBuilder.CreateSequence(
+                name: "catalog_type_hilo",
+                incrementBy: 10);
+
             migrationBuilder.CreateTable(
                 name: "CatalogBrands",
                 columns: table => new
@@ -32,9 +36,8 @@ namespace Catalog.DataAccess.Migrations
                 name: "CatalogTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,6 +104,9 @@ namespace Catalog.DataAccess.Migrations
 
             migrationBuilder.DropSequence(
                 name: "catalog_item_hilo");
+
+            migrationBuilder.DropSequence(
+                name: "catalog_type_hilo");
         }
     }
 }
