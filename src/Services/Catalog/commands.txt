@@ -1,0 +1,8 @@
+# Add EF Core Design Package
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+# Install EF Core Tools
+dotnet tool install --global dotnet-ef
+
+# Add Migration
+dotnet ef migrations add InitialMigration --project ../Catalog.DataAccess
