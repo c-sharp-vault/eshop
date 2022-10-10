@@ -18,22 +18,21 @@ using System.Threading.Tasks;
 namespace Catalog.API {
 	public class Program {
 		public static async Task Main(string[] args) {
-			WebApplicationBuilder webApplicationBuilder = WebApplication.CreateBuilder(args);
-			AddServicesToContainer(webApplicationBuilder);
-			WebApplication webApplication = webApplicationBuilder.Build();
-			ConfigureHttpRequestPipeline(webApplication);
-			await PrepareDatabase.MigrateAndSeedAsync(webApplication);
-			webApplication.Run();
+			WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+			AddServicesToContainer(builder);
+			WebApplication app = builder.Build();
+			ConfigureHttpRequestPipeline(app);
+			await PrepareDatabase.MigrateAndSeedAsync(app);
+			app.Run();
 		}
 
-		private static void AddServicesToContainer(WebApplicationBuilder webApplicationBuilder) {
-			webApplicationBuilder.Services.AddOptions();
-			webApplicationBuilder.Services.AddLogging();
+		private static void AddServicesToContainer(WebApplicationBuilder builder) {
+			builder.Services.AddOptions();
+			builder.Services.AddLogging();
 			// webApplicationBuilder.Services.Configure<CatalogOptions>(webApplicationBuilder.Configuration);
-			webApplicationBuilder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-			webApplicationBuilder.Services.AddEndpointsApiExplorer();
-			webApplicationBuilder.Services.AddSwaggerGen();
+			builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+			builder.Services.AddEndpointsApiExplorer();
+			builder.Services.AddSwaggerGen();
 
 			// Register AutoMapper service #1
 			//MapperConfiguration mapConfiguration = new MapperConfiguration(configure: config => {
@@ -48,11 +47,11 @@ namespace Catalog.API {
 			//webApplicationBuilder.Services.AddAutoMapper(configAction: mapperConfigurationExpression => mapperConfigurationExpression.AddProfile(new CatalogItemProfile()));
 
 			// Register AutoMapper service #3
-			webApplicationBuilder.Services.AddAutoMapper(assemblies: AppDomain.CurrentDomain.GetAssemblies());
-			webApplicationBuilder.Services.AddRouting(opt => opt.LowercaseUrls = true);
+			builder.Services.AddAutoMapper(assemblies: AppDomain.CurrentDomain.GetAssemblies());
+			builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
-			webApplicationBuilder.Services.AddDbContext<CatalogContext>(options => {
-				options.UseNpgsql(webApplicationBuilder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionString"),
+			builder.Services.AddDbContext<CatalogContext>(options => {
+				options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionString"),
 									 options => options.MigrationsAssembly("Catalog.DataAccess")
 													   .EnableRetryOnFailure(
 														   maxRetryCount: 6,
@@ -60,24 +59,24 @@ namespace Catalog.API {
 														   errorCodesToAdd: null));
 				options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
 			});
-			webApplicationBuilder.Services.AddTransient<ICatalogBrandRepository, CatalogBrandRepository>();
-			webApplicationBuilder.Services.AddTransient<ICatalogItemRepository, CatalogItemRepository>();
-			webApplicationBuilder.Services.AddTransient<ICatalogTypeRepository, CatalogTypeRepository>();
-			webApplicationBuilder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+			builder.Services.AddTransient<ICatalogBrandRepository, CatalogBrandRepository>();
+			builder.Services.AddTransient<ICatalogItemRepository, CatalogItemRepository>();
+			builder.Services.AddTransient<ICatalogTypeRepository, CatalogTypeRepository>();
+			builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 		}
 
-		private static void ConfigureHttpRequestPipeline(WebApplication webApplication) {
-			if (webApplication.Environment.IsDevelopment()) {
-				webApplication.UseSwagger();
-				webApplication.UseSwaggerUI(options => {
+		private static void ConfigureHttpRequestPipeline(WebApplication app) {
+			if (app.Environment.IsDevelopment()) {
+				app.UseSwagger();
+				app.UseSwaggerUI(options => {
 					options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 					//options.RoutePrefix = string.Empty;
 				});
 			}
 
-			webApplication.UseHttpsRedirection();
-			webApplication.UseAuthorization();
-			webApplication.MapControllers();
+			app.UseHttpsRedirection();
+			app.UseAuthorization();
+			app.MapControllers();
 		}
 	}
 }
