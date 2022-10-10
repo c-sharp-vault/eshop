@@ -1,6 +1,7 @@
 ﻿using Catalog.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Data;
 
 namespace Catalog.DataAccess.EntityTypeConfigurations {
 	internal class CatalogItemEntityTypeConfiguration : IEntityTypeConfiguration<CatalogItem> {
@@ -10,6 +11,8 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 			builder.HasKey(x => x.Id);
 
 			builder.Property(x => x.Id).UseHiLo("catalog_item_hilo").IsRequired();
+
+			builder.HasIndex(x => x.Name).IsUnique();
 
 			builder.Property(x => x.Name).IsRequired(true).HasMaxLength(50);
 
@@ -21,9 +24,9 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 
 			builder.Ignore(x => x.PictureUri);
 
-			builder.HasOne(x => x.CatalogType).WithMany().HasForeignKey(x => x.CatalogTypeId);
+			builder.HasOne(x => x.CatalogType).WithMany(x => x.CatalogItems).HasForeignKey(x => x.CatalogTypeId);
 
-			builder.HasOne(x => x.CatalogBrand).WithMany().HasForeignKey(x => x.CatalogBrandId);
+			builder.HasOne(x => x.CatalogBrand).WithMany(x => x.CatalogItems).HasForeignKey(x => x.CatalogBrandId);
 
 			builder.Property(x => x.AvailableStock).HasDefaultValue(0);
 

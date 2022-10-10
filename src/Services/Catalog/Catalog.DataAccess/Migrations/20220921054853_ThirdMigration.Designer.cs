@@ -3,6 +3,7 @@ using Catalog.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catalog.DataAccess.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [Migration("20220921054853_ThirdMigration")]
+    partial class ThirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,13 +134,13 @@ namespace Catalog.DataAccess.Migrations
             modelBuilder.Entity("Catalog.Core.Models.CatalogItem", b =>
                 {
                     b.HasOne("Catalog.Core.Models.CatalogBrand", "CatalogBrand")
-                        .WithMany("CatalogItems")
+                        .WithMany()
                         .HasForeignKey("CatalogBrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Catalog.Core.Models.CatalogType", "CatalogType")
-                        .WithMany("CatalogItems")
+                        .WithMany()
                         .HasForeignKey("CatalogTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -146,16 +148,6 @@ namespace Catalog.DataAccess.Migrations
                     b.Navigation("CatalogBrand");
 
                     b.Navigation("CatalogType");
-                });
-
-            modelBuilder.Entity("Catalog.Core.Models.CatalogBrand", b =>
-                {
-                    b.Navigation("CatalogItems");
-                });
-
-            modelBuilder.Entity("Catalog.Core.Models.CatalogType", b =>
-                {
-                    b.Navigation("CatalogItems");
                 });
 #pragma warning restore 612, 618
         }

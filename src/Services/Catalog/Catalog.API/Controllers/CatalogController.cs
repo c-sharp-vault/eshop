@@ -1,65 +1,87 @@
-﻿using Catalog.Core.Models;
+﻿using AutoMapper;
+using Catalog.API.DTOs.CatalogItem;
+using Catalog.Core.Models;
 using Catalog.DataAccess;
 using Catalog.Infrastructure.Options;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Catalog.API.Controllers {
-	[Route("api/v1/[controller]")]
-	public class CatalogController : ControllerBase {
+	[ApiController]
+	[Route("api/v1/catalog/[controller]")]
+	public class ItemsController : ControllerBase {
 		private readonly IUnitOfWork _unitOfWork;
+		private readonly IMapper _mapper;
+		private readonly ILogger<ItemsController> _logger;
 		private readonly CatalogOptions _catalogOptions;
 		
-		public CatalogController(IUnitOfWork unitOfWork, IOptions<CatalogOptions> catalogOptions) {
+		public ItemsController(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ItemsController> logger, IOptions<CatalogOptions> catalogOptions) {
 			_unitOfWork = unitOfWork;
+			_mapper = mapper;
+			_logger = logger;
 			_catalogOptions = catalogOptions.Value;
 		}
 
+		#region CatalogItem
+		[HttpGet("{id}", Name = "GetItemAsync")]
+		[ProducesResponseType(type: typeof(CatalogItemReadDTO), statusCode: (int) HttpStatusCode.OK)]
+		[ProducesResponseType(statusCode: (int) HttpStatusCode.BadRequest)]
+		public async Task<IActionResult> GetItemAsync(int id) {
+			_logger.LogInformation($"--> Returning Catalog w/ Id = {id}");
+
+			if (!await _unitOfWork.CatalogItemRepository.ExistsAsync(id)) {
+				return BadRequest($"Inexistent CatalogItem w/ Id = '{id}'");
+			}
+
+			CatalogItem catalogitem = await _unitOfWork.CatalogItemRepository.GetAsync(id);
+
+			return Ok(_mapper.Map<CatalogItemReadDTO>(catalogitem));
+		}
+
 		// GET api/v1/[controller]/items[?pageSize=3&pageIndex=10]
-		[HttpGet]
-		[Route("items")]
-		[ProducesResponseType(typeof(IEnumerable<CatalogItem>), (int) HttpStatusCode.OK)]
-		[ProducesResponseType((int) HttpStatusCode.BadRequest)]
-		public async Task<IActionResult> GetItemsAsync([FromQuery] byte pageSize = 10, [FromQuery] byte pageIndex = 0, String ids = null) {
-			IEnumerable<CatalogItem> catalogItems;
+		[HttpGet(Name = "GetItemSAsync")]
+		[ProducesResponseType(type: typeof(IEnumerable<CatalogItemReadDTO>), statusCode: (int) HttpStatusCode.OK)]
+		[ProducesResponseType(statusCode: (int) HttpStatusCode.BadRequest)]
+		public async Task<IActionResult> GetItemsAsync([FromQuery] byte pageSize = 10, [FromQuery] byte pageIndex = 0) {
+			_logger.LogInformation("--> Returning all CatalogItems");
 
-			// if any ids were provided...
-			if (!String.IsNullOrEmpty(ids)) {
-				catalogItems = await GetItemsByIdAsync(ids);
+			IEnumerable<CatalogItem> catalogItems = await this._unitOfWork.CatalogItemRepository.GetAllAsync(pageSize, pageIndex);
 
-				if (!catalogItems.Any()) {
-					return BadRequest("ids value invalid. Must be a comma-separated list of numbers");
-				}
-
-				return Ok(catalogItems);
-			}
-
-			catalogItems = await this._unitOfWork.CatalogItemRepository.GetAllAsync(pageSize, pageIndex);
-
-			return Ok(catalogItems);
+			return Ok(_mapper.Map<IEnumerable<CatalogItemReadDTO>>(catalogItems));
 		}
 
-		private async Task<IEnumerable<CatalogItem>> GetItemsByIdAsync(string ids) {
-			IEnumerable<(bool Ok, int Value)> numericIds = ids.Split(',').Select(x => (Ok: int.TryParse(x, out int id), Value: id)); 
-			if (!numericIds.All(x => x.Ok)) {
-				return new List<CatalogItem>();
+		[HttpPost]
+		[ProducesResponseType(type: typeof(CreatedAtRouteResult), statusCode: (int) HttpStatusCode.Created)]
+		[ProducesResponseType(type: typeof(BadRequestResult), statusCode: (int) HttpStatusCode.BadRequest)]
+		public async Task<IActionResult> CreateItemAsync([FromBody] CatalogItemCreateDTO catalogItemCreateDTO) {
+			_logger.LogInformation($"Creating CatatlogItem: {JsonSerializer.Serialize<CatalogItemCreateDTO>(catalogItemCreateDTO)}");
+
+			CatalogItem catalogItem = _mapper.Map<CatalogItem>(catalogItemCreateDTO);
+
+			if (await _unitOfWork.CatalogItemRepository.NameExistsAsync(catalogItem)) {
+				_logger.LogError($"A {typeof(CatalogItem)} w/ Name = {catalogItem.Name} already exists.");
+				return BadRequest($"A {typeof(CatalogItem)} w/ Name = {catalogItem.Name} already exists.");
 			}
 
-			IEnumerable<int> idsToSelect = numericIds.Select(x => x.Value);
-
-			IEnumerable<CatalogItem> items = await _unitOfWork.CatalogItemRepository.FindAllAsync(x => idsToSelect.Contains(x.Id));
-
-			return items;
+			await _unitOfWork.CatalogItemRepository.AddAsync(catalogItem);
+			await _unitOfWork.CompleteAsync();
+			CatalogItemReadDTO catalogItemReadDTO = _mapper.Map<CatalogItemReadDTO>(catalogItem);
+			return CreatedAtRoute(nameof(GetItemAsync), new { id = catalogItem.Id.ToString() }, catalogItemReadDTO);
 		}
+
+		#endregion
+
+		#region Private Methods
 
 		protected async Task Dispose() {
 			await _unitOfWork.DisposeAsync();
 		}
+
+		#endregion
 	}
 }

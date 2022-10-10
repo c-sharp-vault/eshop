@@ -17,6 +17,8 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 			builder.Property(x => x.Id).UseHiLo("catalog_type_hilo").IsRequired();
 
 			builder.Property(x => x.Type).IsRequired(true).HasMaxLength(100);
+
+			builder.HasMany(x => x.CatalogItems).WithOne(x => x.CatalogType).HasForeignKey(x => x.CatalogTypeId);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 	public class SelectTryResult<TSource, TResult> {
 		private TSource _source;
 		private TResult _result;
-		private Exception _exception;
+		private Exception? _exception;
 
 		internal SelectTryResult(TSource source, TResult result, Exception exception) {
 			_source = source;

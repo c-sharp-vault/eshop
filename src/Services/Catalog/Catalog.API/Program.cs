@@ -1,6 +1,9 @@
+using AutoMapper;
+using Catalog.API.DTOs.CatalogItem;
+using Catalog.API.Profiles;
+using Catalog.Core.Models;
 using Catalog.DataAccess;
 using Catalog.DataAccess.Repositories;
-using Catalog.Infrastructure.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Catalog.API {
@@ -23,11 +27,30 @@ namespace Catalog.API {
 		}
 
 		private static void AddServicesToContainer(WebApplicationBuilder webApplicationBuilder) {
-			webApplicationBuilder.Services.AddControllers();
+			webApplicationBuilder.Services.AddOptions();
+			webApplicationBuilder.Services.AddLogging();
+			// webApplicationBuilder.Services.Configure<CatalogOptions>(webApplicationBuilder.Configuration);
+			webApplicationBuilder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			webApplicationBuilder.Services.AddEndpointsApiExplorer();
 			webApplicationBuilder.Services.AddSwaggerGen();
-			webApplicationBuilder.Services.Configure<CatalogOptions>(webApplicationBuilder.Configuration);
+
+			// Register AutoMapper service #1
+			//MapperConfiguration mapConfiguration = new MapperConfiguration(configure: config => {
+			//	config.CreateMap<CatalogItem, CatalogItemReadDTO>();
+			//	//or
+			//	config.AddProfile(new CatalogItemProfile());
+			//});
+			//IMapper mapper = mapConfiguration.CreateMapper();
+			//webApplicationBuilder.Services.AddSingleton(mapper);
+
+			// Register AutoMapper service #2
+			//webApplicationBuilder.Services.AddAutoMapper(configAction: mapperConfigurationExpression => mapperConfigurationExpression.AddProfile(new CatalogItemProfile()));
+
+			// Register AutoMapper service #3
+			webApplicationBuilder.Services.AddAutoMapper(assemblies: AppDomain.CurrentDomain.GetAssemblies());
+			webApplicationBuilder.Services.AddRouting(opt => opt.LowercaseUrls = true);
+
 			webApplicationBuilder.Services.AddDbContext<CatalogContext>(options => {
 				options.UseSqlServer(webApplicationBuilder.Configuration.GetConnectionString("CatalogConnectionString"),
 									 options => options.MigrationsAssembly("Catalog.DataAccess")

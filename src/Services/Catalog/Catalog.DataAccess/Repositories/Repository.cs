@@ -30,8 +30,9 @@ namespace Catalog.DataAccess.Repositories {
 			return (await _catalogContext.Set<TEntity>().FindAsync(id) != null);
 		}
 
-		public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate) {
-			return await _catalogContext.Set<TEntity>().Where(predicate).ToListAsync();
+		public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate = null) {
+			var res = await _catalogContext.Set<TEntity>().Where(predicate).ToListAsync();
+			return res;
 		}
 
 		public async Task AddAsync(TEntity entity) {

@@ -12,18 +12,30 @@ namespace Catalog.DataAccess {
 		public CatalogContext(DbContextOptions<CatalogContext> dbContextOptions) : base(dbContextOptions) { }
 
 		public DbSet<CatalogItem> CatalogItems {
-			get { return _catalogItems; }
-			set { _catalogItems = value; }
+			get {
+				return _catalogItems;
+			}
+			set {
+				_catalogItems = value;
+			}
 		}
 
 		public DbSet<CatalogBrand> CatalogBrands {
-			get { return _catalogBrands; }
-			set { _catalogBrands = value; }
+			get {
+				return _catalogBrands;
+			}
+			set {
+				_catalogBrands = value;
+			}
 		}
 
 		public DbSet<CatalogType> CatalogTypes {
-			get { return _catalogTypes; }
-			set { _catalogTypes = value; }
+			get {
+				return _catalogTypes;
+			}
+			set {
+				_catalogTypes = value;
+			}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
