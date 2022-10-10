@@ -1,7 +1,3 @@
-using AutoMapper;
-using Catalog.API.DTOs.CatalogItem;
-using Catalog.API.Profiles;
-using Catalog.Core.Models;
 using Catalog.DataAccess;
 using Catalog.DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -15,8 +11,9 @@ using System;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Catalog.API {
-	public class Program {
+namespace Catalog.API
+{
+    public class Program {
 		public static async Task Main(string[] args) {
 			WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 			AddServicesToContainer(builder);
