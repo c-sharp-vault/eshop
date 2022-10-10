@@ -52,12 +52,12 @@ namespace Catalog.API {
 			webApplicationBuilder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
 			webApplicationBuilder.Services.AddDbContext<CatalogContext>(options => {
-				options.UseSqlServer(webApplicationBuilder.Configuration.GetConnectionString("CatalogConnectionString"),
+				options.UseNpgsql(webApplicationBuilder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionString"),
 									 options => options.MigrationsAssembly("Catalog.DataAccess")
 													   .EnableRetryOnFailure(
 														   maxRetryCount: 6,
 														   maxRetryDelay: TimeSpan.FromSeconds(30),
-														   errorNumbersToAdd: null));
+														   errorCodesToAdd: null));
 				options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
 			});
 			webApplicationBuilder.Services.AddTransient<ICatalogBrandRepository, CatalogBrandRepository>();

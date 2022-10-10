@@ -3,13 +3,13 @@ using Catalog.Infrastructure.Extensions.Linq;
 using Catalog.Infrastructure.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Retry;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
 namespace Catalog.DataAccess {
