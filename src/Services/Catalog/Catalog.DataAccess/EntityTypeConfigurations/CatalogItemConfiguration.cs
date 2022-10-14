@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Data;
 
 namespace Catalog.DataAccess.EntityTypeConfigurations {
-	internal class CatalogItemEntityTypeConfiguration : IEntityTypeConfiguration<CatalogItem> {
+	internal class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogItem> {
 		public void Configure(EntityTypeBuilder<CatalogItem> builder) {
 			builder.ToTable("CatalogItems");
 
