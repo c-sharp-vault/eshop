@@ -19,6 +19,7 @@ namespace Catalog.API
 			AddServicesToContainer(builder);
 			WebApplication app = builder.Build();
 			ConfigureHttpRequestPipeline(app);
+			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 			await PrepareDatabase.MigrateAndSeedAsync(app);
 			app.Run();
 		}

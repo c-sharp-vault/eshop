@@ -1,4 +1,6 @@
-﻿using Catalog.Core.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Catalog.Core.Models;
 
 namespace Catalog.DataAccess.Repositories {
 	public interface ICatalogItemRepository : IRepository<CatalogItem> {

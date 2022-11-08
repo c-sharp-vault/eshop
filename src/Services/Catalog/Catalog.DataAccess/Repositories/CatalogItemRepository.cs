@@ -1,4 +1,8 @@
-﻿using Catalog.Core.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Catalog.Core.Models;
 using Catalog.DataAccess.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,12 +39,11 @@ namespace Catalog.DataAccess.Repositories {
 
 		public async Task<IEnumerable<CatalogItem>> GetAllAsync(byte pageSize, byte pageIndex) {
 			return await _catalogContext.CatalogItems
-											.OrderBy(x => x.Name)
+											.OrderBy(x => x.Id)
 											.Skip(pageSize * pageIndex)
 											.Take(pageSize)
 											.Include(x => x.CatalogBrand)
 											.Include(x => x.CatalogType)
-											.OrderBy(x => x.Id)
 											.ToListAsync();
 		}
 	}

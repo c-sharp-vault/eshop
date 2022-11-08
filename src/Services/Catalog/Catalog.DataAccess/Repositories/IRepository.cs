@@ -1,4 +1,7 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Catalog.Core.Models;
 
 namespace Catalog.DataAccess.Repositories {
@@ -15,8 +18,12 @@ namespace Catalog.DataAccess.Repositories {
 		Task AddAsync(TEntity entity);
 		Task AddRangeAsync(IEnumerable<TEntity> entities);
 
+		// Update
+		void Update(TEntity entity);
+		void UpdateRange(IEnumerable<TEntity> entities);
+
 		// Delete
-		Task RemoveAsync(TEntity entity);
+		Task RemoveAsync(int id);
 		Task RemoveRangeAsync(IEnumerable<TEntity> entities);
 	}
 }

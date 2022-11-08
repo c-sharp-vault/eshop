@@ -1,35 +1,24 @@
-﻿namespace Catalog.Core.Models {
-	public class CatalogType : IEntityType {
-		private int _id;
-		private String _type;
-		private ICollection<CatalogItem> _catalogItems;
+﻿using System;
+using System.Collections.Generic;
 
-		public int Id {
-			get { return _id; }
-			set { _id = value; }
+namespace Catalog.Core.Models {
+	public class CatalogType : EntityType {
+		private String type = String.Empty;
+		private ICollection<CatalogItem> catalogItems;
+
+		public CatalogType() : base() {
+			type = String.Empty;
+			catalogItems = new List<CatalogItem>();
 		}
 
 		public String Type {
-			get { return _type; }
-			set { _type = value; }
+			get => type;
+			set => type = value ?? throw new ArgumentNullException(nameof(type), "Value can't be null");
 		}
 
 		public ICollection<CatalogItem> CatalogItems {
-			get {
-				return _catalogItems;
-			}
-			set {
-				if (value == null) {
-					throw new ArgumentNullException($"{nameof(CatalogType.CatalogItems)} can't be null");
-				}
-
-				_catalogItems = value;
-			}
-		}
-
-		public CatalogType(String type = "Undefined") {
-			this._type = type;
-			this.CatalogItems = new List<CatalogItem>();
+			get => catalogItems;
+			set => catalogItems = value ?? throw new ArgumentNullException(nameof(catalogItems), "Value can't be null");
 		}
 	}
 }

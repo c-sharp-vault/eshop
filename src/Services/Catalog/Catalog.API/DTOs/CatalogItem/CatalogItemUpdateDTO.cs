@@ -2,7 +2,7 @@
 using System;
 
 namespace Catalog.API.DTOs.CatalogItem {
-	public class CatalogItemUpdateDTO {
+	public class CatalogItemUpdateDTO : EntityTypeDTO {
 		private String _name = String.Empty;
 		private String _description = String.Empty;
 		private decimal _price;

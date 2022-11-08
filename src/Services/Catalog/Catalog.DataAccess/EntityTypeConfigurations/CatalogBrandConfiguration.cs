@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Catalog.DataAccess.EntityTypeConfigurations {
-	public class CatalogBrandEntityTypeConfiguration : IEntityTypeConfiguration<CatalogBrand> {
+	public class CatalogBrandConfiguration : IEntityTypeConfiguration<CatalogBrand> {
 		public void Configure(EntityTypeBuilder<CatalogBrand> builder) {
 			builder.ToTable("CatalogBrands");
 

@@ -1,6 +1,6 @@
 ﻿namespace Catalog.API.DTOs.CatalogItem
 {
-    public class CatalogItemPublishDTO
+    public class CatalogItemPublishDTO : EntityTypeDTO
     {
     }
 }

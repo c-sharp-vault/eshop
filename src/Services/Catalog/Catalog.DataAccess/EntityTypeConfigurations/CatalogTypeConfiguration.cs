@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Catalog.DataAccess.EntityTypeConfigurations {
-	internal class CatalogTypeEntityTypeConfiguration : IEntityTypeConfiguration<CatalogType> {
+	internal class CatalogTypeConfiguration : IEntityTypeConfiguration<CatalogType> {
 		public void Configure(EntityTypeBuilder<CatalogType> builder) {
 			builder.ToTable("CatalogTypes");
 

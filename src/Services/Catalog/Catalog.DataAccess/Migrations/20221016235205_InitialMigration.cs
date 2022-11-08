@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -25,7 +26,11 @@ namespace Catalog.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
-                    Brand = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    Brand = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -37,7 +42,11 @@ namespace Catalog.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
-                    Type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    Type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,12 +62,16 @@ namespace Catalog.DataAccess.Migrations
                     Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     PictureFileName = table.Column<string>(type: "text", nullable: true, defaultValue: "placeholder.png"),
-                    CatalogTypeId = table.Column<int>(type: "integer", nullable: false),
-                    CatalogBrandId = table.Column<int>(type: "integer", nullable: false),
                     AvailableStock = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
                     RestockThreshold = table.Column<int>(type: "integer", nullable: false, defaultValue: 10),
                     MaxStockThreshold = table.Column<int>(type: "integer", nullable: false, defaultValue: 1000),
-                    OnReorder = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
+                    CatalogTypeId = table.Column<int>(type: "integer", nullable: false),
+                    CatalogBrandId = table.Column<int>(type: "integer", nullable: false),
+                    OnReorder = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

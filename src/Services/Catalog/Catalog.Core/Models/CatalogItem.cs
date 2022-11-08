@@ -1,107 +1,96 @@
-﻿namespace Catalog.Core.Models {
-	public class CatalogItem : IEntityType {
-		private int _id;
-		private String _name;
-		private String _description;
-		private decimal _price;
-		private String _pictureFileName;
-		private String _pictureUri;
-		private int _catalogTypeId;
-		private CatalogType _catalogType;
-		private int _catalogBrandId;
-		private CatalogBrand _catalogBrand;
-		private int _availableStock;
-		private int _restockThreshold;
-		private int _maxStockThreshold;
-		private bool _onReorder;
+﻿using System;
+using Catalog.Infrastructure.Enums;
 
-		public int Id {
-			get { return _id; }
-			set { _id = value; }
+namespace Catalog.Core.Models {
+    public class CatalogItem : EntityType {
+		private String name;
+		private String description;
+		private decimal price;
+		private String pictureFileName;
+		private int availableStock;
+		private int restockThreshold;
+		private int maxStockThreshold;
+		private CatalogType catalogType;
+		private CatalogBrand catalogBrand;
+
+		public CatalogItem() : base() {
+			name = String.Empty;
+			description = String.Empty;
+			price = PriceLimit.MIN;
+			pictureFileName = "placeholder.png";
+			availableStock = AvailableStockLimit.MIN;
+			restockThreshold = RestockThresholdLimit.MIN;
+			maxStockThreshold = MaxStockThresholdLimit.MIN;
+			catalogType = new CatalogType();
+			catalogBrand = new CatalogBrand();
 		}
 
 		public String Name {
-			get { return _name; }
-			set { _name = value; }
+			get => name;
+			set => name = value ?? throw new ArgumentNullException(nameof(name), "Value can't be null");
 		}
 
 		public String Description {
-			get { return _description; }
-			set { _description = value; }
+			get => description;
+			set => description = value ?? throw new ArgumentNullException(nameof(description), "Value can't be null");
 		}
 
 		public decimal Price {
-			get { return _price; }
-			set { _price = value; }
+			get => price;
+			set => price =  (value >= PriceLimit.MIN) && (value <= PriceLimit.MAX) ? 
+							value : 
+							throw new ArgumentOutOfRangeException(nameof(price), 
+								$"Value must be between {PriceLimit.MIN} and {PriceLimit.MAX}");
 		}
 
 		public String PictureFileName {
-			get { return _pictureFileName; }
-			set { _pictureFileName = value; }
+			get => pictureFileName;
+			set => pictureFileName = value ?? throw new ArgumentNullException(nameof(pictureFileName), "Value can't be null");
 		}
 
 
 		public String PictureUri {
-			get { return _pictureUri; }
-			set { _pictureUri = value; }
-		}
-
-		public int CatalogTypeId {
-			get { return _catalogTypeId; }
-			set { _catalogTypeId = value; }
-		}
-
-		public CatalogType CatalogType {
-			get { return _catalogType; }
-			set { _catalogType = value; }
-		}
-
-		public int CatalogBrandId {
-			get { return _catalogBrandId; }
-			set { _catalogBrandId = value; }
-		}
-
-		public CatalogBrand CatalogBrand {
-			get { return _catalogBrand; }
-			set { _catalogBrand = value; }
+			get => @$"C:\Users\Fedex\source\repos\eShop\src\Services\Catalog\Catalog.API\Assets\Images\{pictureFileName}";
 		}
 
 		public int AvailableStock {
-			get { return _availableStock; }
-			set { _availableStock = value; }
+			get => availableStock;
+			set => availableStock = (availableStock >= AvailableStockLimit.MIN) && 
+									(availableStock <= AvailableStockLimit.MAX) ? value : 
+										throw new ArgumentOutOfRangeException(nameof(availableStock), 
+											$"Value must be between {AvailableStockLimit.MIN} and {AvailableStockLimit.MAX}");
 		}
 
 		public int RestockThreshold {
-			get { return _restockThreshold; }
-			set { _restockThreshold = value; }
+			get => restockThreshold;
+			set => restockThreshold = (restockThreshold >= RestockThresholdLimit.MIN) && 
+									  (restockThreshold <= RestockThresholdLimit.MAX) ? value : 
+										throw new ArgumentOutOfRangeException(nameof(restockThreshold), 
+											$"Value must be between {RestockThresholdLimit.MIN} and {RestockThresholdLimit.MAX}");
 		}
 
 		public int MaxStockThreshold {
-			get { return _maxStockThreshold; }
-			set { _maxStockThreshold = value; }
+			get => maxStockThreshold;
+			set => maxStockThreshold = (maxStockThreshold >= MaxStockThresholdLimit.MIN) && 
+									   (maxStockThreshold <= MaxStockThresholdLimit.MAX) ? value : 
+										throw new ArgumentOutOfRangeException(nameof(maxStockThreshold), 
+											$"Value must be between {MaxStockThresholdLimit.MIN} and {MaxStockThresholdLimit.MAX}");
 		}
 
-		public bool OnReorder {
-			get { return _onReorder; }
-			set { _onReorder = value; }
+		public int CatalogTypeId { get; set; }
+
+		public CatalogType CatalogType {
+			get => catalogType;
+			set => catalogType = value ?? throw new ArgumentNullException(nameof(catalogType), "Value can't be null");
 		}
 
-		public CatalogItem() { }
+		public int CatalogBrandId { get; set; }
 
-		public CatalogItem(string name, string description, CatalogType catalogType, CatalogBrand catalogBrand, decimal price, int availableStock = 0, 
-						   string pictureFileName = "placeholder.png", int restockThreshold = 10, 
-						   int maxStockThreshold = 1000, bool onReorder = false) {
-			this._name = name;
-			this._description = description;
-			this._price = price;
-			this._pictureFileName = pictureFileName;
-			this._pictureUri = @"C:\Users\Fedex\source\repos\eShop\src\Services\Catalog\Catalog.API\Assets\Images\" + pictureFileName;
-			this._catalogType = catalogType;
-			this._catalogBrand = catalogBrand;
-			this._availableStock = availableStock;
-			this.RestockThreshold = restockThreshold;
-			this._maxStockThreshold = maxStockThreshold;
-			this._onReorder = onReorder;
+		public CatalogBrand CatalogBrand {
+			get => catalogBrand;
+			set => catalogBrand = value ?? throw new ArgumentNullException(nameof(catalogBrand), "Value can't be null");
 		}
+
+		public bool OnReorder { get; set; }
 	}
 }

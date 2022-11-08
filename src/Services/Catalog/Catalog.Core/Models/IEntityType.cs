@@ -1,4 +1,6 @@
-﻿namespace Catalog.Core.Models {
-	public interface IEntityType {
-	}
+
+namespace Catalog.Core.Models {
+	public interface IEntityType { 
+
+    }
 }

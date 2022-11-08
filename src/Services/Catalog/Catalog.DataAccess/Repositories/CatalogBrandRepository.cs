@@ -1,4 +1,7 @@
-﻿using Catalog.Core.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Catalog.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.DataAccess.Repositories {
@@ -12,5 +15,5 @@ namespace Catalog.DataAccess.Repositories {
 		public async Task<Dictionary<String, int>> GetDictionaryAsync() {
 			return await _catalogContext.CatalogBrands.ToDictionaryAsync(x => x.Brand, x => x.Id);
 		}
-	}
+    }
 }

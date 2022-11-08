@@ -9,8 +9,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Retry;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Catalog.DataAccess {
 	public class PrepareDatabase {
@@ -67,6 +72,8 @@ namespace Catalog.DataAccess {
 						);
 						await _unitOfWork.CompleteAsync();
 					}
+
+					await _unitOfWork.DisposeAsync();
 				});
 			}
 		}
@@ -102,16 +109,16 @@ namespace Catalog.DataAccess {
 			if (String.IsNullOrEmpty(brand)) {
 				throw new Exception("CatalogBrand name empty");
 			}
-			return new CatalogBrand(brand);
+			return new CatalogBrand() { Brand = brand };
 		}
 
 		private static IEnumerable<CatalogBrand> GetPreconfiguredCatalogBrands() {
 			return new List<CatalogBrand>() {
-				new CatalogBrand("Azure"),
-				new CatalogBrand(".NET"),
-				new CatalogBrand("Visual Studio"),
-				new CatalogBrand("SQL Server"),
-				new CatalogBrand("Other")
+				new CatalogBrand() { Brand = "Azure" },
+				new CatalogBrand() { Brand = ".NET" },
+				new CatalogBrand() { Brand = "Visual Studio" },
+				new CatalogBrand() { Brand = "SQL Server" },
+				new CatalogBrand() { Brand = "Other" },
 			};
 		}
 
@@ -143,20 +150,20 @@ namespace Catalog.DataAccess {
 							.Where(x => x != null);
 		}
 
-		private static CatalogType CreateCatalogType(String brand) {
-			brand = brand.Trim('"').Trim();
-			if (String.IsNullOrEmpty(brand)) {
+		private static CatalogType CreateCatalogType(String type) {
+			type = type.Trim('"').Trim();
+			if (String.IsNullOrEmpty(type)) {
 				throw new Exception("CatalogBrand name empty");
 			}
-			return new CatalogType(brand);
+			return new CatalogType() { Type = type };
 		}
 
 		private static IEnumerable<CatalogType> GetPreconfiguredCatalogTypes() {
 			return new List<CatalogType>() {
-				new CatalogType("Mug"),
-				new CatalogType("T-Shirt"),
-				new CatalogType("Sheet"),
-				new CatalogType("USB Memory Stick")
+				new CatalogType() { Type = "Mug" },
+				new CatalogType() { Type = "T-Shirt" },
+				new CatalogType() { Type = "Sheet" },
+				new CatalogType() { Type = "USB Memory Stick" }
 			};
 		}
 
@@ -216,14 +223,14 @@ namespace Catalog.DataAccess {
 				throw new Exception($"Price = '{priceString}' is not a valid integer number. Exception: {exception.Message}.");
 			}
 
-			CatalogItem catalogItem = new CatalogItem(
-				name: columns[Array.IndexOf(headers, "name")].Trim('"').Trim(), 
-				description: columns[Array.IndexOf(headers, "description")].Trim('"').Trim(),
-				catalogType: await _unitOfWork.CatalogTypeRepository.GetAsync(catalogTypeIdLookup[catalogTypeName]),
-				catalogBrand: await _unitOfWork.CatalogBrandRepository.GetAsync(catalogBrandIdLookup[catalogBrandName]),
-				pictureFileName: columns[Array.IndexOf(headers, "picturefilename")].Trim('"').Trim(),
-				price: price
-			);
+			CatalogItem catalogItem = new CatalogItem() {
+				Name = columns[Array.IndexOf(headers, "name")].Trim('"').Trim(),
+				Description = columns[Array.IndexOf(headers, "description")].Trim('"').Trim(),
+				CatalogType = await _unitOfWork.CatalogTypeRepository.GetAsync(catalogTypeIdLookup[catalogTypeName]),
+				CatalogBrand = await _unitOfWork.CatalogBrandRepository.GetAsync(catalogBrandIdLookup[catalogBrandName]),
+				PictureFileName = columns[Array.IndexOf(headers, "picturefilename")].Trim('"').Trim(),
+				Price = price
+			};
 
 			int retockThresholdIndex = Array.IndexOf(headers, "restockthreshold");
 			if (retockThresholdIndex != -1) {
@@ -271,18 +278,114 @@ namespace Catalog.DataAccess {
 			IEnumerable<CatalogBrand> brands = await _unitOfWork.CatalogBrandRepository.GetAllAsync();
 			IEnumerable<CatalogType> types = await _unitOfWork.CatalogTypeRepository.GetAllAsync();
 			return new List<CatalogItem>() {
-				new CatalogItem(catalogType: types.Single(x => x.Id == 2), catalogBrand: brands.Single(x => x.Id == 2), availableStock: 100, description : ".NET Bot Black Hoodie", name: ".NET Bot Black Hoodie", price: 19.5M, pictureFileName: "1.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 1), catalogBrand: brands.Single(x => x.Id == 2), availableStock: 100, description : ".NET Black & White Mug", name: ".NET Black & White Mug", price: 8.50M, pictureFileName: "2.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 2), catalogBrand: brands.Single(x => x.Id == 5), availableStock: 100, description : "Prism White T-Shirt", name: "Prism White T-Shirt", price: 12, pictureFileName: "3.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 2), catalogBrand: brands.Single(x => x.Id == 2), availableStock: 100, description : ".NET Foundation T-shirt", name: ".NET Foundation T-shirt", price: 12, pictureFileName: "4.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 3), catalogBrand: brands.Single(x => x.Id == 5), availableStock: 100, description : "Roslyn Red Sheet", name: "Roslyn Red Sheet", price: 8.5M, pictureFileName: "5.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 2), catalogBrand: brands.Single(x => x.Id == 2), availableStock: 100, description : ".NET Blue Hoodie", name: ".NET Blue Hoodie", price: 12, pictureFileName: "6.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 2), catalogBrand: brands.Single(x => x.Id == 5), availableStock: 100, description : "Roslyn Red T-Shirt", name: "Roslyn Red T-Shirt", price: 12, pictureFileName: "7.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 2), catalogBrand: brands.Single(x => x.Id == 5), availableStock: 100, description : "Kudu Purple Hoodie", name: "Kudu Purple Hoodie", price: 8.5M, pictureFileName: "8.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 1), catalogBrand: brands.Single(x => x.Id == 5), availableStock: 100, description : "Cup<T> White Mug", name: "Cup<T> White Mug", price: 12, pictureFileName: "9.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 3), catalogBrand: brands.Single(x => x.Id == 2), availableStock: 100, description : ".NET Foundation Sheet", name: ".NET Foundation Sheet", price: 12, pictureFileName: "10.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 3), catalogBrand: brands.Single(x => x.Id == 2), availableStock: 100, description : "Cup<T> Sheet", name: "Cup<T> Sheet", price: 8.5M, pictureFileName: "11.png"),
-				new CatalogItem(catalogType: types.Single(x => x.Id == 2), catalogBrand: brands.Single(x => x.Id == 5), availableStock: 100, description : "Prism White TShirt", name: "Prism White TShirt", price: 12, pictureFileName: "12.png"),
+				new CatalogItem() {
+					Name = ".NET Bot Black Hoodie",
+					Description = ".NET Bot Black Hoodie",
+					CatalogType = types.Single(x => x.Id == 2),
+					CatalogBrand = brands.Single(x => x.Id == 2),
+					AvailableStock = 100,
+					Price = 19.5m,
+					PictureFileName = "1.png"
+				},
+				new CatalogItem() {
+					Name = ".NET Black & White Mug",
+					Description = ".NET Black & White Mug",
+					CatalogType = types.Single(x => x.Id == 1),
+					CatalogBrand = brands.Single(x => x.Id == 2),
+					AvailableStock = 100,
+					Price = 8.50m,
+					PictureFileName = "2.png"
+				},
+				new CatalogItem() {
+					Name = "Prism White T-Shirt",
+					Description = "Prism White T-Shirt",
+					CatalogType = types.Single(x => x.Id == 2),
+					CatalogBrand = brands.Single(x => x.Id == 5),
+					AvailableStock = 100,
+					Price = 12.0m,
+					PictureFileName = "3.png"
+				},
+				new CatalogItem() {
+					Name = ".NET Foundation T-shirt",
+					Description = ".NET Foundation T-shirt",
+					CatalogType = types.Single(x => x.Id == 2),
+					CatalogBrand = brands.Single(x => x.Id == 2),
+					AvailableStock = 100,
+					Price = 12.0m,
+					PictureFileName = "4.png"
+				},
+				new CatalogItem() {
+					Name = "Roslyn Red Sheet",
+					Description = "Roslyn Red Sheet",
+					CatalogType = types.Single(x => x.Id == 3),
+					CatalogBrand = brands.Single(x => x.Id == 5),
+					AvailableStock = 100,
+					Price = 8.5m,
+					PictureFileName = "5.png"
+				},
+				new CatalogItem() {
+					Name = ".NET Blue Hoodie",
+					Description = ".NET Blue Hoodie",
+					CatalogType = types.Single(x => x.Id == 2),
+					CatalogBrand = brands.Single(x => x.Id == 2),
+					AvailableStock = 100,
+					Price = 12.0m,
+					PictureFileName = "6.png"
+				},
+				new CatalogItem() {
+					Name = "Roslyn Red T-Shirt",
+					Description = "Roslyn Red T-Shirt",
+					CatalogType = types.Single(x => x.Id == 2),
+					CatalogBrand = brands.Single(x => x.Id == 5),
+					AvailableStock = 100,
+					Price = 12.0m,
+					PictureFileName = "7.png"
+				},
+				new CatalogItem() {
+					Name = "Kudu Purple Hoodie",
+					Description = "Kudu Purple Hoodie",
+					CatalogType = types.Single(x => x.Id == 2),
+					CatalogBrand = brands.Single(x => x.Id == 5),
+					AvailableStock = 100,
+					Price = 8.5m,
+					PictureFileName = "8.png"
+				},
+				new CatalogItem() {
+					Name = "Cup<T> White Mug",
+					Description = "Cup<T> White Mug",
+					CatalogType = types.Single(x => x.Id == 1),
+					CatalogBrand = brands.Single(x => x.Id == 5),
+					AvailableStock = 100,
+					Price = 12.0m,
+					PictureFileName = "9.png"
+				},
+				new CatalogItem() {
+					Name = ".NET Foundation Sheet",
+					Description = ".NET Foundation Sheet",
+					CatalogType = types.Single(x => x.Id == 3),
+					CatalogBrand = brands.Single(x => x.Id == 2),
+					AvailableStock = 100,
+					Price = 12.0m,
+					PictureFileName = "10.png"
+				},
+				new CatalogItem() {
+					Name = "Cup<T> Sheet",
+					Description = "Cup<T> Sheet",
+					CatalogType = types.Single(x => x.Id == 3),
+					CatalogBrand = brands.Single(x => x.Id == 2),
+					AvailableStock = 100,
+					Price = 8.5m,
+					PictureFileName = "11.png"
+				},
+				new CatalogItem() {
+					Name = "Prism White TShirt",
+					Description = "Prism White TShirt",
+					CatalogType = types.Single(x => x.Id == 2),
+					CatalogBrand = brands.Single(x => x.Id == 5),
+					AvailableStock = 100,
+					Price = 12.0m,
+					PictureFileName = "12.png"
+				}
 			};
 		}
 

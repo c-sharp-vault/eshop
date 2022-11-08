@@ -39,9 +39,9 @@ namespace Catalog.DataAccess {
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) {
-			modelBuilder.ApplyConfiguration(new CatalogBrandEntityTypeConfiguration());
-			modelBuilder.ApplyConfiguration(new CatalogTypeEntityTypeConfiguration());
-			modelBuilder.ApplyConfiguration(new CatalogItemEntityTypeConfiguration());
+			modelBuilder.ApplyConfiguration(new CatalogBrandConfiguration());
+			modelBuilder.ApplyConfiguration(new CatalogTypeConfiguration());
+			modelBuilder.ApplyConfiguration(new CatalogItemConfiguration());
 		}
 	}
 }

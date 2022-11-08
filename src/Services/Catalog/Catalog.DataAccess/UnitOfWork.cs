@@ -1,4 +1,6 @@
-﻿using Catalog.DataAccess.Repositories;
+﻿using System;
+using System.Threading.Tasks;
+using Catalog.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.DataAccess {
@@ -29,6 +31,10 @@ namespace Catalog.DataAccess {
 
 		public ICatalogTypeRepository CatalogTypeRepository {
 			get { return _catalogTypeRepository; }
+		}
+
+		public void Complete() {
+			this._catalogContext.SaveChanges();
 		}
 
 		public async Task CompleteAsync() {

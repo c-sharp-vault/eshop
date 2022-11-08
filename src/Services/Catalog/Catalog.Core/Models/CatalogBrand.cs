@@ -1,38 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System;
+using System.Collections.Generic;
 
-namespace Catalog.Core.Models {
-	public class CatalogBrand : IEntityType {
-		private int _id;
-		private String _brand;
-		private ICollection<CatalogItem> _catalogItems;
+namespace Catalog.Core.Models
+{
+    public class CatalogBrand : EntityType {
+		private String brand;
+		private ICollection<CatalogItem> catalogItems;
 
-		public int Id {
-			get { return _id; }
-			set { _id = value; }
+		public CatalogBrand() : base() {
+			brand = String.Empty;
+			catalogItems = new List<CatalogItem>();
 		}
 
 		public String Brand {
-			get { return _brand; }
-			set { _brand = value; }
+			get => brand;
+			set => brand = value ?? throw new ArgumentNullException(nameof(brand), "Value can't be null");
 		}
 
 		public ICollection<CatalogItem> CatalogItems {
-			get {
-				return _catalogItems;
-			}
-			set {
-				if (value == null) {
-					throw new ArgumentNullException($"{nameof(CatalogBrand.CatalogItems)} can't be null");
-				}
-
-				_catalogItems = value;
-			}
-		}
-
-
-		public CatalogBrand(String brand = "Undefined") {
-			this._brand = brand;
-			this._catalogItems = new List<CatalogItem>();
+			get => catalogItems;
+			set => catalogItems = value ?? throw new ArgumentNullException(nameof(catalogItems), "Value can't be null");
 		}
 	}
 }

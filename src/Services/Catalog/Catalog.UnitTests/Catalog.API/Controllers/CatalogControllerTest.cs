@@ -1,15 +1,12 @@
 using AutoMapper;
 using Catalog.API.Controllers;
-using Catalog.API.DTOs.CatalogBrand;
 using Catalog.API.DTOs.CatalogItem;
-using Catalog.API.DTOs.CatalogType;
 using Catalog.API.Profiles;
 using Catalog.Core.Models;
 using Catalog.DataAccess;
 using Catalog.DataAccess.Repositories;
 using Catalog.Infrastructure.Options;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -17,11 +14,13 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Amido.NAuto;
 
-namespace Catalog.UnitTests.Catalog.API.Controllers {
-	[TestFixture]
+namespace Catalog.UnitTests.Catalog.API.Controllers
+{
+    [TestFixture]
 	public class CatalogControllerTest {
 		private List<CatalogItem> _catalogItemList;
 		private List<CatalogItem> _anotherCatalogItemList;
@@ -36,43 +35,6 @@ namespace Catalog.UnitTests.Catalog.API.Controllers {
 		[SetUp]
 		public void Setup() {
 			_catalogItemList = GetExpectedCatalogItemList();
-			_catalogItemList.ElementAt(0).Id = 1;
-			_catalogItemList.ElementAt(0).CatalogBrandId = 1;
-			_catalogItemList.ElementAt(0).CatalogBrand.Id = 1;
-			_catalogItemList.ElementAt(0).CatalogTypeId = 1;
-			_catalogItemList.ElementAt(0).CatalogType.Id = 1;
-
-			_catalogItemList.ElementAt(1).Id = 2;
-			_catalogItemList.ElementAt(1).CatalogBrandId = 2;
-			_catalogItemList.ElementAt(1).CatalogBrand.Id = 2;
-			_catalogItemList.ElementAt(1).CatalogTypeId = 2;
-			_catalogItemList.ElementAt(1).CatalogType.Id = 2;
-
-			_catalogItemList.ElementAt(2).Id = 3;
-			_catalogItemList.ElementAt(2).CatalogBrandId = 3;
-			_catalogItemList.ElementAt(2).CatalogBrand.Id = 3;
-			_catalogItemList.ElementAt(2).CatalogTypeId = 3;
-			_catalogItemList.ElementAt(2).CatalogType.Id = 3;
-
-			_anotherCatalogItemList = GetAnotherCatalogItemList();
-			_anotherCatalogItemList.ElementAt(0).Id = 4;
-			_anotherCatalogItemList.ElementAt(0).CatalogBrandId = 4;
-			_anotherCatalogItemList.ElementAt(0).CatalogBrand.Id = 4;
-			_anotherCatalogItemList.ElementAt(0).CatalogTypeId = 4;
-			_anotherCatalogItemList.ElementAt(0).CatalogType.Id = 4;
-
-			_anotherCatalogItemList.ElementAt(1).Id = 5;
-			_anotherCatalogItemList.ElementAt(1).CatalogBrandId = 5;
-			_anotherCatalogItemList.ElementAt(1).CatalogBrand.Id = 5;
-			_anotherCatalogItemList.ElementAt(1).CatalogTypeId = 5;
-			_anotherCatalogItemList.ElementAt(1).CatalogType.Id = 5;
-
-			_anotherCatalogItemList.ElementAt(2).Id = 6;
-			_anotherCatalogItemList.ElementAt(2).CatalogBrandId = 6;
-			_anotherCatalogItemList.ElementAt(2).CatalogBrand.Id = 6;
-			_anotherCatalogItemList.ElementAt(2).CatalogTypeId = 6;
-			_anotherCatalogItemList.ElementAt(2).CatalogType.Id = 6;
-
 			_mockedCatalogItemRepository = new Mock<ICatalogItemRepository>();
 			_mockedUnitOfWork = new Mock<IUnitOfWork>();
 			_mockedUnitOfWork.SetupGet<ICatalogItemRepository>(x => x.CatalogItemRepository)
@@ -169,42 +131,20 @@ namespace Catalog.UnitTests.Catalog.API.Controllers {
 			Assert.IsAssignableFrom(typeof(BadRequestObjectResult), actionResult);
 		}
 
-		private List<CatalogItem> GetExpectedCatalogItemList() {
-			return new List<CatalogItem>() {
-				new CatalogItem(name: ".NET Bot Black Hoodie", description: "An excellent .NET Bot black hoodie", price: 19.5m, catalogType: new CatalogType(type: "T-Shirt"), catalogBrand: new CatalogBrand(brand: ".NET")),
-				new CatalogItem(name: "Roslyn Red Pin", description: "A beautiful Roslyn red pin", price: 8.5m, catalogType: new CatalogType(type: "Pin"), catalogBrand: new CatalogBrand(brand: "C#")),
-				new CatalogItem(name: "Azure Mug", description: "A beautiful mug with the Azure blue logo", price: 12m, catalogType: new CatalogType(type: "Mug"), catalogBrand: new CatalogBrand(brand: "Azure")),
-			};
-		}
+		private List<CatalogItem> GetExpectedCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.Id, 3);
 
-		private List<CatalogItem> GetAnotherCatalogItemList() {
-			return new List<CatalogItem>() {
-				new CatalogItem(name: ".NET Bot Black Hoodie+", description: "An excellent .NET Bot black hoodie+", price: 19m, catalogType: new CatalogType(type: "T-Shirt+"), catalogBrand: new CatalogBrand(brand: ".NET+")),
-				new CatalogItem(name: "Roslyn Red Pin+", description: "A beautiful Roslyn red pin+", price: 8m, catalogType: new CatalogType(type: "Pin+"), catalogBrand: new CatalogBrand(brand: "C#+")),
-				new CatalogItem(name: "Azure Mug+", description: "A beautiful mug with the Azure blue logo+", price: 12.1m, catalogType: new CatalogType(type: "Mug+"), catalogBrand: new CatalogBrand(brand: "Azure+")),
-				new CatalogItem(name: "Kudu Purple Hoodie+", description: "A beautiful Kudu Purple Hoodie+", price: 10.5m, catalogType: new CatalogType(type: "T-Shirt+"), catalogBrand: new CatalogBrand(brand: "Other+")),
-			};
-		}
+		private List<CatalogItem> GetAnotherCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.Id, 3);
 
 		private void TestCatalogItemListsEquality(IEnumerable<CatalogItem> catalogItemsResult, IEnumerable<CatalogItem> catalogItemsFiltered = null) {
 			IEnumerable<CatalogItem> catalogItems = catalogItemsFiltered != null? catalogItemsFiltered : _catalogItemList;
-			catalogItems.Select((element, index) => new { Element = element, Index = index }).ToList().ForEach(obj => {
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).Name, Is.EquivalentTo(obj.Element.Name), $"{nameof(CatalogItem)}.{nameof(CatalogItem.Name)} mismatch at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).Description, Is.EqualTo(obj.Element.Description), $"{nameof(CatalogItem)}.{nameof(CatalogItem.Description)} mismatch at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).Price, Is.EqualTo(obj.Element.Price), $"{nameof(CatalogItem)}.{nameof(CatalogItem.Price)} mismatch at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).CatalogType.Type, Is.EqualTo(obj.Element.CatalogType.Type), $"{nameof(CatalogType)}.{nameof(CatalogType.Type)} mismatch at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).CatalogBrand.Brand, Is.EqualTo(obj.Element.CatalogBrand.Brand), $"{nameof(CatalogBrand)}.{nameof(CatalogBrand.Brand)} mismatch at index {obj.Index} of List<CatalogItem>");
-			});
+			catalogItems.Should().BeEquivalentTo(catalogItemsResult, cfg => cfg.Excluding(x => x.CreatedBy).Excluding(x => x.CreatedOn)
+				.Excluding(x => x.UpdatedBy).Excluding(x => x.UpdatedOn).Excluding(x => x.CatalogBrandId).Excluding(x => x.CatalogTypeId)
+				.Excluding(x => x.CatalogBrand.CreatedOn).Excluding(x => x.CatalogType.CreatedOn));
 		}
 
-		private void TestCatalogItemListsInequality(IEnumerable<CatalogItem> catalogItemsResult) {
-			_catalogItemList.Select((element, index) => new { Element = element, Index = index }).ToList().ForEach(obj => {
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).Name, !Is.EquivalentTo(obj.Element.Name), $"{nameof(CatalogItem)}.{nameof(CatalogItem.Name)} match at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).Description, !Is.EqualTo(obj.Element.Description), $"{nameof(CatalogItem)}.{nameof(CatalogItem.Description)} match at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).Price, !Is.EqualTo(obj.Element.Price), $"{nameof(CatalogItem)}.{nameof(CatalogItem.Price)} match at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).CatalogType.Type, !Is.EqualTo(obj.Element.CatalogType.Type), $"{nameof(CatalogType)}.{nameof(CatalogType.Type)} match at index {obj.Index} of List<CatalogItem>");
-				Assert.That(catalogItemsResult.ElementAt(obj.Index).CatalogBrand.Brand, !Is.EqualTo(obj.Element.CatalogBrand.Brand), $"{nameof(CatalogBrand)}.{nameof(CatalogBrand.Brand)} match at index {obj.Index} of List<CatalogItem>");
-			});
-		}
+		private void TestCatalogItemListsInequality(IEnumerable<CatalogItem> catalogItemsResult) =>
+			_catalogItemList.Should().NotBeEquivalentTo(catalogItemsResult, cfg => cfg.Excluding(x => x.CreatedBy).Excluding(x => x.CreatedOn)
+				.Excluding(x => x.UpdatedBy).Excluding(x => x.UpdatedOn).Excluding(x => x.CatalogBrandId).Excluding(x => x.CatalogTypeId)
+				.Excluding(x => x.CatalogBrand.CreatedOn).Excluding(x => x.CatalogType.CreatedOn));
 	}
 }
