@@ -49,7 +49,7 @@ namespace Catalog.API
 			builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
 			builder.Services.AddDbContext<CatalogContext>(options => {
-				options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionString"),
+				options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionstring"),
 									 options => options.MigrationsAssembly("Catalog.DataAccess")
 													   .EnableRetryOnFailure(
 														   maxRetryCount: 6,

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Catalog.DataAccess.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    [Migration("20221016235205_InitialMigration")]
+    [Migration("20221108051121_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,11 +35,11 @@ namespace Catalog.DataAccess.Migrations
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogBrand", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "catalog_brand_hilo");
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("ID"), "catalog_brand_hilo");
 
                     b.Property<string>("Brand")
                         .IsRequired()
@@ -59,18 +59,18 @@ namespace Catalog.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("CatalogBrands", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "catalog_item_hilo");
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("ID"), "catalog_item_hilo");
 
                     b.Property<int>("AvailableStock")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace Catalog.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("CatalogBrandId");
 
@@ -142,11 +142,11 @@ namespace Catalog.DataAccess.Migrations
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "catalog_type_hilo");
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("ID"), "catalog_type_hilo");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -166,7 +166,7 @@ namespace Catalog.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("CatalogTypes", (string)null);
                 });

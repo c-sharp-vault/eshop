@@ -1,8 +1,8 @@
 ﻿namespace Catalog.Infrastructure.Options {
 	public class CatalogOptions {
 
-		private String _picBaseUrl = String.Empty;
-		private String _eventBusConnection = String.Empty;
+		private string _picBaseUrl = string.Empty;
+		private string _eventBusConnection = string.Empty;
 		private bool _useCustomizationData;
 		private bool _azureStorageEnabled;
 

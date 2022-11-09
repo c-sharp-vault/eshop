@@ -3,11 +3,11 @@ using System;
 
 namespace Catalog.API.DTOs.CatalogItem {
 	public class CatalogItemUpdateDTO : EntityTypeDTO {
-		private String _name = String.Empty;
-		private String _description = String.Empty;
+		private string _name = string.Empty;
+		private string _description = string.Empty;
 		private decimal _price;
-		private String _pictureFileName = String.Empty;
-		private String _pictureUri = String.Empty;
+		private string _pictureFileName = string.Empty;
+		private string _pictureUri = string.Empty;
 		private int _catalogTypeId;
 		private int _catalogBrandId;
 		private int _availableStock;
@@ -15,12 +15,12 @@ namespace Catalog.API.DTOs.CatalogItem {
 		private int _maxStockThreshold;
 		private bool _onReorder;
 
-		public String Name {
+		public string Name {
 			get { return _name; }
 			set { _name = value; }
 		}
 
-		public String Description {
+		public string Description {
 			get { return _description; }
 			set { _description = value; }
 		}
@@ -30,13 +30,13 @@ namespace Catalog.API.DTOs.CatalogItem {
 			set { _price = value; }
 		}
 
-		public String PictureFileName {
+		public string PictureFileName {
 			get { return _pictureFileName; }
 			set { _pictureFileName = value; }
 		}
 
 
-		public String PictureUri {
+		public string PictureUri {
 			get { return _pictureUri; }
 			set { _pictureUri = value; }
 		}

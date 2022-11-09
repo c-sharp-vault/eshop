@@ -12,8 +12,8 @@ namespace Catalog.DataAccess.Repositories {
 			this._catalogContext = catalogContext;
 		}
 
-		public async Task<Dictionary<String, int>> GetDictionaryAsync() {
-			return await _catalogContext.CatalogBrands.ToDictionaryAsync(x => x.Brand, x => x.Id);
+		public async Task<Dictionary<string, int>> GetDictionaryAsync() {
+			return await _catalogContext.CatalogBrands.ToDictionaryAsync(x => x.Brand, x => x.ID);
 		}
     }
 }

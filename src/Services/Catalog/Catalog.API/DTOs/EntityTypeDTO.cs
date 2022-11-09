@@ -3,9 +3,9 @@ using System;
 
 namespace Catalog.API.DTOs {
 	public abstract class EntityTypeDTO : IEntityTypeDTO {
-		private String createdBy;
+		private string createdBy;
         private DateTime createdOn;
-        private String? updatedBy;
+        private string? updatedBy;
         private DateTime? updatedOn;
 
 		public EntityTypeDTO() {
@@ -13,9 +13,9 @@ namespace Catalog.API.DTOs {
 			createdOn = DateTime.Now;
 		}
 
-		public int Id { get; set; }
+		public int ID { get; set; }
 
-		public String CreatedBy { 
+		public string CreatedBy { 
 			get => createdBy; 
 		}
 
@@ -23,7 +23,7 @@ namespace Catalog.API.DTOs {
             get => createdOn;
         }
 
-        public String? UpdatedBy { 
+        public string? UpdatedBy { 
             get => updatedBy;
 			set => updatedBy = value;
         }

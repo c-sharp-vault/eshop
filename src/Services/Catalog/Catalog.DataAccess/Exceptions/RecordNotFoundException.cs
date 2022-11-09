@@ -2,7 +2,7 @@
 
 namespace Catalog.DataAccess.Exceptions {
 	internal class RecordNotFoundException : SystemException {
-		public RecordNotFoundException(String message) {
+		public RecordNotFoundException(string message) {
 
 		}
 	}

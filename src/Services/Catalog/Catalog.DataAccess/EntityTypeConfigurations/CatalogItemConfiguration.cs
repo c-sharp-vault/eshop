@@ -8,9 +8,9 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 		public void Configure(EntityTypeBuilder<CatalogItem> builder) {
 			builder.ToTable("CatalogItems");
 
-			builder.HasKey(x => x.Id);
+			builder.HasKey(x => x.ID);
 
-			builder.Property(x => x.Id).UseHiLo("catalog_item_hilo").IsRequired();
+			builder.Property(x => x.ID).UseHiLo("catalog_item_hilo").IsRequired();
 
 			builder.HasIndex(x => x.Name).IsUnique();
 

@@ -83,17 +83,17 @@ namespace Catalog.API.Controllers {
 			await unitOfWork.CompleteAsync();
 			CatalogItemReadDTO catalogItemReadDTO = mapper.Map<CatalogItemReadDTO>(catalogItem);
 
-			return CreatedAtRoute(nameof(GetItemAsync), new { id = catalogItem.Id.ToString() }, catalogItemReadDTO);
+			return CreatedAtRoute(nameof(GetItemAsync), new { id = catalogItem.ID.ToString() }, catalogItemReadDTO);
 		}
 
 		[HttpPut]
 		[ProducesResponseType(type: typeof(AcceptedAtActionResult), statusCode: (int) HttpStatusCode.Accepted)]
 		[ProducesResponseType(type: typeof(NotFoundObjectResult), statusCode: (int) HttpStatusCode.NotFound)]
 		public async Task<IActionResult> UpdateItemAsync([FromBody] CatalogItemUpdateDTO catalogItemUpdateDTO) {
-			logger.LogInformation($"Updating CatalogItem: {JsonSerializer.Serialize<CatalogItemUpdateDTO>(catalogItemUpdateDTO)}");
+			logger.LogInformation($"Updating CatalogItem: {JsonSerializer.Serialize(catalogItemUpdateDTO)}");
 
-			CatalogItem? catalogItem = await unitOfWork.CatalogItemRepository.GetAsync(catalogItemUpdateDTO.Id);
-			if (catalogItem == null) return NotFound($"{typeof(CatalogItem)} with ID = {catalogItemUpdateDTO.Id} not found.");
+			CatalogItem? catalogItem = await unitOfWork.CatalogItemRepository.GetAsync(catalogItemUpdateDTO.ID);
+			if (catalogItem == null) return NotFound($"{typeof(CatalogItem)} with ID = {catalogItemUpdateDTO.ID} not found.");
 
 			CatalogBrand catalogBrand = await unitOfWork.CatalogBrandRepository.GetAsync(catalogItemUpdateDTO.CatalogBrandId);
 			if (catalogBrand == null) return NotFound($"{typeof(CatalogBrand)} with ID = {catalogItem.CatalogBrandId} not found.");
@@ -117,9 +117,9 @@ namespace Catalog.API.Controllers {
 			unitOfWork.Complete();
 			CatalogItemReadDTO catalogItemReadDTO = mapper.Map<CatalogItemReadDTO>(catalogItem);
 
-			CatalogItem? catalogItemBis = await unitOfWork.CatalogItemRepository.GetAsync(catalogItemUpdateDTO.Id);
+			CatalogItem? catalogItemBis = await unitOfWork.CatalogItemRepository.GetAsync(catalogItemUpdateDTO.ID);
 
-			return AcceptedAtRoute(nameof(GetItemAsync), new { id = catalogItemReadDTO.Id.ToString()}, catalogItemReadDTO);
+			return AcceptedAtRoute(nameof(GetItemAsync), new { id = catalogItemReadDTO.ID.ToString()}, catalogItemReadDTO);
 		}
 
 		[HttpDelete("{id}")]
@@ -131,7 +131,7 @@ namespace Catalog.API.Controllers {
 			CatalogItem? catalogItem = await unitOfWork.CatalogItemRepository.GetAsync(id);
 			if (catalogItem == null) return NotFound($"{typeof(CatalogItem)} with ID = {id} not found.");
 
-			await unitOfWork.CatalogItemRepository.RemoveAsync(catalogItem.Id);
+			await unitOfWork.CatalogItemRepository.RemoveAsync(catalogItem.ID);
 			await unitOfWork.CompleteAsync();
 
 			return Accepted();

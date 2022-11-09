@@ -12,7 +12,7 @@ namespace Catalog.Core.Models {
 			createdOn = DateTime.Now;
 		}
 
-		public int Id { get; set; }
+		public int ID { get; set; }
 
 		public String CreatedBy { 
 			get => createdBy;

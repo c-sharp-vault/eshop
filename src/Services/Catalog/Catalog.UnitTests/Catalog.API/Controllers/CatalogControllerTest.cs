@@ -92,11 +92,11 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 		[TestCase(3)]
 		public async Task GetItemAsync_WithValidIds_ReturnsMatchingItems(int id) {
 			// Arrange
-			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.Id);
+			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.ID);
 			_mockedCatalogItemRepository.Setup(x => x.ExistsAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => x.Id == id) != null));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => x.ID == id) != null));
 			_mockedCatalogItemRepository.Setup(x => x.GetAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.Id))));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.ID))));
 			ItemsController catalogController = new ItemsController(unitOfWork: _mockedUnitOfWork.Object, mapper: _mapper, logger: _mockedLogger.Object, catalogOptions: _mockedOptions.Object);
 
 			// Act
@@ -109,7 +109,7 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 			Assert.IsAssignableFrom(typeof(CatalogItemReadDTO), okObjectResult.Value);
 			CatalogItemReadDTO catalogItemReadDTO = (CatalogItemReadDTO) okObjectResult.Value;
 
-			TestCatalogItemListsEquality(new List<CatalogItem>() { _mapper.Map<CatalogItem>(catalogItemReadDTO) }, _catalogItemList.Where(x => x.Id == catalogItemReadDTO.Id));
+			TestCatalogItemListsEquality(new List<CatalogItem>() { _mapper.Map<CatalogItem>(catalogItemReadDTO) }, _catalogItemList.Where(x => x.ID == catalogItemReadDTO.ID));
 		}
 
 		[TestCase(4)]
@@ -117,11 +117,11 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 		[TestCase(6)]
 		public async Task GetItemAsync_WithInvalidIds_ReturnsBadRequest(int id) {
 			// Arrange
-			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.Id);
+			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.ID);
 			_mockedCatalogItemRepository.Setup(x => x.ExistsAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => x.Id == id) != null));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => x.ID == id) != null));
 			_mockedCatalogItemRepository.Setup(x => x.GetAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.Id))));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.ID))));
 			ItemsController catalogController = new ItemsController(unitOfWork: _mockedUnitOfWork.Object, mapper: _mapper, logger: _mockedLogger.Object, catalogOptions: _mockedOptions.Object);
 
 			// Act
@@ -131,9 +131,9 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 			Assert.IsAssignableFrom(typeof(BadRequestObjectResult), actionResult);
 		}
 
-		private List<CatalogItem> GetExpectedCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.Id, 3);
+		private List<CatalogItem> GetExpectedCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.ID, 3);
 
-		private List<CatalogItem> GetAnotherCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.Id, 3);
+		private List<CatalogItem> GetAnotherCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.ID, 3);
 
 		private void TestCatalogItemListsEquality(IEnumerable<CatalogItem> catalogItemsResult, IEnumerable<CatalogItem> catalogItemsFiltered = null) {
 			IEnumerable<CatalogItem> catalogItems = catalogItemsFiltered != null? catalogItemsFiltered : _catalogItemList;

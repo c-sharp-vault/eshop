@@ -12,9 +12,9 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 		public void Configure(EntityTypeBuilder<CatalogType> builder) {
 			builder.ToTable("CatalogTypes");
 
-			builder.HasKey(x => x.Id);
+			builder.HasKey(x => x.ID);
 
-			builder.Property(x => x.Id).UseHiLo("catalog_type_hilo").IsRequired();
+			builder.Property(x => x.ID).UseHiLo("catalog_type_hilo").IsRequired();
 
 			builder.Property(x => x.Type).IsRequired(true).HasMaxLength(100);
 

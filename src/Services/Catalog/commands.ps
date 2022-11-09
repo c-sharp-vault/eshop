@@ -5,7 +5,10 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet tool install --global dotnet-ef
 
 # Add Migration
-dotnet ef migrations add InitialMigration --project ../Catalog.DataAccess
+dotnet ef migrations add InitialMigration --project .\Catalog.DataAccess --startup-project .\Catalog.API\
+
+# Update Database
+dotnet ef database update --project .\Catalog.DataAccess --startup-project .\Catalog.API\
 
 # Run project
  dotnet run --project ./Catalog.API

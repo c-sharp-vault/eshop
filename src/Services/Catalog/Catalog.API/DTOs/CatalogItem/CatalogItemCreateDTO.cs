@@ -3,11 +3,11 @@ using System;
 
 namespace Catalog.API.DTOs.CatalogItem {
 	public class CatalogItemCreateDTO : EntityTypeDTO {
-		private String _name = String.Empty;
-		private String _description = String.Empty;
+		private string _name = string.Empty;
+		private string _description = string.Empty;
 		private decimal _price;
-		private String _pictureFileName = String.Empty;
-		private String _pictureUri = String.Empty;
+		private string _pictureFileName = string.Empty;
+		private string _pictureUri = string.Empty;
 		private int _catalogTypeId;
 		private int _catalogBrandId;
 		private int _availableStock;

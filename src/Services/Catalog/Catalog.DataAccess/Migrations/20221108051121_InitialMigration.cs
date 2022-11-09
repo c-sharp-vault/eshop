@@ -25,7 +25,7 @@ namespace Catalog.DataAccess.Migrations
                 name: "CatalogBrands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false),
+                    ID = table.Column<int>(type: "integer", nullable: false),
                     Brand = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -34,14 +34,14 @@ namespace Catalog.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CatalogBrands", x => x.Id);
+                    table.PrimaryKey("PK_CatalogBrands", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CatalogTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false),
+                    ID = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -50,14 +50,14 @@ namespace Catalog.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CatalogTypes", x => x.Id);
+                    table.PrimaryKey("PK_CatalogTypes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CatalogItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false),
+                    ID = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
@@ -75,18 +75,18 @@ namespace Catalog.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CatalogItems", x => x.Id);
+                    table.PrimaryKey("PK_CatalogItems", x => x.ID);
                     table.ForeignKey(
                         name: "FK_CatalogItems_CatalogBrands_CatalogBrandId",
                         column: x => x.CatalogBrandId,
                         principalTable: "CatalogBrands",
-                        principalColumn: "Id",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CatalogItems_CatalogTypes_CatalogTypeId",
                         column: x => x.CatalogTypeId,
                         principalTable: "CatalogTypes",
-                        principalColumn: "Id",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 

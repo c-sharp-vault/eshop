@@ -1,33 +1,28 @@
 ﻿using Catalog.API.DTOs.CatalogBrand;
 using Catalog.API.DTOs.CatalogType;
-using System;
 
 namespace Catalog.API.DTOs.CatalogItem {
 	public class CatalogItemReadDTO : EntityTypeDTO {
-		private int _id;
-		private String _name = String.Empty;
-		private String _description = String.Empty;
+		private string _name = string.Empty;
+		private string _description = string.Empty;
 		private decimal _price;
-		private String _pictureFileName = String.Empty;
-		private String _pictureUri = String.Empty;
+		private string _pictureFileName = string.Empty;
+		private string _pictureUri = string.Empty;
+		private int _catalogTypeId;
 		private CatalogTypeReadDTO _catalogType = new CatalogTypeReadDTO();
+		private int _catalogBrandId;
 		private CatalogBrandReadDTO _catalogBrand = new CatalogBrandReadDTO();
 		private int _availableStock;
 		private int _restockThreshold;
 		private int _maxStockThreshold;
 		private bool _onReorder;
 
-		public int Id {
-			get { return _id; }
-			set { _id = value; }
-		}
-
-		public String Name {
+		public string Name {
 			get { return _name; }
 			set { _name = value; }
 		}
 
-		public String Description {
+		public string Description {
 			get { return _description; }
 			set { _description = value; }
 		}
@@ -37,14 +32,19 @@ namespace Catalog.API.DTOs.CatalogItem {
 			set { _price = value; }
 		}
 
-		public String PictureFileName {
+		public string PictureFileName {
 			get { return _pictureFileName; }
 			set { _pictureFileName = value; }
 		}
 
-		public String PictureUri {
+		public string PictureUri {
 			get { return _pictureUri; }
 			set { _pictureUri = value; }
+		}
+
+		public int CatalogTypeId { 
+			get => _catalogTypeId;
+			set => _catalogTypeId = value; 
 		}
 
 		public CatalogTypeReadDTO CatalogType {
@@ -52,6 +52,10 @@ namespace Catalog.API.DTOs.CatalogItem {
 			set { _catalogType = value; }
 		}
 
+		public int CatalogBrandId {
+			get => _catalogBrandId;
+			set => _catalogBrandId = value;
+		}
 
 		public CatalogBrandReadDTO CatalogBrand {
 			get { return _catalogBrand; }

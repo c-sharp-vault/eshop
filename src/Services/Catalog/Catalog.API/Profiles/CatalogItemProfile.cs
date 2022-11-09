@@ -12,18 +12,24 @@ namespace Catalog.API.Profiles {
 			CreateMap<CatalogType, CatalogTypeReadDTO>().ReverseMap();
 
 			CreateMap<CatalogItem, CatalogItemReadDTO>()
-				.ForMember(destinationMember => destinationMember.CatalogBrand, memberOptions => memberOptions.MapFrom(src => src.CatalogBrand))
-				.ForMember(destinationMember => destinationMember.CatalogType, memberOptions => memberOptions.MapFrom(src => src.CatalogType)).ReverseMap();
+				.ForMember(dst => dst.CatalogBrand, opt => opt.MapFrom(src => src.CatalogBrand))
+				.ForMember(dst => dst.CatalogType, opt => opt.MapFrom(src => src.CatalogType))
+				.ForMember(dst => dst.CatalogBrandId, opt => opt.MapFrom(src => src.CatalogBrandId))
+				.ForMember(dst => dst.CatalogTypeId, opt => opt.MapFrom(src => src.CatalogTypeId))
+				.ReverseMap();
 
 			CreateMap<CatalogItemCreateDTO, CatalogItem>()
-				.ForMember(destinationMember => destinationMember.Id, memberOptions => memberOptions.Ignore())
-				.ForMember(destinationMember => destinationMember.CatalogBrand, memberOptions => memberOptions.Ignore())
-				.ForMember(destinationMember => destinationMember.CatalogType, memberOptions => memberOptions.Ignore());
+				.ForMember(dst => dst.ID, opt => opt.Ignore())
+				.ForMember(dst => dst.CatalogBrand, opt => opt.Ignore())
+				.ForMember(dst => dst.CatalogType, opt => opt.Ignore())
+				.ForMember(dst => dst.CatalogBrandId, opt => opt.MapFrom(src => src.CatalogBrandId))
+				.ForMember(dst => dst.CatalogTypeId, opt => opt.MapFrom(src => src.CatalogTypeId));
 
 			CreateMap<CatalogItemUpdateDTO, CatalogItem>()
-				.ForMember(destinationMember => destinationMember.Id, memberOptions => memberOptions.Ignore())
-				.ForMember(destinationMember => destinationMember.CatalogBrand, memberOptions => memberOptions.Ignore())
-				.ForMember(destinationMember => destinationMember.CatalogType, memberOptions => memberOptions.Ignore());
+				.ForMember(dst => dst.CatalogBrand, opt => opt.Ignore())
+				.ForMember(dst => dst.CatalogType, opt => opt.Ignore())
+				.ForMember(dst => dst.CatalogBrandId, opt => opt.MapFrom(src => src.CatalogBrandId))
+				.ForMember(dst => dst.CatalogTypeId, opt => opt.MapFrom(src => src.CatalogTypeId));
 
 			CreateMap<CatalogItemReadDTO, CatalogItemPublishDTO>();
 		}
