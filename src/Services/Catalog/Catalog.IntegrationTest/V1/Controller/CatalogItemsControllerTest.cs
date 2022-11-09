@@ -32,7 +32,7 @@ namespace Catalog.IntegrationTest.V1.Controller {
 		[TestCase(15, 2)]
 		[TestCase(30, 1)]
 		[Test]
-		public async Task GetAll_WhithCatalogItemsInDB_ReturnsPopulatedList(int pageSize, int pageIndex) {
+		public async Task GetAll_WhithCatalogItemsInDB_ReturnsNonEmptyList(int pageSize, int pageIndex) {
 			try {
 				// Arrange
 				SeedData();
@@ -54,5 +54,55 @@ namespace Catalog.IntegrationTest.V1.Controller {
 				RemoveData();
 			}
 		}
+
+		[TestCase(1)]
+		[TestCase(2)]
+		[TestCase(3)]
+		[TestCase(4)]
+		[TestCase(5)]
+		[Test]
+		public async Task GetByID_WhithCatalogItemsInDBAndValidID_ReturnsOKStatusAndElementSatisfiyingThatID(int id) {
+			try {
+				// Arrange
+				SeedData();
+				var url = APIRoutes.Items.GetByID.Replace("{id}", id.ToString());
+
+				// Act
+				var response = await _httpClient.GetAsync(url);
+
+				// Assert
+				response.StatusCode.Should().Be(HttpStatusCode.OK);
+				var result = response.Content.ReadFromJsonAsync<CatalogItemReadDTO>().Result;
+				_mapper.Map<CatalogItem>(result).Should().BeEquivalentTo(_testList.Single(x => x.ID == id), cfg => cfg
+					   .Excluding(x => x.CatalogBrand.CreatedOn).Excluding(x => x.CatalogBrand.CatalogItems)
+					   .Excluding(x => x.CatalogType.CreatedOn).Excluding(x => x.CatalogType.CatalogItems)
+					   .Excluding(x => x.CreatedOn).Excluding(x => x.UpdatedOn));
+			} finally {
+				RemoveData();
+			}
+		}
+
+		[TestCase(31)]
+		[TestCase(32)]
+		[TestCase(33)]
+		[TestCase(34)]
+		[TestCase(35)]
+		[Test]
+		public async Task GetByID_WhithCatalogItemsInDBAndInvalidID_ReturnsBadRequestStatusAndNoElementSatisfiyingThatID(int id) {
+			try {
+				// Arrange
+				SeedData();
+				var url = APIRoutes.Items.GetByID.Replace("{id}", id.ToString());
+
+				// Act
+				var response = await _httpClient.GetAsync(url);
+
+				// Assert
+				response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+			} finally {
+				RemoveData();
+			}
+		}
 	}
 }
+ 
