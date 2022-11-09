@@ -46,10 +46,10 @@ namespace Catalog.IntegrationTest.V1.Controller {
 				response.StatusCode.Should().Be(HttpStatusCode.OK);
 				var result = response.Content.ReadFromJsonAsync<IEnumerable<CatalogItemReadDTO>>().Result;
 				_mapper.Map<List<CatalogItem>>(result).Should().HaveCount(pageSize).And
-					   .BeEquivalentTo(_testList.Skip(pageSize * (pageIndex - 1))
-					   .Take(pageSize), cfg => cfg.Excluding(x => x.CreatedOn).Excluding(x => x.UpdatedOn)
+					   .BeEquivalentTo(_testList.Skip(pageSize * (pageIndex - 1)).Take(pageSize), cfg => cfg
 					   .Excluding(x => x.CatalogBrand.CreatedOn).Excluding(x => x.CatalogBrand.CatalogItems)
-					   .Excluding(x => x.CatalogType.CreatedOn).Excluding(x => x.CatalogType.CatalogItems));
+					   .Excluding(x => x.CatalogType.CreatedOn).Excluding(x => x.CatalogType.CatalogItems)
+					   .Excluding(x => x.CreatedOn).Excluding(x => x.UpdatedOn));
 			} finally { 
 				RemoveData();
 			}
