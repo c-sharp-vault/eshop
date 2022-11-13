@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Catalog.Core.Models;
 
 namespace Catalog.DataAccess.Repositories {
-	public interface IRepository<TEntity> where TEntity : class, IEntityType {
+	public interface IRepository<TEntity> where TEntity : class, IEntity {
 
 		// Read
 		Task<TEntity> GetAsync(int id);

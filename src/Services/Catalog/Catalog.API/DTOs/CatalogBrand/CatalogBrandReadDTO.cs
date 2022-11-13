@@ -1,22 +1,17 @@
 ﻿using System;
 
 namespace Catalog.API.DTOs.CatalogBrand {
-	public class CatalogBrandReadDTO {
-		private int _id;
-		private string _brand;
+	public class CatalogBrandReadDTO : EntityTypeDTO {
+		public int CatalogBrandID { get; set; }
 
-		public int Id {
-			get { return _id; }
-			set { _id = value; }
-		}
+		public string Brand { get; set; }
 
-		public string Brand {
-			get { return _brand; }
-			set { _brand = value; }
-		}
+		public string CreatedBy { get; set; }
 
-		public CatalogBrandReadDTO(string brand = "Undefined") {
-			this._brand = brand;
-		}
+		public DateTime CreatedOn { get; set; }
+
+		public string UpdatedBy { get; set; }
+
+		public DateTime UpdatedOn { get; set; }
 	}
 }

@@ -39,7 +39,7 @@ namespace Catalog.DataAccess.Repositories {
 
 		public async Task<IEnumerable<CatalogItem>> GetAllAsync(byte pageSize, byte pageIndex) {
 			return await _catalogContext.CatalogItems
-											.OrderBy(x => x.ID)
+											.OrderBy(x => x.CatalogItemID)
 											.Skip(pageSize * (pageIndex - 1))
 											.Take(pageSize)
 											.Include(x => x.CatalogBrand)

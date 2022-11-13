@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -57,6 +58,17 @@ namespace Catalog.API
 														   errorCodesToAdd: null));
 				options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
 			});
+
+			//builder.Services.AddDbContext<CatalogContext>(options => {
+			//	options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerCatalogConnectionstring"),
+			//							options => options.MigrationsAssembly("Catalog.DataAccess")
+			//											.EnableRetryOnFailure(
+			//												maxRetryCount: 6,
+			//												maxRetryDelay: TimeSpan.FromSeconds(30),
+			//												errorNumbersToAdd: null));
+			//	options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
+			//});
+
 			builder.Services.AddTransient<ICatalogBrandRepository, CatalogBrandRepository>();
 			builder.Services.AddTransient<ICatalogItemRepository, CatalogItemRepository>();
 			builder.Services.AddTransient<ICatalogTypeRepository, CatalogTypeRepository>();

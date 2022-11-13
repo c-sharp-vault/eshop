@@ -1,5 +1,6 @@
 ﻿using Catalog.API.DTOs.CatalogBrand;
 using Catalog.API.DTOs.CatalogType;
+using System;
 
 namespace Catalog.API.DTOs.CatalogItem {
 	public class CatalogItemReadDTO : EntityTypeDTO {
@@ -16,6 +17,8 @@ namespace Catalog.API.DTOs.CatalogItem {
 		private int _restockThreshold;
 		private int _maxStockThreshold;
 		private bool _onReorder;
+
+		public int CatalogItemID { get; set; }
 
 		public string Name {
 			get { return _name; }
@@ -42,9 +45,9 @@ namespace Catalog.API.DTOs.CatalogItem {
 			set { _pictureUri = value; }
 		}
 
-		public int CatalogTypeId { 
+		public int CatalogTypeId {
 			get => _catalogTypeId;
-			set => _catalogTypeId = value; 
+			set => _catalogTypeId = value;
 		}
 
 		public CatalogTypeReadDTO CatalogType {
@@ -81,5 +84,13 @@ namespace Catalog.API.DTOs.CatalogItem {
 			get { return _onReorder; }
 			set { _onReorder = value; }
 		}
+
+		public string CreatedBy { get; set; }
+
+		public DateTime CreatedOn { get; set; }
+
+		public string UpdatedBy { get; set; }
+
+		public DateTime UpdatedOn { get; set; }
 	}
 }

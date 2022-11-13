@@ -1,18 +1,16 @@
 ﻿using System;
 
 namespace Catalog.Core.Models {
-	public abstract class EntityType : IEntityType {
+	public abstract class Entity : IEntity {
 		private String createdBy;
         private DateTime createdOn;
         private String? updatedBy;
         private DateTime? updatedOn;
 
-		public EntityType() {
+		public Entity() {
 			createdBy = Environment.UserName;
 			createdOn = DateTime.Now;
 		}
-
-		public int ID { get; set; }
 
 		public String CreatedBy { 
 			get => createdBy;

@@ -1,4 +1,5 @@
 
+using Newtonsoft.Json;
 using System;
 
 namespace Catalog.API.DTOs {
@@ -7,13 +8,6 @@ namespace Catalog.API.DTOs {
         private DateTime createdOn;
         private string? updatedBy;
         private DateTime? updatedOn;
-
-		public EntityTypeDTO() {
-			createdBy = Environment.UserName;
-			createdOn = DateTime.Now;
-		}
-
-		public int ID { get; set; }
 
 		public string CreatedBy { 
 			get => createdBy; 

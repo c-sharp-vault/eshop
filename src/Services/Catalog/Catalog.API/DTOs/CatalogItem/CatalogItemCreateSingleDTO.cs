@@ -2,18 +2,19 @@
 using System;
 
 namespace Catalog.API.DTOs.CatalogItem {
-	public class CatalogItemCreateDTO : EntityTypeDTO {
+	public class CatalogItemCreateSingleDTO {
 		private string _name = string.Empty;
 		private string _description = string.Empty;
 		private decimal _price;
 		private string _pictureFileName = string.Empty;
-		private string _pictureUri = string.Empty;
 		private int _catalogTypeId;
 		private int _catalogBrandId;
 		private int _availableStock;
 		private int _restockThreshold;
 		private int _maxStockThreshold;
 		private bool _onReorder;
+
+		public int CatalogItemID { get; set; }
 
 		public string Name {
 			get { return _name; }
@@ -34,13 +35,6 @@ namespace Catalog.API.DTOs.CatalogItem {
 			get { return _pictureFileName; }
 			set { _pictureFileName = value; }
 		}
-
-
-		public string PictureUri {
-			get { return _pictureUri; }
-			set { _pictureUri = value; }
-		}
-
 		public int CatalogTypeId {
 			get { return _catalogTypeId; }
 			set { _catalogTypeId = value; }

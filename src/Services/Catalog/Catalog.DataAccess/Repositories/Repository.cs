@@ -8,17 +8,17 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Catalog.DataAccess.Repositories {
-	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntityType {
+	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity {
 
 		private readonly CatalogContext _catalogContext;
 
 		public Repository(CatalogContext catalogContext) {
-			this._catalogContext = catalogContext;
+			_catalogContext = catalogContext;
 		}
 
 		public async Task<TEntity> GetAsync(int id) {
 			if (id == 0) throw new ArgumentOutOfRangeException(nameof(id), "Must be greater than zero");
-			if (!ExistsAsync(id).Result) throw new RecordNotFoundException($"{nameof(TEntity)} with Id = {id} doesn't exist");
+			if (!ExistsAsync(id).Result) throw new RecordNotFoundException("yooooo");
 			return await _catalogContext.Set<TEntity>().FindAsync(id);
 		}
 

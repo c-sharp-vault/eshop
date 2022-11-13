@@ -33,16 +33,12 @@ namespace Catalog.DataAccess {
 			get { return _catalogTypeRepository; }
 		}
 
-		public void Complete() {
-			this._catalogContext.SaveChanges();
-		}
+		public bool Complete() => _catalogContext.SaveChanges() > 0;
 
-		public async Task CompleteAsync() {
-			await this._catalogContext.SaveChangesAsync();
-		}
+		public async Task<bool> CompleteAsync() => await _catalogContext.SaveChangesAsync() > 0;
 
 		public async Task MigrateAsync() {
-			await this._catalogContext.Database.MigrateAsync();
+			await _catalogContext.Database.MigrateAsync();
 		}
 
 		public async Task DisposeAsync() {

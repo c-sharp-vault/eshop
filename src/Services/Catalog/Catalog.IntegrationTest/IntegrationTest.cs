@@ -22,6 +22,8 @@ using Microsoft.OpenApi.Writers;
 using AutoMapper;
 using Catalog.API.Profiles;
 using Amido.NAuto;
+using System.Linq;
+using Microsoft.AspNetCore.TestHost;
 
 namespace Catalog.IntegrationTest;
 
@@ -29,45 +31,73 @@ namespace Catalog.IntegrationTest;
 public class IntegrationTest {
     protected WebApplicationFactory<Program> _appFactory;
     protected IServiceScopeFactory? _serviceFactory;
-    protected HttpClient _httpClient;
+	protected HttpClient _httpClient;
     protected IMapper _mapper;
 	protected IList<CatalogItem> _testList;
 
     protected IntegrationTest() {
 		_appFactory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder => {
-            builder.UseEnvironment("Testing").ConfigureServices(services => {
-                services.RemoveAll(typeof(CatalogContext)).AddDbContext<CatalogContext>(options => {
-                    options.UseInMemoryDatabase("TestDB");
-                });
-            });
-        });
-        _httpClient = _appFactory.CreateClient();
+			builder.UseEnvironment("Testing").ConfigureTestServices(services => {
+				services.RemoveAll(typeof(CatalogContext)).AddDbContext<CatalogContext>(options => {
+					options.UseInMemoryDatabase("TestDB");
+				});
+			});
+		});
+		//_appFactory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder => builder.UseEnvironment("Testing"));
+		_httpClient = _appFactory.CreateClient();
 		_serviceFactory = _appFactory.Services.GetService<IServiceScopeFactory>();
 		_mapper = new Mapper(new MapperConfiguration(x => x.AddProfile(new CatalogItemProfile())));
 	}
 
-    [SetUp]
+	[SetUp]
 	protected void Setup() {
-		_testList = NAuto.GetRandomList<CatalogItem>(x => x.ID, 30, 1);
-		foreach (var testElement in _testList) testElement.Name += $"Fake name for item #{testElement.ID}";
 	}
 
 	[TearDown]
 	protected void TearDown() {
-		_testList = null;
 	}
 
-	protected bool SeedData() {
+	// Seeding via CatalogContext
+	protected async Task<bool> SeedData() {
 		using var scope = _serviceFactory?.CreateScope();
 		var context = scope?.ServiceProvider?.GetRequiredService<CatalogContext>();
+		var catalogBrand = context?.CatalogBrands.First();
+		var catalogType = context?.CatalogTypes.First();
+		_testList = NAuto.GetRandomList<CatalogItem>(x => x.CatalogItemID, 30, 1);
+		foreach (var element in _testList) {
+			element.Name += $"Fake name for item #{element.CatalogItemID}";
+			element.CatalogBrandId = catalogBrand.CatalogBrandID;
+			element.CatalogBrand = catalogBrand;
+			element.CatalogTypeId = catalogType.CatalogTypeID;
+			element.CatalogType = catalogType;
+		}
 		context?.CatalogItems.AddRange(_testList);
 		return context?.SaveChanges() > 0;
+		context.Dispose();
 	}
 
-	protected bool RemoveData() {
+	// Removing via CatalogContext
+	protected async Task<bool> RemoveData() {
 		using var scope = _serviceFactory?.CreateScope();
 		var context = scope?.ServiceProvider?.GetRequiredService<CatalogContext>();
 		context?.CatalogItems.RemoveRange(_testList);
 		return context?.SaveChanges() > 0;
+		context.Dispose();
 	}
+
+	// Seeding via UnitOfWork
+	//protected async Task<bool> SeedData() {
+	//	var response = await _httpClient?.PostAsJsonAsync(APIRoutes.Items.Create, _testList);
+	//	return response.IsSuccessStatusCode;
+	//}
+
+	// Removing via UnitOfWork
+	//protected async Task<bool> RemoveData() {
+	//	List<bool> allSuccessfullResponses = new List<bool>();
+	//	foreach (CatalogItem item in _testList) {
+	//		var response = await _httpClient?.PostAsJsonAsync(APIRoutes.Items.Delete, item.ID);
+	//		allSuccessfullResponses.Add(response.IsSuccessStatusCode);
+	//	}
+	//	return allSuccessfullResponses.All(x => x == true);
+	//}
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Catalog.API.DTOs;
 using Catalog.API.DTOs.CatalogBrand;
 using Catalog.API.DTOs.CatalogItem;
 using Catalog.API.DTOs.CatalogType;
@@ -9,29 +10,30 @@ namespace Catalog.API.Profiles {
 		public CatalogItemProfile() {
 			// Source -> Target
 			CreateMap<CatalogBrand, CatalogBrandReadDTO>().ReverseMap();
+
 			CreateMap<CatalogType, CatalogTypeReadDTO>().ReverseMap();
 
-			CreateMap<CatalogItem, CatalogItemReadDTO>()
-				.ForMember(dst => dst.CatalogBrand, opt => opt.MapFrom(src => src.CatalogBrand))
-				.ForMember(dst => dst.CatalogType, opt => opt.MapFrom(src => src.CatalogType))
-				.ForMember(dst => dst.CatalogBrandId, opt => opt.MapFrom(src => src.CatalogBrandId))
-				.ForMember(dst => dst.CatalogTypeId, opt => opt.MapFrom(src => src.CatalogTypeId))
+			CreateMap<CatalogItem, CatalogItemReadDTO>().ReverseMap();
+
+			CreateMap<CatalogItemCreateSingleDTO, CatalogItem>()
+				.ForMember(src => src.CatalogType, dst => dst.Ignore())
+				.ForMember(src => src.CatalogBrand, dst => dst.Ignore())
+				.ForMember(src => src.CreatedBy, dst => dst.Ignore())
+				.ForMember(src => src.CreatedOn, dst => dst.Ignore())
+				.ForMember(src => src.UpdatedBy, dst => dst.Ignore())
+				.ForMember(src => src.UpdatedOn, dst => dst.Ignore())
 				.ReverseMap();
 
-			CreateMap<CatalogItemCreateDTO, CatalogItem>()
-				.ForMember(dst => dst.ID, opt => opt.Ignore())
-				.ForMember(dst => dst.CatalogBrand, opt => opt.Ignore())
-				.ForMember(dst => dst.CatalogType, opt => opt.Ignore())
-				.ForMember(dst => dst.CatalogBrandId, opt => opt.MapFrom(src => src.CatalogBrandId))
-				.ForMember(dst => dst.CatalogTypeId, opt => opt.MapFrom(src => src.CatalogTypeId));
-
 			CreateMap<CatalogItemUpdateDTO, CatalogItem>()
-				.ForMember(dst => dst.CatalogBrand, opt => opt.Ignore())
-				.ForMember(dst => dst.CatalogType, opt => opt.Ignore())
-				.ForMember(dst => dst.CatalogBrandId, opt => opt.MapFrom(src => src.CatalogBrandId))
-				.ForMember(dst => dst.CatalogTypeId, opt => opt.MapFrom(src => src.CatalogTypeId));
+				.ForMember(src => src.CatalogType, dst => dst.Ignore())
+				.ForMember(src => src.CatalogBrand, dst => dst.Ignore())
+				.ForMember(src => src.CreatedBy, dst => dst.Ignore())
+				.ForMember(src => src.CreatedOn, dst => dst.Ignore())
+				.ForMember(src => src.UpdatedBy, dst => dst.Ignore())
+				.ForMember(src => src.UpdatedOn, dst => dst.Ignore())
+				.ReverseMap();
 
-			CreateMap<CatalogItemReadDTO, CatalogItemPublishDTO>();
+			CreateMap<CatalogItemReadDTO, CatalogItemPublishDTO>().ReverseMap();
 		}
 	}
 }

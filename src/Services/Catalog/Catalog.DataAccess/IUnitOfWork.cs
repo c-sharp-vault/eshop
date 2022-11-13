@@ -7,8 +7,8 @@ namespace Catalog.DataAccess {
 		ICatalogBrandRepository CatalogBrandRepository { get; }
 		ICatalogTypeRepository CatalogTypeRepository { get; }
 		Task MigrateAsync();
-		void Complete();
-		Task CompleteAsync();
+		bool Complete();
+		Task<bool> CompleteAsync();
 		Task DisposeAsync();
 	}
 }

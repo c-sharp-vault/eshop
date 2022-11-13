@@ -33,42 +33,36 @@ namespace Catalog.DataAccess.Migrations
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogBrand", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("CatalogBrandID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("ID"), "catalog_brand_hilo");
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("CatalogBrandID"), "catalog_brand_hilo");
 
                     b.Property<string>("Brand")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("ID");
+                    b.HasKey("CatalogBrandID");
 
                     b.ToTable("CatalogBrands", (string)null);
                 });
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogItem", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("CatalogItemID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("ID"), "catalog_item_hilo");
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("CatalogItemID"), "catalog_item_hilo");
 
                     b.Property<int>("AvailableStock")
                         .ValueGeneratedOnAdd()
@@ -80,13 +74,6 @@ namespace Catalog.DataAccess.Migrations
 
                     b.Property<int>("CatalogTypeId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -121,12 +108,13 @@ namespace Catalog.DataAccess.Migrations
                         .HasDefaultValue(10);
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("ID");
+                    b.HasKey("CatalogItemID");
 
                     b.HasIndex("CatalogBrandId");
 
@@ -140,18 +128,11 @@ namespace Catalog.DataAccess.Migrations
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogType", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("CatalogTypeID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("ID"), "catalog_type_hilo");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("CatalogTypeID"), "catalog_type_hilo");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -159,12 +140,13 @@ namespace Catalog.DataAccess.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("UpdatedOn")
+                    b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("ID");
+                    b.HasKey("CatalogTypeID");
 
                     b.ToTable("CatalogTypes", (string)null);
                 });

@@ -56,7 +56,7 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 																		catalogOptions: _mockedOptions.Object);
 
 			// Act
-			IActionResult actionResult =  await catalogController.GetItemsAsync();
+			IActionResult actionResult =  await catalogController.GetAllAsync();
 			OkObjectResult okObjectResult = (OkObjectResult) actionResult;
 			IEnumerable<CatalogItemReadDTO> catalogItemsResult = (IEnumerable<CatalogItemReadDTO>) okObjectResult.Value;
 
@@ -73,7 +73,7 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 			ItemsController catalogController = new ItemsController(unitOfWork: _mockedUnitOfWork.Object, mapper: _mapper, logger: _mockedLogger.Object, catalogOptions: _mockedOptions.Object);
 
 			// Act
-			IActionResult actionResult = await catalogController.GetItemsAsync();
+			IActionResult actionResult = await catalogController.GetAllAsync();
 
 			// Assert
 			Assert.IsAssignableFrom(typeof(OkObjectResult), actionResult);
@@ -92,15 +92,15 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 		[TestCase(3)]
 		public async Task GetItemAsync_WithValidIds_ReturnsMatchingItems(int id) {
 			// Arrange
-			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.ID);
+			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.CatalogItemID);
 			_mockedCatalogItemRepository.Setup(x => x.ExistsAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => x.ID == id) != null));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => x.CatalogItemID == id) != null));
 			_mockedCatalogItemRepository.Setup(x => x.GetAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.ID))));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.CatalogItemID))));
 			ItemsController catalogController = new ItemsController(unitOfWork: _mockedUnitOfWork.Object, mapper: _mapper, logger: _mockedLogger.Object, catalogOptions: _mockedOptions.Object);
 
 			// Act
-			IActionResult actionResult = await catalogController.GetItemAsync(id);
+			IActionResult actionResult = await catalogController.GetByIDAsync(id);
 
 			// Assert
 			Assert.IsAssignableFrom(typeof(OkObjectResult), actionResult);
@@ -109,31 +109,31 @@ namespace Catalog.UnitTests.Catalog.API.Controllers
 			Assert.IsAssignableFrom(typeof(CatalogItemReadDTO), okObjectResult.Value);
 			CatalogItemReadDTO catalogItemReadDTO = (CatalogItemReadDTO) okObjectResult.Value;
 
-			TestCatalogItemListsEquality(new List<CatalogItem>() { _mapper.Map<CatalogItem>(catalogItemReadDTO) }, _catalogItemList.Where(x => x.ID == catalogItemReadDTO.ID));
+			TestCatalogItemListsEquality(new List<CatalogItem>() { _mapper.Map<CatalogItem>(catalogItemReadDTO) }, _catalogItemList.Where(x => x.CatalogItemID == catalogItemReadDTO.CatalogItemID));;
 		}
 
 		[TestCase(4)]
 		[TestCase(5)]
 		[TestCase(6)]
-		public async Task GetItemAsync_WithInvalidIds_ReturnsBadRequest(int id) {
+		public async Task GetItemAsync_WithInvalidIds_ReturnsNotFoundResult(int id) {
 			// Arrange
-			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.ID);
+			IEnumerable<int> idsToSelect = _catalogItemList.Select(x => x.CatalogItemID);
 			_mockedCatalogItemRepository.Setup(x => x.ExistsAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => x.ID == id) != null));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => x.CatalogItemID == id) != null));
 			_mockedCatalogItemRepository.Setup(x => x.GetAsync(It.IsAny<int>()))
-										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.ID))));
+										.Returns(Task.FromResult(_catalogItemList.Find(x => idsToSelect.Contains(x.CatalogItemID))));
 			ItemsController catalogController = new ItemsController(unitOfWork: _mockedUnitOfWork.Object, mapper: _mapper, logger: _mockedLogger.Object, catalogOptions: _mockedOptions.Object);
 
 			// Act
-			IActionResult actionResult = await catalogController.GetItemAsync(id);
+			IActionResult actionResult = await catalogController.GetByIDAsync(id);
 
 			// Assert
-			Assert.IsAssignableFrom(typeof(BadRequestObjectResult), actionResult);
+			Assert.IsAssignableFrom(typeof(NotFoundObjectResult), actionResult);
 		}
 
-		private List<CatalogItem> GetExpectedCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.ID, 3);
+		private List<CatalogItem> GetExpectedCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.CatalogItemID, 3);
 
-		private List<CatalogItem> GetAnotherCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.ID, 3);
+		private List<CatalogItem> GetAnotherCatalogItemList() => NAuto.GetRandomList<CatalogItem>(x => x.CatalogItemID, 3);
 
 		private void TestCatalogItemListsEquality(IEnumerable<CatalogItem> catalogItemsResult, IEnumerable<CatalogItem> catalogItemsFiltered = null) {
 			IEnumerable<CatalogItem> catalogItems = catalogItemsFiltered != null? catalogItemsFiltered : _catalogItemList;

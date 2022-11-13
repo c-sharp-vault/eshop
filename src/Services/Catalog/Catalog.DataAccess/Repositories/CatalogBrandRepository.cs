@@ -13,7 +13,7 @@ namespace Catalog.DataAccess.Repositories {
 		}
 
 		public async Task<Dictionary<string, int>> GetDictionaryAsync() {
-			return await _catalogContext.CatalogBrands.ToDictionaryAsync(x => x.Brand, x => x.ID);
+			return await _catalogContext.CatalogBrands.ToDictionaryAsync(x => x.Brand, x => x.CatalogBrandID);
 		}
     }
 }

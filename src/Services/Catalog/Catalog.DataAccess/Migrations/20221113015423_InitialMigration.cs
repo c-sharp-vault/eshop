@@ -25,39 +25,35 @@ namespace Catalog.DataAccess.Migrations
                 name: "CatalogBrands",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false),
+                    CatalogBrandID = table.Column<int>(type: "integer", nullable: false),
                     Brand = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    UpdatedBy = table.Column<string>(type: "text", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CatalogBrands", x => x.ID);
+                    table.PrimaryKey("PK_CatalogBrands", x => x.CatalogBrandID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CatalogTypes",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false),
+                    CatalogTypeID = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    UpdatedBy = table.Column<string>(type: "text", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CatalogTypes", x => x.ID);
+                    table.PrimaryKey("PK_CatalogTypes", x => x.CatalogTypeID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "CatalogItems",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false),
+                    CatalogItemID = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
@@ -68,25 +64,23 @@ namespace Catalog.DataAccess.Migrations
                     CatalogTypeId = table.Column<int>(type: "integer", nullable: false),
                     CatalogBrandId = table.Column<int>(type: "integer", nullable: false),
                     OnReorder = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "text", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    UpdatedBy = table.Column<string>(type: "text", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CatalogItems", x => x.ID);
+                    table.PrimaryKey("PK_CatalogItems", x => x.CatalogItemID);
                     table.ForeignKey(
                         name: "FK_CatalogItems_CatalogBrands_CatalogBrandId",
                         column: x => x.CatalogBrandId,
                         principalTable: "CatalogBrands",
-                        principalColumn: "ID",
+                        principalColumn: "CatalogBrandID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CatalogItems_CatalogTypes_CatalogTypeId",
                         column: x => x.CatalogTypeId,
                         principalTable: "CatalogTypes",
-                        principalColumn: "ID",
+                        principalColumn: "CatalogTypeID",
                         onDelete: ReferentialAction.Cascade);
                 });
 

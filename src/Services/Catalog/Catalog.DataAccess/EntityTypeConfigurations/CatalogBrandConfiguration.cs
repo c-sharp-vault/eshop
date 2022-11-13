@@ -7,9 +7,9 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 		public void Configure(EntityTypeBuilder<CatalogBrand> builder) {
 			builder.ToTable("CatalogBrands");
 
-			builder.HasKey(x => x.ID);
+			builder.HasKey(x => x.CatalogBrandID);
 
-			builder.Property(x => x.ID).UseHiLo("catalog_brand_hilo").IsRequired();
+			builder.Property(x => x.CatalogBrandID).UseHiLo("catalog_brand_hilo").IsRequired();
 
 			builder.Property(x => x.Brand).IsRequired().HasMaxLength(100);
 

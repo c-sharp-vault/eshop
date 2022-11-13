@@ -15,6 +15,8 @@ namespace Catalog.API.DTOs.CatalogItem {
 		private int _maxStockThreshold;
 		private bool _onReorder;
 
+		public int CatalogItemID { get; set; }
+
 		public string Name {
 			get { return _name; }
 			set { _name = value; }

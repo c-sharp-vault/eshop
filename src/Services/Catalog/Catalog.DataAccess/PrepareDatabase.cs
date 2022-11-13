@@ -284,8 +284,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = ".NET Bot Black Hoodie",
 					Description = ".NET Bot Black Hoodie",
-					CatalogType = types.Single(x => x.ID == 2),
-					CatalogBrand = brands.Single(x => x.ID == 2),
+					CatalogType = types.Single(x => x.CatalogTypeID == 2),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 2),
 					AvailableStock = 100,
 					Price = 19.5m,
 					PictureFileName = "1.png"
@@ -293,8 +293,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = ".NET Black & White Mug",
 					Description = ".NET Black & White Mug",
-					CatalogType = types.Single(x => x.ID == 1),
-					CatalogBrand = brands.Single(x => x.ID == 2),
+					CatalogType = types.Single(x => x.CatalogTypeID == 1),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 2),
 					AvailableStock = 100,
 					Price = 8.50m,
 					PictureFileName = "2.png"
@@ -302,8 +302,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = "Prism White T-Shirt",
 					Description = "Prism White T-Shirt",
-					CatalogType = types.Single(x => x.ID == 2),
-					CatalogBrand = brands.Single(x => x.ID == 5),
+					CatalogType = types.Single(x => x.CatalogTypeID == 2),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 5),
 					AvailableStock = 100,
 					Price = 12.0m,
 					PictureFileName = "3.png"
@@ -311,8 +311,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = ".NET Foundation T-shirt",
 					Description = ".NET Foundation T-shirt",
-					CatalogType = types.Single(x => x.ID == 2),
-					CatalogBrand = brands.Single(x => x.ID == 2),
+					CatalogType = types.Single(x => x.CatalogTypeID == 2),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 2),
 					AvailableStock = 100,
 					Price = 12.0m,
 					PictureFileName = "4.png"
@@ -320,8 +320,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = "Roslyn Red Sheet",
 					Description = "Roslyn Red Sheet",
-					CatalogType = types.Single(x => x.ID == 3),
-					CatalogBrand = brands.Single(x => x.ID == 5),
+					CatalogType = types.Single(x => x.CatalogTypeID == 3),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 5),
 					AvailableStock = 100,
 					Price = 8.5m,
 					PictureFileName = "5.png"
@@ -329,8 +329,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = ".NET Blue Hoodie",
 					Description = ".NET Blue Hoodie",
-					CatalogType = types.Single(x => x.ID == 2),
-					CatalogBrand = brands.Single(x => x.ID == 2),
+					CatalogType = types.Single(x => x.CatalogTypeID == 2),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 2),
 					AvailableStock = 100,
 					Price = 12.0m,
 					PictureFileName = "6.png"
@@ -338,8 +338,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = "Roslyn Red T-Shirt",
 					Description = "Roslyn Red T-Shirt",
-					CatalogType = types.Single(x => x.ID == 2),
-					CatalogBrand = brands.Single(x => x.ID == 5),
+					CatalogType = types.Single(x => x.CatalogTypeID == 2),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 5),
 					AvailableStock = 100,
 					Price = 12.0m,
 					PictureFileName = "7.png"
@@ -347,8 +347,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = "Kudu Purple Hoodie",
 					Description = "Kudu Purple Hoodie",
-					CatalogType = types.Single(x => x.ID == 2),
-					CatalogBrand = brands.Single(x => x.ID == 5),
+					CatalogType = types.Single(x => x.CatalogTypeID == 2),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 5),
 					AvailableStock = 100,
 					Price = 8.5m,
 					PictureFileName = "8.png"
@@ -356,8 +356,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = "Cup<T> White Mug",
 					Description = "Cup<T> White Mug",
-					CatalogType = types.Single(x => x.ID == 1),
-					CatalogBrand = brands.Single(x => x.ID == 5),
+					CatalogType = types.Single(x => x.CatalogTypeID == 1),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 5),
 					AvailableStock = 100,
 					Price = 12.0m,
 					PictureFileName = "9.png"
@@ -365,8 +365,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = ".NET Foundation Sheet",
 					Description = ".NET Foundation Sheet",
-					CatalogType = types.Single(x => x.ID == 3),
-					CatalogBrand = brands.Single(x => x.ID == 2),
+					CatalogType = types.Single(x => x.CatalogTypeID == 3),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 2),
 					AvailableStock = 100,
 					Price = 12.0m,
 					PictureFileName = "10.png"
@@ -374,8 +374,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = "Cup<T> Sheet",
 					Description = "Cup<T> Sheet",
-					CatalogType = types.Single(x => x.ID == 3),
-					CatalogBrand = brands.Single(x => x.ID == 2),
+					CatalogType = types.Single(x => x.CatalogTypeID == 3),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 2),
 					AvailableStock = 100,
 					Price = 8.5m,
 					PictureFileName = "11.png"
@@ -383,8 +383,8 @@ namespace Catalog.DataAccess {
 				new CatalogItem() {
 					Name = "Prism White TShirt",
 					Description = "Prism White TShirt",
-					CatalogType = types.Single(x => x.ID == 2),
-					CatalogBrand = brands.Single(x => x.ID == 5),
+					CatalogType = types.Single(x => x.CatalogTypeID == 2),
+					CatalogBrand = brands.Single(x => x.CatalogBrandID == 5),
 					AvailableStock = 100,
 					Price = 12.0m,
 					PictureFileName = "12.png"

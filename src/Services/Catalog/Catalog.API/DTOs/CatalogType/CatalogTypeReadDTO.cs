@@ -1,22 +1,17 @@
 ﻿using System;
 
 namespace Catalog.API.DTOs.CatalogType {
-	public class CatalogTypeReadDTO {
-		private int _id;
-		private string _type;
+	public class CatalogTypeReadDTO : EntityTypeDTO {
+		public int CatalogTypeID { get; set; }
 
-		public int ID {
-			get { return _id; }
-			set { _id = value; }
-		}
+		public string Type { get; set; }
 
-		public string Type {
-			get { return _type; }
-			set { _type = value; }
-		}
+		public string CreatedBy { get; set; }
 
-		public CatalogTypeReadDTO(string type = "Undefined") {
-			this._type = type;
-		}
+		public DateTime CreatedOn { get; set; }
+
+		public string UpdatedBy { get; set; }
+
+		public DateTime UpdatedOn { get; set; }
 	}
 }
