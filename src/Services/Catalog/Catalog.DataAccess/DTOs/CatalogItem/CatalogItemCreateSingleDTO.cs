@@ -1,18 +1,14 @@
-﻿using Catalog.API.DTOs.CatalogBrand;
-using Catalog.API.DTOs.CatalogType;
+﻿using Catalog.Core.Models;
 using System;
 
-namespace Catalog.API.DTOs.CatalogItem {
-	public class CatalogItemReadDTO : EntityTypeDTO {
+namespace Catalog.DataAccess.DTOs.CatalogItem {
+	public class CatalogItemCreateSingleDTO {
 		private string _name = string.Empty;
 		private string _description = string.Empty;
 		private decimal _price;
 		private string _pictureFileName = string.Empty;
-		private string _pictureUri = string.Empty;
 		private int _catalogTypeId;
-		private CatalogTypeReadDTO _catalogType = new CatalogTypeReadDTO();
 		private int _catalogBrandId;
-		private CatalogBrandReadDTO _catalogBrand = new CatalogBrandReadDTO();
 		private int _availableStock;
 		private int _restockThreshold;
 		private int _maxStockThreshold;
@@ -39,30 +35,14 @@ namespace Catalog.API.DTOs.CatalogItem {
 			get { return _pictureFileName; }
 			set { _pictureFileName = value; }
 		}
-
-		public string PictureUri {
-			get { return _pictureUri; }
-			set { _pictureUri = value; }
-		}
-
 		public int CatalogTypeId {
-			get => _catalogTypeId;
-			set => _catalogTypeId = value;
-		}
-
-		public CatalogTypeReadDTO CatalogType {
-			get { return _catalogType; }
-			set { _catalogType = value; }
+			get { return _catalogTypeId; }
+			set { _catalogTypeId = value; }
 		}
 
 		public int CatalogBrandId {
-			get => _catalogBrandId;
-			set => _catalogBrandId = value;
-		}
-
-		public CatalogBrandReadDTO CatalogBrand {
-			get { return _catalogBrand; }
-			set { _catalogBrand = value; }
+			get { return _catalogBrandId; }
+			set { _catalogBrandId = value; }
 		}
 
 		public int AvailableStock {
@@ -84,13 +64,5 @@ namespace Catalog.API.DTOs.CatalogItem {
 			get { return _onReorder; }
 			set { _onReorder = value; }
 		}
-
-		public string CreatedBy { get; set; }
-
-		public DateTime CreatedOn { get; set; }
-
-		public string UpdatedBy { get; set; }
-
-		public DateTime UpdatedOn { get; set; }
 	}
 }

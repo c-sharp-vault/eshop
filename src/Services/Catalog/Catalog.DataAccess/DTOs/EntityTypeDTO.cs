@@ -1,23 +1,24 @@
 
-using Newtonsoft.Json;
 using System;
 
-namespace Catalog.API.DTOs {
+namespace Catalog.DataAccess.DTOs {
 	public abstract class EntityTypeDTO : IEntityTypeDTO {
 		private string createdBy;
         private DateTime createdOn;
-        private string? updatedBy;
+        private string updatedBy;
         private DateTime? updatedOn;
 
 		public string CreatedBy { 
 			get => createdBy; 
+            set => createdBy = value;
 		}
 
         public DateTime CreatedOn {
             get => createdOn;
+            set => createdOn = value;
         }
 
-        public string? UpdatedBy { 
+        public string UpdatedBy { 
             get => updatedBy;
 			set => updatedBy = value;
         }

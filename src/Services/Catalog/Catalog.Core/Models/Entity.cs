@@ -2,36 +2,36 @@
 
 namespace Catalog.Core.Models {
 	public abstract class Entity : IEntity {
-		private String createdBy;
-        private DateTime createdOn;
-        private String? updatedBy;
-        private DateTime? updatedOn;
+		private string _createdBy;
+        private DateTime _createdOn;
+        private string _updatedBy;
+        private DateTime _updatedOn;
 
 		public Entity() {
-			createdBy = Environment.UserName;
-			createdOn = DateTime.Now;
+			_createdBy = Environment.UserName;
+			_createdOn = DateTime.Now;
+			_updatedBy = Environment.UserName;
+			_updatedOn= DateTime.Now;
 		}
 
-		public String CreatedBy { 
-			get => createdBy;
-			set => createdBy = value;
+		public string CreatedBy { 
+			get => _createdBy;
+			set => _createdBy = value ?? throw new ArgumentNullException(nameof(CreatedBy));
 		}
 
         public DateTime CreatedOn {
-            get => createdOn;
-			set => createdOn = (value == null || ((DateTime?) value) != null) ? value : 
-								throw new ArgumentException(nameof(createdOn), $"Value should be able to be casted to {typeof(DateTime?)}");
+            get => _createdOn;
+			set => _createdOn = value;
         }
 
-        public String? UpdatedBy { 
-            get => updatedBy;
-			set => updatedBy = value;
-        }
+        public string UpdatedBy { 
+            get => _updatedBy;
+			set => _updatedBy = value ?? throw new ArgumentNullException(nameof(UpdatedBy));
+		}
 
-        public DateTime? UpdatedOn { 
-            get => updatedOn;  
-			set => updatedOn = (value == null || ((DateTime?) value) != null) ? value : 
-								throw new ArgumentException(nameof(updatedOn), $"Value should be able to be casted to {typeof(DateTime?)}");
+        public DateTime UpdatedOn { 
+            get => _updatedOn;
+			set => _updatedOn = value;
         }
 	}
 }

@@ -1,16 +1,15 @@
 ﻿using Catalog.Core.Models;
+using Catalog.Infrastructure.Records;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Data;
+using System.Collections.Generic;
 
 namespace Catalog.DataAccess.EntityTypeConfigurations {
-	internal class CatalogItemConfiguration : IEntityTypeConfiguration<CatalogItem> {
-		public void Configure(EntityTypeBuilder<CatalogItem> builder) {
-			builder.ToTable("CatalogItems");
+	internal class CatalogItemConfiguration : EntityTypeConfigurationBase<CatalogItem> {
+		protected override void ConfigureEntity(EntityTypeBuilder<CatalogItem> builder) {
+			builder.ToTable("CatalogItems", Constants.CatalogSchemaName).HasKey(x => x.CatalogItemID);
 
-			builder.HasKey(x => x.CatalogItemID);
-
-			builder.Property(x => x.CatalogItemID).UseHiLo("catalog_item_hilo").IsRequired();
+			builder.Property(x => x.CatalogItemID).ValueGeneratedOnAdd().IsRequired();
 
 			builder.HasIndex(x => x.Name).IsUnique();
 
@@ -22,11 +21,9 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 
 			builder.Property(x => x.PictureFileName).IsRequired(false).HasDefaultValue("placeholder.png");
 
-			builder.Ignore(x => x.PictureUri);
+			builder.HasOne(x => x.CatalogType).WithMany(x => x.CatalogItems).HasForeignKey(x => x.CatalogTypeID);
 
-			builder.HasOne(x => x.CatalogType).WithMany(x => x.CatalogItems).HasForeignKey(x => x.CatalogTypeId);
-
-			builder.HasOne(x => x.CatalogBrand).WithMany(x => x.CatalogItems).HasForeignKey(x => x.CatalogBrandId);
+			builder.HasOne(x => x.CatalogBrand).WithMany(x => x.CatalogItems).HasForeignKey(x => x.CatalogBrandID);
 
 			builder.Property(x => x.AvailableStock).HasDefaultValue(0);
 
@@ -36,5 +33,13 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 
 			builder.Property(x => x.OnReorder).HasDefaultValue(false);
 		}
+
+		protected override IEnumerable<CatalogItem> GetSeedData() =>
+			new List<CatalogItem> {
+				new CatalogItem { CatalogItemID = 1, Name = "Sin Azúcar 1.5l", CatalogBrandID = 2, CatalogTypeID = 2 },
+				new CatalogItem { CatalogItemID = 2, Name = "Clásica 500ml", CatalogBrandID = 5, CatalogTypeID = 5 },
+				new CatalogItem { CatalogItemID = 3, Name = "Tita", CatalogBrandID = 3, CatalogTypeID = 4 },
+				new CatalogItem { CatalogItemID = 4, Name = "Ice Blast 8", CatalogBrandID = 4, CatalogTypeID = 3 }
+			};
 	}
 }

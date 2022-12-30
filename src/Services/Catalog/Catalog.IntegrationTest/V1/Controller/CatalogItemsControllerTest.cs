@@ -1,4 +1,4 @@
-﻿using Catalog.API.DTOs.CatalogItem;
+﻿using Catalog.DataAccess.DTOs.CatalogItem;
 using Catalog.API.Utils;
 using Catalog.Core.Models;
 using Catalog.DataAccess;
@@ -144,7 +144,7 @@ namespace Catalog.IntegrationTest.V1.Controller {
 
 			// Cleanup
 			var deleteURL = Items.Delete.Replace("{id}", createdObject.CatalogItemID.ToString());
-			_httpClient.DeleteAsync(deleteURL);
+			await _httpClient.DeleteAsync(deleteURL);
 		}
 
 		#endregion
@@ -173,7 +173,7 @@ namespace Catalog.IntegrationTest.V1.Controller {
 
 			// Assert
 			deleteResponse.StatusCode.Should().Be(HttpStatusCode.Accepted);
-			context?.CatalogItems.Find(createdObject.CatalogItemID).Should().BeNull();
+			context.CatalogItems.Find(createdObject.CatalogItemID).Should().BeNull();
 		}
 		#endregion
 	}

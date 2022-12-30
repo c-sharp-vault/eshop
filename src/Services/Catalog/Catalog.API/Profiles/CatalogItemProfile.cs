@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Catalog.API.DTOs;
-using Catalog.API.DTOs.CatalogBrand;
-using Catalog.API.DTOs.CatalogItem;
-using Catalog.API.DTOs.CatalogType;
+using Catalog.DataAccess.DTOs;
+using Catalog.DataAccess.DTOs.CatalogBrand;
+using Catalog.DataAccess.DTOs.CatalogItem;
+using Catalog.DataAccess.DTOs.CatalogType;
 using Catalog.Core.Models;
+using Catalog.DataAccess.Managers.CatalogItems.Messages;
 
 namespace Catalog.API.Profiles {
 	public class CatalogItemProfile : Profile {
@@ -14,6 +15,10 @@ namespace Catalog.API.Profiles {
 			CreateMap<CatalogType, CatalogTypeReadDTO>().ReverseMap();
 
 			CreateMap<CatalogItem, CatalogItemReadDTO>().ReverseMap();
+
+			CreateMap<CatalogItem, CreateSingleRequest>().ReverseMap();
+
+			CreateMap<CatalogItem, UpdateSingleRequest>().ReverseMap();
 
 			CreateMap<CatalogItemCreateSingleDTO, CatalogItem>()
 				.ForMember(src => src.CatalogType, dst => dst.Ignore())

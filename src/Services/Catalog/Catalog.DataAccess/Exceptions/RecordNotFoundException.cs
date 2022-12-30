@@ -1,8 +1,8 @@
 ﻿using System;
 
 namespace Catalog.DataAccess.Exceptions {
-	public class RecordNotFoundException : SystemException {
-		public RecordNotFoundException(string message) {
+	public class RecordNotFoundException : Exception {
+		public RecordNotFoundException(string message) : base(message) {
 
 		}
 	}

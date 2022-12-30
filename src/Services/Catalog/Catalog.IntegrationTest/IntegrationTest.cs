@@ -13,7 +13,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Catalog.Core.Models;
 using System.Collections.Generic;
-using Catalog.API.DTOs.CatalogItem;
+using Catalog.DataAccess.DTOs.CatalogItem;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper.Internal;
@@ -30,7 +30,7 @@ namespace Catalog.IntegrationTest;
 [TestFixture]
 public class IntegrationTest {
     protected WebApplicationFactory<Program> _appFactory;
-    protected IServiceScopeFactory? _serviceFactory;
+    protected IServiceScopeFactory _serviceFactory;
 	protected HttpClient _httpClient;
     protected IMapper _mapper;
 	protected IList<CatalogItem> _testList;
@@ -66,23 +66,21 @@ public class IntegrationTest {
 		_testList = NAuto.GetRandomList<CatalogItem>(x => x.CatalogItemID, 30, 1);
 		foreach (var element in _testList) {
 			element.Name += $"Fake name for item #{element.CatalogItemID}";
-			element.CatalogBrandId = catalogBrand.CatalogBrandID;
+			element.CatalogBrandID = catalogBrand.CatalogBrandID;
 			element.CatalogBrand = catalogBrand;
-			element.CatalogTypeId = catalogType.CatalogTypeID;
+			element.CatalogTypeID = catalogType.CatalogTypeID;
 			element.CatalogType = catalogType;
 		}
-		context?.CatalogItems.AddRange(_testList);
+		await context?.CatalogItems.AddRangeAsync(_testList);
 		return context?.SaveChanges() > 0;
-		context.Dispose();
 	}
 
 	// Removing via CatalogContext
-	protected async Task<bool> RemoveData() {
+	protected bool RemoveData() {
 		using var scope = _serviceFactory?.CreateScope();
 		var context = scope?.ServiceProvider?.GetRequiredService<CatalogContext>();
 		context?.CatalogItems.RemoveRange(_testList);
 		return context?.SaveChanges() > 0;
-		context.Dispose();
 	}
 
 	// Seeding via UnitOfWork

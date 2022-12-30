@@ -1,5 +1,5 @@
 
-namespace Catalog.API.DTOs {
+namespace Catalog.DataAccess.DTOs {
     public interface IEntityTypeDTO {
         
     }

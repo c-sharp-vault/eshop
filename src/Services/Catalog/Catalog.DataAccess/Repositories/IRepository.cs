@@ -8,14 +8,14 @@ namespace Catalog.DataAccess.Repositories {
 	public interface IRepository<TEntity> where TEntity : class, IEntity {
 
 		// Read
-		Task<TEntity> GetAsync(int id);
+		Task<TEntity> GetByIDAsync(int id);
 		Task<IEnumerable<TEntity>> GetAllAsync();
 		Task<bool> AnyAsync();
 		Task<bool> ExistsAsync(int id);
 		Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate);
 
 		// Create
-		Task AddAsync(TEntity entity);
+		Task CreateAsync(TEntity entity);
 		Task AddRangeAsync(IEnumerable<TEntity> entities);
 
 		// Update

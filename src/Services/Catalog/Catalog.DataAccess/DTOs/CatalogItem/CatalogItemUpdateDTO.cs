@@ -1,13 +1,13 @@
 ﻿using Catalog.Core.Models;
 using System;
 
-namespace Catalog.API.DTOs.CatalogItem {
+namespace Catalog.DataAccess.DTOs.CatalogItem {
 	public class CatalogItemUpdateDTO : EntityTypeDTO {
 		private string _name = string.Empty;
 		private string _description = string.Empty;
 		private decimal _price;
 		private string _pictureFileName = string.Empty;
-		private string _pictureUri = string.Empty;
+		private string _pictureURI = string.Empty;
 		private int _catalogTypeId;
 		private int _catalogBrandId;
 		private int _availableStock;
@@ -38,17 +38,17 @@ namespace Catalog.API.DTOs.CatalogItem {
 		}
 
 
-		public string PictureUri {
-			get { return _pictureUri; }
-			set { _pictureUri = value; }
+		public string PictureURI {
+			get { return _pictureURI; }
+			set { _pictureURI = value; }
 		}
 
-		public int CatalogTypeId {
+		public int CatalogTypeID {
 			get { return _catalogTypeId; }
 			set { _catalogTypeId = value; }
 		}
 
-		public int CatalogBrandId {
+		public int CatalogBrandID {
 			get { return _catalogBrandId; }
 			set { _catalogBrandId = value; }
 		}

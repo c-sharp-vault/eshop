@@ -16,53 +16,61 @@ namespace Catalog.DataAccess.Repositories {
 			_catalogContext = catalogContext;
 		}
 
-		public async Task<TEntity> GetAsync(int id) {
-			if (id == 0) throw new ArgumentOutOfRangeException(nameof(id), "Must be greater than zero");
-			if (!ExistsAsync(id).Result) throw new RecordNotFoundException("yooooo");
+		public virtual async Task<TEntity> GetByIDAsync(int id) {
+			if (id == 0) 
+				throw new ArgumentOutOfRangeException(nameof(id), "Must be greater than zero");
+
+			if (!ExistsAsync(id).Result)
+				throw new RecordNotFoundException($"{nameof(TEntity)} entity with ID = {id} was not found.");
+
 			return await _catalogContext.Set<TEntity>().FindAsync(id);
 		}
 
-		public async Task<IEnumerable<TEntity>> GetAllAsync() => await _catalogContext.Set<TEntity>().ToListAsync();
+		public virtual async Task<IEnumerable<TEntity>> GetAllAsync() => await _catalogContext.Set<TEntity>().ToListAsync();
 
-		public async Task<bool> AnyAsync() => (await _catalogContext.Set<TEntity>().AnyAsync());
+		public virtual async Task<bool> AnyAsync() => (await _catalogContext.Set<TEntity>().AnyAsync());
 
-		public async Task<bool> ExistsAsync(int id) => (await _catalogContext.Set<TEntity>().FindAsync(id) != null);
+		public virtual async Task<bool> ExistsAsync(int id) => (await _catalogContext.Set<TEntity>().FindAsync(id) != null);
 
-		public async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate = null) => 
+		public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate = null) => 
 			await _catalogContext.Set<TEntity>().Where(predicate).ToListAsync();
 
-		public async Task AddAsync(TEntity entity) {
+		public virtual async Task CreateAsync(TEntity entity) {
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
 			await _catalogContext.Set<TEntity>().AddAsync(entity);
 		}
 
-		public async Task AddRangeAsync(IEnumerable<TEntity> entities) {
+		public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities) {
 			if (!entities.Any()) throw new ArgumentException(nameof(entities));
 			await _catalogContext.Set<TEntity>().AddRangeAsync(entities);
 		}
 
-		public void Update(TEntity entity) {
+		public virtual void Update(TEntity entity) {
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
 			_catalogContext.Set<TEntity>().Update(entity);
 		}
 
-		public void UpdateRange(IEnumerable<TEntity> entities) {
+		public virtual void UpdateRange(IEnumerable<TEntity> entities) {
 			if (!entities.Any()) throw new ArgumentException(nameof(entities));
 			_catalogContext.Set<TEntity>().UpdateRange(entities);
 		}
 
-		public async Task RemoveAsync(int id) {
-			if (id == 0) throw new ArgumentOutOfRangeException(nameof(id), "Must be greater than zero");
-			if (!ExistsAsync(id).Result) throw new RecordNotFoundException($"{nameof(TEntity)} with ID = {id} doesn't exist");
+		public virtual async Task RemoveAsync(int id) {
+			if (id == 0)
+				throw new ArgumentOutOfRangeException(nameof(id), "The provided ID must be a positive integer.");
 
-			TEntity? entity = await _catalogContext.Set<TEntity>().FindAsync(id);
-			if (entity == null) throw new RecordNotFoundException($"{nameof(TEntity)} with ID = {id} doesn't exist");
+			TEntity entity = await _catalogContext.Set<TEntity>().FindAsync(id);
+			if (entity == null) 
+				throw new RecordNotFoundException($"{nameof(TEntity)} entity with ID = {id} was not found.");
 			
 			_catalogContext.Remove(entity);
+
+			if (await _catalogContext.SaveChangesAsync() == 0)
+				throw new DbUpdateException($"Failed trying to save deleted {nameof(TEntity)} entity from the database.");
 		}
 
-		public async Task RemoveRangeAsync(IEnumerable<TEntity> entities) {
-			throw new NotImplementedException();
+		public virtual async Task RemoveRangeAsync(IEnumerable<TEntity> entities) {
+			 await Task.Delay(10);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 using Catalog.DataAccess;
+using Catalog.DataAccess.Managers.CatalogItems;
 using Catalog.DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,13 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Catalog.API
-{
-    public class Program {
+namespace Catalog.API {
+	public class Program {
 		public static async Task Main(string[] args) {
 			WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 			AddServicesToContainer(builder);
@@ -49,14 +48,14 @@ namespace Catalog.API
 			builder.Services.AddAutoMapper(assemblies: AppDomain.CurrentDomain.GetAssemblies());
 			builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
-			builder.Services.AddDbContext<CatalogContext>(options => {
-				options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionstring"),
-									 options => options.MigrationsAssembly("Catalog.DataAccess")
-													   .EnableRetryOnFailure(
-														   maxRetryCount: 6,
-														   maxRetryDelay: TimeSpan.FromSeconds(30),
-														   errorCodesToAdd: null));
-				options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
+			builder.Services.AddDbContext<CatalogContext>(dbContextOptionsBuilder => {
+				dbContextOptionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionstring"),
+												  npgSqlDbContextOptionsBuilder => npgSqlDbContextOptionsBuilder.MigrationsAssembly("Catalog.DataAccess")
+																											    .EnableRetryOnFailure(
+																													maxRetryCount: 6,
+																													maxRetryDelay: TimeSpan.FromSeconds(30),
+																													errorCodesToAdd: null));
+				dbContextOptionsBuilder.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning));
 			});
 
 			//builder.Services.AddDbContext<CatalogContext>(options => {
@@ -72,7 +71,10 @@ namespace Catalog.API
 			builder.Services.AddTransient<ICatalogBrandRepository, CatalogBrandRepository>();
 			builder.Services.AddTransient<ICatalogItemRepository, CatalogItemRepository>();
 			builder.Services.AddTransient<ICatalogTypeRepository, CatalogTypeRepository>();
+
 			builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+			builder.Services.AddTransient<ICatalogItemManager, CatalogItemManager>();
 		}
 
 		private static void ConfigureHttpRequestPipeline(WebApplication app) {

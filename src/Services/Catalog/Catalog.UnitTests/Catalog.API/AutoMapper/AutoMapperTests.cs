@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Catalog.API.DTOs.CatalogItem;
+using Catalog.DataAccess.DTOs.CatalogItem;
 using Catalog.API.Profiles;
 using Catalog.Core.Models;
 using NUnit.Framework;
