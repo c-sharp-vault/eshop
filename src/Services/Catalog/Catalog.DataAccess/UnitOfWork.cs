@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.DataAccess {
 	public class UnitOfWork : IUnitOfWork {
-		private readonly CatalogContext _catalogContext;
+		private readonly CatalogDbContext _catalogContext;
 		private readonly ICatalogItemRepository _catalogItemRepository;
 		private readonly ICatalogBrandRepository _catalogBrandRepository;
 		private readonly ICatalogTypeRepository _catalogTypeRepository;
 
 		public UnitOfWork(
-			CatalogContext catalogContext, 
+			CatalogDbContext catalogContext, 
 			ICatalogItemRepository catalogItemRepository, 
 			ICatalogBrandRepository catalogBrandRepository, 
 			ICatalogTypeRepository catalogTypeRepository) {

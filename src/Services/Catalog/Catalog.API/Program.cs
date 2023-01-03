@@ -27,28 +27,15 @@ namespace Catalog.API {
 		private static void AddServicesToContainer(WebApplicationBuilder builder) {
 			builder.Services.AddOptions();
 			builder.Services.AddLogging();
+			builder.Services.AddHealthChecks();
 			// webApplicationBuilder.Services.Configure<CatalogOptions>(webApplicationBuilder.Configuration);
 			builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
-
-			// Register AutoMapper service #1
-			//MapperConfiguration mapConfiguration = new MapperConfiguration(configure: config => {
-			//	config.CreateMap<CatalogItem, CatalogItemReadDTO>();
-			//	//or
-			//	config.AddProfile(new CatalogItemProfile());
-			//});
-			//IMapper mapper = mapConfiguration.CreateMapper();
-			//webApplicationBuilder.Services.AddSingleton(mapper);
-
-			// Register AutoMapper service #2
-			//webApplicationBuilder.Services.AddAutoMapper(configAction: mapperConfigurationExpression => mapperConfigurationExpression.AddProfile(new CatalogItemProfile()));
-
-			// Register AutoMapper service #3
 			builder.Services.AddAutoMapper(assemblies: AppDomain.CurrentDomain.GetAssemblies());
 			builder.Services.AddRouting(opt => opt.LowercaseUrls = true);
 
-			builder.Services.AddDbContext<CatalogContext>(dbContextOptionsBuilder => {
+			builder.Services.AddDbContext<CatalogDbContext>(dbContextOptionsBuilder => {
 				dbContextOptionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLCatalogConnectionstring"),
 												  npgSqlDbContextOptionsBuilder => npgSqlDbContextOptionsBuilder.MigrationsAssembly("Catalog.DataAccess")
 																											    .EnableRetryOnFailure(
@@ -86,6 +73,7 @@ namespace Catalog.API {
 				});
 			}
 
+			//app.UseProbe();
 			app.UseHttpsRedirection();
 			app.UseAuthorization();
 			app.MapControllers();

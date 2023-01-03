@@ -1,4 +1,8 @@
-﻿namespace Catalog.Infrastructure.Extensions.Linq {
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Catalog.Infrastructure.Extensions.Linq {
 	public static class LinqSelectExtensions {
 		public static IEnumerable<SelectTryResult<TSource, TResult>> SelectTry<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> selector) {
 			foreach (TSource element in enumerable) {

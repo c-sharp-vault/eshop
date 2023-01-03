@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.DataAccess.Repositories {
 	public class CatalogTypeRepository : Repository<CatalogType>, ICatalogTypeRepository {
-		private readonly CatalogContext _catalogContext;
+		private readonly CatalogDbContext _catalogContext;
 
-		public CatalogTypeRepository(CatalogContext catalogContext) : base(catalogContext) {
+		public CatalogTypeRepository(CatalogDbContext catalogContext) : base(catalogContext) {
 			this._catalogContext = catalogContext;
 		}
 

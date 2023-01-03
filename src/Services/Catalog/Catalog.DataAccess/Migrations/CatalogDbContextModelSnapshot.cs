@@ -6,12 +6,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-#nullable disable
-
 namespace Catalog.DataAccess.Migrations
 {
-    [DbContext(typeof(CatalogContext))]
-    partial class CatalogContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(CatalogDbContext))]
+    partial class CatalogDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -61,45 +59,45 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 1,
                             Brand = "N/A",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(2607),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(1545),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(3262)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(2234)
                         },
                         new
                         {
                             CatalogBrandID = 2,
                             Brand = "Coca-Cola",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(3885),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(2915),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(4489)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(3543)
                         },
                         new
                         {
                             CatalogBrandID = 3,
                             Brand = "Terrabusi",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(5113),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(4182),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(5732)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(4810)
                         },
                         new
                         {
                             CatalogBrandID = 4,
                             Brand = "Marlboro",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(6352),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(5441),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(6959)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(6057)
                         },
                         new
                         {
                             CatalogBrandID = 5,
                             Brand = "Quilmes",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(7582),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(6688),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(8189)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(7314)
                         });
                 });
 
@@ -189,7 +187,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 2,
                             CatalogTypeID = 2,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(3660),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(3069),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Sin Azúcar 1.5l",
@@ -198,7 +196,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(4299)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(3715)
                         },
                         new
                         {
@@ -207,7 +205,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 5,
                             CatalogTypeID = 5,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(4932),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(4368),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Clásica 500ml",
@@ -216,7 +214,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(5545)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(4983)
                         },
                         new
                         {
@@ -225,7 +223,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 3,
                             CatalogTypeID = 4,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(6171),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(5623),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Tita",
@@ -234,7 +232,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(6795)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(6246)
                         },
                         new
                         {
@@ -243,7 +241,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 4,
                             CatalogTypeID = 3,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(7421),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(6870),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Ice Blast 8",
@@ -252,7 +250,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(8031)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(7488)
                         });
                 });
 
@@ -294,46 +292,46 @@ namespace Catalog.DataAccess.Migrations
                         {
                             CatalogTypeID = 1,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(9958),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(9477),
                             Type = "N/A",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(581)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(117)
                         },
                         new
                         {
                             CatalogTypeID = 2,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(1210),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(752),
                             Type = "Gaseosas",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(1823)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(1381)
                         },
                         new
                         {
                             CatalogTypeID = 3,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(2445),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(2016),
                             Type = "Cigarrillos",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(3051)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(2643)
                         },
                         new
                         {
                             CatalogTypeID = 4,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(3672),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(3275),
                             Type = "Alfajores & Obleas",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(4280)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(3903)
                         },
                         new
                         {
                             CatalogTypeID = 5,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(4895),
+                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(4540),
                             Type = "Cervezas",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(5503)
+                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(5159)
                         });
                 });
 

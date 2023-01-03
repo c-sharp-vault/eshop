@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-#nullable disable
-
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace Catalog.DataAccess.Migrations
@@ -100,11 +98,11 @@ namespace Catalog.DataAccess.Migrations
                 columns: new[] { "CatalogBrandID", "Brand", "CreatedBy", "CreatedOn", "UpdatedBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, "N/A", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(2607), "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(3262) },
-                    { 2, "Coca-Cola", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(3885), "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(4489) },
-                    { 3, "Terrabusi", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(5113), "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(5732) },
-                    { 4, "Marlboro", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(6352), "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(6959) },
-                    { 5, "Quilmes", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(7582), "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 415, DateTimeKind.Local).AddTicks(8189) }
+                    { 1, "N/A", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(1545), "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(2234) },
+                    { 2, "Coca-Cola", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(2915), "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(3543) },
+                    { 3, "Terrabusi", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(4182), "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(4810) },
+                    { 4, "Marlboro", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(5441), "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(6057) },
+                    { 5, "Quilmes", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(6688), "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(7314) }
                 });
 
             migrationBuilder.InsertData(
@@ -113,11 +111,11 @@ namespace Catalog.DataAccess.Migrations
                 columns: new[] { "CatalogTypeID", "CreatedBy", "CreatedOn", "Type", "UpdatedBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(9958), "N/A", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(581) },
-                    { 2, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(1210), "Gaseosas", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(1823) },
-                    { 3, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(2445), "Cigarrillos", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(3051) },
-                    { 4, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(3672), "Alfajores & Obleas", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(4280) },
-                    { 5, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(4895), "Cervezas", "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 417, DateTimeKind.Local).AddTicks(5503) }
+                    { 1, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(9477), "N/A", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(117) },
+                    { 2, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(752), "Gaseosas", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(1381) },
+                    { 3, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(2016), "Cigarrillos", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(2643) },
+                    { 4, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(3275), "Alfajores & Obleas", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(3903) },
+                    { 5, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(4540), "Cervezas", "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(5159) }
                 });
 
             migrationBuilder.InsertData(
@@ -126,10 +124,10 @@ namespace Catalog.DataAccess.Migrations
                 columns: new[] { "CatalogItemID", "CatalogBrandID", "CatalogTypeID", "CreatedBy", "CreatedOn", "Description", "MaxStockThreshold", "Name", "PictureFileName", "Price", "UpdatedBy", "UpdatedOn" },
                 values: new object[,]
                 {
-                    { 1, 2, 2, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(3660), "", 1, "Sin Azúcar 1.5l", "placeholder.png", 0m, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(4299) },
-                    { 2, 5, 5, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(4932), "", 1, "Clásica 500ml", "placeholder.png", 0m, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(5545) },
-                    { 3, 3, 4, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(6171), "", 1, "Tita", "placeholder.png", 0m, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(6795) },
-                    { 4, 4, 3, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(7421), "", 1, "Ice Blast 8", "placeholder.png", 0m, "Fedex", new DateTime(2022, 12, 29, 20, 15, 14, 416, DateTimeKind.Local).AddTicks(8031) }
+                    { 1, 2, 2, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(3069), "", 1, "Sin Azúcar 1.5l", "placeholder.png", 0m, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(3715) },
+                    { 2, 5, 5, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(4368), "", 1, "Clásica 500ml", "placeholder.png", 0m, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(4983) },
+                    { 3, 3, 4, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(5623), "", 1, "Tita", "placeholder.png", 0m, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(6246) },
+                    { 4, 4, 3, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(6870), "", 1, "Ice Blast 8", "placeholder.png", 0m, "Fedex", new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(7488) }
                 });
 
             migrationBuilder.CreateIndex(

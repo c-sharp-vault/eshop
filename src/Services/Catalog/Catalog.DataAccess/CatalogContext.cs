@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.DataAccess {
-	public class CatalogContext : DbContext, ICatalogContext {
+	public class CatalogDbContext : DbContext, ICatalogContext {
 
-		public CatalogContext() { }
+		public CatalogDbContext() { }
 
-		public CatalogContext(DbContextOptions<CatalogContext> dbContextOptions) : base(dbContextOptions) { }
+		public CatalogDbContext(DbContextOptions<CatalogDbContext> dbContextOptions) : base(dbContextOptions) { }
 
 		public DbSet<CatalogItem> CatalogItems { get; set; }
 
@@ -19,6 +19,6 @@ namespace Catalog.DataAccess {
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) =>
-			modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogContext).Assembly);
+			modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
 	}
 }

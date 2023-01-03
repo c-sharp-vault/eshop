@@ -13,11 +13,11 @@ namespace Catalog.DataAccess.Repositories {
 
 		#region Fields
 
-		private readonly CatalogContext _catalogContext;
+		private readonly CatalogDbContext _catalogContext;
 
 		#endregion
 
-		public CatalogItemRepository(CatalogContext catalogContext) : base(catalogContext) {
+		public CatalogItemRepository(CatalogDbContext catalogContext) : base(catalogContext) {
 			_catalogContext = catalogContext;
 		}
 

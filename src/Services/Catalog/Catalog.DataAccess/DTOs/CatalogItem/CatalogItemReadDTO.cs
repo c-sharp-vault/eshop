@@ -8,7 +8,6 @@ namespace Catalog.DataAccess.DTOs.CatalogItem {
 		private string _description = string.Empty;
 		private decimal _price;
 		private string _pictureFileName = string.Empty;
-		private string _pictureUri = string.Empty;
 		private int _catalogTypeId;
 		private CatalogTypeReadDTO _catalogType = new CatalogTypeReadDTO();
 		private int _catalogBrandId;
@@ -38,11 +37,6 @@ namespace Catalog.DataAccess.DTOs.CatalogItem {
 		public string PictureFileName {
 			get { return _pictureFileName; }
 			set { _pictureFileName = value; }
-		}
-
-		public string PictureUri {
-			get { return _pictureUri; }
-			set { _pictureUri = value; }
 		}
 
 		public int CatalogTypeId {

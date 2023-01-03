@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace Catalog.DataAccess.Repositories {
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity {
 
-		private readonly CatalogContext _catalogContext;
+		private readonly CatalogDbContext _catalogContext;
 
-		public Repository(CatalogContext catalogContext) {
+		public Repository(CatalogDbContext catalogContext) {
 			_catalogContext = catalogContext;
 		}
 
@@ -35,9 +35,10 @@ namespace Catalog.DataAccess.Repositories {
 		public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate = null) => 
 			await _catalogContext.Set<TEntity>().Where(predicate).ToListAsync();
 
-		public virtual async Task CreateAsync(TEntity entity) {
+		public virtual async Task<TEntity> CreateAsync(TEntity entity) {
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
 			await _catalogContext.Set<TEntity>().AddAsync(entity);
+			return entity;
 		}
 
 		public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities) {

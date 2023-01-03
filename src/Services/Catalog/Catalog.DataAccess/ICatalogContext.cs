@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.DataAccess {
     public interface ICatalogContext {
-        public DbSet<CatalogItem> CatalogItems { get; set; }
-        public DbSet<CatalogBrand> CatalogBrands { get; set; }
-        public DbSet<CatalogType> CatalogTypes { get; set; }
+        DbSet<CatalogItem> CatalogItems { get; set; }
+        DbSet<CatalogBrand> CatalogBrands { get; set; }
+        DbSet<CatalogType> CatalogTypes { get; set; }
     }
 }

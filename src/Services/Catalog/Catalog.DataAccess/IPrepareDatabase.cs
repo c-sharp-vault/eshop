@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Catalog.DataAccess {
 	public interface IPrepareDatabase {
-		Task SeedAsync(CatalogContext catalogContext, IWebHostEnvironment webHostEnvironment, IOptions<CatalogOptions> settings, ILogger<PrepareDatabase> logger);
+		Task SeedAsync(CatalogDbContext catalogContext, IWebHostEnvironment webHostEnvironment, IOptions<CatalogOptions> settings, ILogger<PrepareDatabase> logger);
 	}
 }

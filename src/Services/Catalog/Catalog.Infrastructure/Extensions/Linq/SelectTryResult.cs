@@ -1,4 +1,6 @@
-﻿namespace Catalog.Infrastructure.Extensions.Linq {
+﻿using System;
+
+namespace Catalog.Infrastructure.Extensions.Linq {
 	public class SelectTryResult<TSource, TResult> {
 		private TSource _source;
 		private TResult _result;

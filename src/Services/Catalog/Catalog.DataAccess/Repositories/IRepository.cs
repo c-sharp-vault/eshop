@@ -15,7 +15,7 @@ namespace Catalog.DataAccess.Repositories {
 		Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate);
 
 		// Create
-		Task CreateAsync(TEntity entity);
+		Task<TEntity> CreateAsync(TEntity entity);
 		Task AddRangeAsync(IEnumerable<TEntity> entities);
 
 		// Update

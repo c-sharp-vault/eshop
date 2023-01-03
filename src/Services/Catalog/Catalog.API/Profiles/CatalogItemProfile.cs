@@ -16,10 +16,6 @@ namespace Catalog.API.Profiles {
 
 			CreateMap<CatalogItem, CatalogItemReadDTO>().ReverseMap();
 
-			CreateMap<CatalogItem, CreateSingleRequest>().ReverseMap();
-
-			CreateMap<CatalogItem, UpdateSingleRequest>().ReverseMap();
-
 			CreateMap<CatalogItemCreateSingleDTO, CatalogItem>()
 				.ForMember(src => src.CatalogType, dst => dst.Ignore())
 				.ForMember(src => src.CatalogBrand, dst => dst.Ignore())
