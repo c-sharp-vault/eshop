@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Catalog.DataAccess;
+using Catalog.DataAccess.DTOs.CatalogItem;
 using Catalog.DataAccess.Managers.CatalogItems;
 using Catalog.DataAccess.Managers.CatalogItems.Messages;
 using Catalog.Infrastructure.Options;
@@ -39,56 +40,56 @@ namespace Catalog.API.Controllers {
 
 		#region Actions
 
-		[HttpPost("get-single", Name = "GetSingleAsync")]
+		[HttpGet("{id}", Name = "GetSingleAsync")]
 		[ProducesResponseType(type: typeof(GetSingleResponse), statusCode: (int)HttpStatusCode.OK)]
 		[ProducesResponseType(type: typeof(GetSingleResponse), statusCode: (int)HttpStatusCode.BadRequest)]
-		public async Task<IActionResult> GetSingleAsync(GetSingleRequest request) {
+		public async Task<IActionResult> GetSingleAsync([FromRoute] int id) {
 
-			GetSingleResponse response = await _catalogItemManager.GetSingleAsync(request);
-
-			if (response.Success) return Ok(response);
-			return BadRequest(response);
-		}
-
-		[HttpPost("get-range", Name = "GetRangeAsync")]
-		[ProducesResponseType(type: typeof(GetRangeResponse), statusCode: (int)HttpStatusCode.OK)]
-		[ProducesResponseType(type: typeof(GetRangeResponse), statusCode: (int)HttpStatusCode.BadRequest)]
-		public async Task<IActionResult> GetRangeAsync(GetRangeRequest request) {
-
-			GetRangeResponse response = await _catalogItemManager.GetRangeAsync(request);
+			GetSingleResponse response = await _catalogItemManager.GetSingleAsync(id);
 
 			if (response.Success) return Ok(response);
 			return BadRequest(response);
 		}
 
-		[HttpPost("create-single", Name = "CreateSingleAsync")]
-		[ProducesResponseType(type: typeof(CreateSingleResponse), statusCode: (int)HttpStatusCode.Created)]
-		[ProducesResponseType(type: typeof(CreateSingleResponse), statusCode: (int)HttpStatusCode.BadRequest)]
-		public async Task<IActionResult> CreateSingleAsync(CreateSingleRequest request) {
+		[HttpGet(Name = "GetRangeAsync")]
+		[ProducesResponseType(type: typeof(GetRangeResponse), statusCode: (int) HttpStatusCode.OK)]
+		[ProducesResponseType(type: typeof(GetRangeResponse), statusCode: (int) HttpStatusCode.BadRequest)]
+		public async Task<IActionResult> GetRangeAsync(byte pageSize = 10, byte pageIndex = 1, bool includeNested = false) {
 
-			CreateSingleResponse response = await _catalogItemManager.CreateSingleAsync(request);
+			GetRangeResponse response = await _catalogItemManager.GetRangeAsync(pageSize, pageIndex, includeNested);
+
+			if (response.Success) return Ok(response);
+			return BadRequest(response);
+		}
+
+		[HttpPost(Name = "CreateSingleAsync")]
+		[ProducesResponseType(type: typeof(CreateSingleResponse), statusCode: (int) HttpStatusCode.Created)]
+		[ProducesResponseType(type: typeof(CreateSingleResponse), statusCode: (int) HttpStatusCode.BadRequest)]
+		public async Task<IActionResult> CreateSingleAsync(CatalogItemCreateSingleDTO catalogItemDTO) {
+
+			CreateSingleResponse response = await _catalogItemManager.CreateSingleAsync(catalogItemDTO);
 
 			if (response.Success) Ok(response);
 			return BadRequest(response);
 		}
 
-		[HttpPut("update-single", Name = "UpdateSingleAsync")]
-		[ProducesResponseType(type: typeof(AcceptedAtActionResult), statusCode: (int)HttpStatusCode.Accepted)]
-		[ProducesResponseType(type: typeof(NotFoundObjectResult), statusCode: (int)HttpStatusCode.NotFound)]
-		public async Task<IActionResult> UpdateSingleAsync(UpdateSingleRequest request) {
+		[HttpPut(Name = "UpdateSingleAsync")]
+		[ProducesResponseType(type: typeof(UpdateSingleResponse), statusCode: (int) HttpStatusCode.Accepted)]
+		[ProducesResponseType(type: typeof(UpdateSingleResponse), statusCode: (int) HttpStatusCode.NotFound)]
+		public async Task<IActionResult> UpdateSingleAsync(CatalogItemUpdateDTO catalogItemUpdateDTO) {
 
-			UpdateSingleResponse response = await _catalogItemManager.UpdateSingleAsync(request);
+			UpdateSingleResponse response = await _catalogItemManager.UpdateSingleAsync(catalogItemUpdateDTO);
 
 			if (response.Success) return Ok(response);
 			return BadRequest(response);
 		}
 
-		[HttpDelete("remove-single", Name = "RemoveSingleAsync")]
-		[ProducesResponseType(type: typeof(AcceptedResult), statusCode: (int)HttpStatusCode.Accepted)]
-		[ProducesResponseType(type: typeof(NotFoundObjectResult), statusCode: (int)HttpStatusCode.NotFound)]
-		public async Task<IActionResult> RemoveSingleAsync(RemoveSingleRequest request) {
+		[HttpDelete("{id}", Name = "RemoveSingleAsync")]
+		[ProducesResponseType(type: typeof(RemoveSingleResponse), statusCode: (int) HttpStatusCode.Accepted)]
+		[ProducesResponseType(type: typeof(RemoveSingleResponse), statusCode: (int) HttpStatusCode.NotFound)]
+		public async Task<IActionResult> RemoveSingleAsync([FromRoute] int id) {
 
-			RemoveSingleResponse response = await _catalogItemManager.RemoveSingleAsync(request);
+			RemoveSingleResponse response = await _catalogItemManager.RemoveSingleAsync(id);
 
 			if (response.Success) return Ok(response);
 			return BadRequest(response);

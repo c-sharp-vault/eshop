@@ -48,22 +48,18 @@ namespace Catalog.UnitTests.Catalog.API.Controllers {
 
 			// Arrange
 			IEnumerable<CatalogItemReadDTO> expectedCatalogItems = CatalogItems;
-			_mockedManager.Setup(_ => _.GetRangeAsync(It.IsAny<GetRangeRequest>()))
-									 .ReturnsAsync(new GetRangeResponse {
-										 CatalogItems = expectedCatalogItems,
-										 Success = true
-									 });
+			_mockedManager.Setup(_ => _.GetRangeAsync(It.IsAny<byte>(), It.IsAny<byte>(), It.IsAny<bool>()))
+										 .ReturnsAsync(new GetRangeResponse {
+											 CatalogItems = expectedCatalogItems,
+											 Success = true
+										 });
 			CatalogItemsController catalogController = new CatalogItemsController(catalogItemManager: _mockedManager.Object,
 																				  mapper: _mapper,
 																				  logger: _mockedLogger.Object,
 																				  catalogOptions: _mockedOptions.Object);
 
 			// Act
-			IActionResult actionResult = await catalogController.GetRangeAsync(new GetRangeRequest {
-				PageSize = 10,
-				PageIndex = 1,
-				IncludeNested = true,
-			});
+			IActionResult actionResult = await catalogController.GetRangeAsync(10, 1, true);
 
 			// Assert
 			Assert.IsAssignableFrom(typeof(OkObjectResult), actionResult);
@@ -81,10 +77,10 @@ namespace Catalog.UnitTests.Catalog.API.Controllers {
 		[TestCase(1)]
 		[TestCase(2)]
 		[TestCase(3)]
-		public async Task GetSingleAsync_WithValidIds_ReturnsMatchingItems(int id) {
+		public async Task GetSingleAsync_WithValidIds_ReturnsMatchingItems(int catalogItemID) {
 			// Arrange
-			var expectedCatalogItem = CatalogItems.Single(x => x.CatalogItemID == id);
-			_mockedManager.Setup(x => x.GetSingleAsync(It.IsAny<GetSingleRequest>()))
+			var expectedCatalogItem = CatalogItems.Single(x => x.CatalogItemID == catalogItemID);
+			_mockedManager.Setup(x => x.GetSingleAsync(It.IsAny<int>()))
 									   .ReturnsAsync(new GetSingleResponse {
 											CatalogItem = expectedCatalogItem
 									   });
@@ -95,7 +91,7 @@ namespace Catalog.UnitTests.Catalog.API.Controllers {
 																				  catalogOptions: _mockedOptions.Object);
 
 			// Act
-			IActionResult actionResult = await catalogController.GetSingleAsync(new GetSingleRequest { CatalogItemID = id });
+			IActionResult actionResult = await catalogController.GetSingleAsync(catalogItemID);
 
 			// Assert
 			Assert.IsAssignableFrom(typeof(OkObjectResult), actionResult);
@@ -111,10 +107,10 @@ namespace Catalog.UnitTests.Catalog.API.Controllers {
 		[TestCase(4)]
 		[TestCase(5)]
 		[TestCase(6)]
-		public async Task GetSingleAsync_WithInvalidIds_ReturnsNotFoundResult(int id) {
+		public async Task GetSingleAsync_WithInvalidIds_ReturnsNotFoundResult(int catalogItemID) {
 			// Arrange
-			var expectedErrorMessage = new string[] { $"{nameof(CatalogItem)} entity with ID = {id} not found." };
-			_mockedManager.Setup(x => x.GetSingleAsync(It.IsAny<GetSingleRequest>()))
+			var expectedErrorMessage = new string[] { $"{nameof(CatalogItem)} entity with ID = {catalogItemID} not found." };
+			_mockedManager.Setup(x => x.GetSingleAsync(It.IsAny<int>()))
 									   .ReturnsAsync(new GetSingleResponse {
 										   Success = false,
 										   ErrorMessages = expectedErrorMessage
@@ -126,7 +122,7 @@ namespace Catalog.UnitTests.Catalog.API.Controllers {
 																				  catalogOptions: _mockedOptions.Object);
 
 			// Act
-			IActionResult actionResult = await catalogController.GetSingleAsync(new GetSingleRequest { CatalogItemID = id });
+			IActionResult actionResult = await catalogController.GetSingleAsync(catalogItemID);
 
 			// Assert
 			Assert.IsAssignableFrom(typeof(BadRequestObjectResult), actionResult);

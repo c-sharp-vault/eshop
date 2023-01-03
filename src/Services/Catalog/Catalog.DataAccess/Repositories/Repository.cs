@@ -21,7 +21,7 @@ namespace Catalog.DataAccess.Repositories {
 				throw new ArgumentOutOfRangeException(nameof(id), "Must be greater than zero");
 
 			if (!ExistsAsync(id).Result)
-				throw new RecordNotFoundException($"{nameof(TEntity)} entity with ID = {id} was not found.");
+				throw new RecordNotFoundException($"{typeof(TEntity).Name} entity with ID = {id} was not found.");
 
 			return await _catalogContext.Set<TEntity>().FindAsync(id);
 		}
@@ -62,12 +62,12 @@ namespace Catalog.DataAccess.Repositories {
 
 			TEntity entity = await _catalogContext.Set<TEntity>().FindAsync(id);
 			if (entity == null) 
-				throw new RecordNotFoundException($"{nameof(TEntity)} entity with ID = {id} was not found.");
+				throw new RecordNotFoundException($"{typeof(TEntity).Name} entity with ID = {id} was not found.");
 			
 			_catalogContext.Remove(entity);
 
 			if (await _catalogContext.SaveChangesAsync() == 0)
-				throw new DbUpdateException($"Failed trying to save deleted {nameof(TEntity)} entity from the database.");
+				throw new DbUpdateException($"Failed trying to save deleted {typeof(TEntity).Name} entity from the database.");
 		}
 
 		public virtual async Task RemoveRangeAsync(IEnumerable<TEntity> entities) {

@@ -1,13 +1,13 @@
-﻿using Catalog.DataAccess.Managers.CatalogItems.Messages;
+﻿using Catalog.DataAccess.DTOs.CatalogItem;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Catalog.API.Controllers {
 	public interface ICatalogItemsController {
-		Task<IActionResult> CreateSingleAsync(CreateSingleRequest request);
-		Task<IActionResult> GetRangeAsync(GetRangeRequest request);
-		Task<IActionResult> GetSingleAsync(GetSingleRequest request);
-		Task<IActionResult> RemoveSingleAsync(RemoveSingleRequest request);
-		Task<IActionResult> UpdateSingleAsync(UpdateSingleRequest request);
+		Task<IActionResult> GetSingleAsync(int id);
+		Task<IActionResult> GetRangeAsync(byte pageSize, byte pageIndex, bool includeNested);
+		Task<IActionResult> CreateSingleAsync(CatalogItemCreateSingleDTO catalogItemDTO);
+		Task<IActionResult> UpdateSingleAsync(CatalogItemUpdateDTO catalogItemUpdateDTO);
+		Task<IActionResult> RemoveSingleAsync(int id);
 	}
 }

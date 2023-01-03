@@ -27,12 +27,12 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			_catalogOptions = catalogOptions.Value;
 		}
 
-		public async Task<GetSingleResponse> GetSingleAsync(GetSingleRequest request) {
+		public async Task<GetSingleResponse> GetSingleAsync(int catalogItemID) {
 
 			GetSingleResponse response = new GetSingleResponse();
 
 			try {
-				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.GetByIDAsync(request.CatalogItemID);
+				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.GetByIDAsync(catalogItemID);
 				response.CatalogItem = _mapper.Map<CatalogItemReadDTO>(catalogItem);
 			} catch (Exception ex) {
 				response.Success = false;
@@ -42,12 +42,12 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			return response;
 		}
 
-		public async Task<GetRangeResponse> GetRangeAsync(GetRangeRequest request) {
+		public async Task<GetRangeResponse> GetRangeAsync(byte pageSize, byte pageIndex, bool includeNested) {
 
 			GetRangeResponse response = new GetRangeResponse();
 
 			try {
-				IEnumerable<CatalogItem> catalogItems = await _unitOfWork.CatalogItemRepository.GetAllAsync(request.PageSize, request.PageIndex, request.IncludeNested);
+				IEnumerable<CatalogItem> catalogItems = await _unitOfWork.CatalogItemRepository.GetAllAsync(pageSize, pageIndex, includeNested);
 				response.CatalogItems = _mapper.Map<IEnumerable<CatalogItemReadDTO>>(catalogItems);
 			} catch (Exception ex) {
 				response.Success = false;
@@ -57,12 +57,12 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			return response;
 		}
 
-		public async Task<CreateSingleResponse> CreateSingleAsync(CreateSingleRequest request) {
+		public async Task<CreateSingleResponse> CreateSingleAsync(CatalogItemCreateSingleDTO catalogItemDTO) {
 
 			CreateSingleResponse response = new CreateSingleResponse();
 
 			try {
-				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.CreateAsync(_mapper.Map<CatalogItem>(request.CatalogItem));
+				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.CreateAsync(_mapper.Map<CatalogItem>(catalogItemDTO));
 				response.CatalogItem = _mapper.Map<CatalogItemReadDTO>(catalogItem);
 			} catch (Exception ex) {
 				response.Success = false;
@@ -72,12 +72,12 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			return response;
 		}
 
-		public async Task<UpdateSingleResponse> UpdateSingleAsync(UpdateSingleRequest request) {
+		public async Task<UpdateSingleResponse> UpdateSingleAsync(CatalogItemUpdateDTO catalogItemUpdateDTO) {
 
 			UpdateSingleResponse response = new UpdateSingleResponse();
 
 			try {
-				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.UpdateAsync(_mapper.Map<CatalogItem>(request.CatalogItem));
+				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.UpdateAsync(_mapper.Map<CatalogItem>(catalogItemUpdateDTO));
 				response.CatalogItem = _mapper.Map<CatalogItemReadDTO>(catalogItem);
 			} catch (Exception ex) {
 				response.Success = false;
@@ -87,12 +87,12 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			return response;
 		}
 
-		public async Task<RemoveSingleResponse> RemoveSingleAsync(RemoveSingleRequest request) {
+		public async Task<RemoveSingleResponse> RemoveSingleAsync(int catalogItemID) {
 
 			RemoveSingleResponse response = new RemoveSingleResponse();
 
 			try {
-				await _unitOfWork.CatalogItemRepository.RemoveAsync(request.CatalogItemID);
+				await _unitOfWork.CatalogItemRepository.RemoveAsync(catalogItemID);
 			} catch (Exception ex) {
 				response.Success = false;
 				response.AddErrorMessage(ex.Message);
