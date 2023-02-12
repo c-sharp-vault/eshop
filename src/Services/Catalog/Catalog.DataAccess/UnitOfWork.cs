@@ -21,17 +21,11 @@ namespace Catalog.DataAccess {
 			_catalogTypeRepository = catalogTypeRepository;
 		}	
 
-		public ICatalogItemRepository CatalogItemRepository { 
-			get { return _catalogItemRepository; }
-		}
+		public ICatalogItemRepository CatalogItemRepository => _catalogItemRepository;
 
-		public ICatalogBrandRepository CatalogBrandRepository {
-			get { return _catalogBrandRepository; }
-		}
+		public ICatalogBrandRepository CatalogBrandRepository => _catalogBrandRepository;
 
-		public ICatalogTypeRepository CatalogTypeRepository {
-			get { return _catalogTypeRepository; }
-		}
+		public ICatalogTypeRepository CatalogTypeRepository => _catalogTypeRepository;
 
 		public bool Complete() => _catalogContext.SaveChanges() > 0;
 

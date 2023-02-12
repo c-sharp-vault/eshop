@@ -11,7 +11,7 @@ namespace Catalog.IntegrationTests {
 		[Ignore("Need to setup probe health check code")]
 		[Test]
 		public async Task TestApplicationStarts() {
-			var factory = new TestApplicationFactory();
+			var factory = new WebApplicationFactory();
 			var client = factory.CreateClient();
 
 			var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(5)).Token;

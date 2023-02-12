@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Catalog.IntegrationTests {
-	internal class TestApplicationFactory : WebApplicationFactory<Program> {
+	internal class WebApplicationFactory : WebApplicationFactory<Program> {
 
 	}
 }

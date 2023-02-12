@@ -15,7 +15,8 @@ namespace Catalog.DataAccess {
 		public DbSet<CatalogType> CatalogTypes { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options) {
-			if (!options.IsConfigured) options.UseNpgsql();
+			//if (!options.IsConfigured) options.UseNpgsql();
+			if (!options.IsConfigured) options.UseSqlServer();
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder) =>

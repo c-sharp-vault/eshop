@@ -3,8 +3,8 @@ using System;
 using Catalog.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Catalog.DataAccess.Migrations
 {
@@ -15,28 +15,28 @@ namespace Catalog.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Catalog.Core.Models.CatalogBrand", b =>
                 {
                     b.Property<int>("CatalogBrandID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CatalogBrandID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CatalogBrandID"));
 
                     b.Property<string>("Brand")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("date");
@@ -44,7 +44,7 @@ namespace Catalog.DataAccess.Migrations
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("date");
@@ -59,45 +59,45 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 1,
                             Brand = "N/A",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(1545),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 442, DateTimeKind.Local).AddTicks(6636),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(2234)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 442, DateTimeKind.Local).AddTicks(7280)
                         },
                         new
                         {
                             CatalogBrandID = 2,
                             Brand = "Coca-Cola",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(2915),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 442, DateTimeKind.Local).AddTicks(7917),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(3543)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 442, DateTimeKind.Local).AddTicks(8524)
                         },
                         new
                         {
                             CatalogBrandID = 3,
                             Brand = "Terrabusi",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(4182),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 442, DateTimeKind.Local).AddTicks(9144),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(4810)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 442, DateTimeKind.Local).AddTicks(9718)
                         },
                         new
                         {
                             CatalogBrandID = 4,
                             Brand = "Marlboro",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(5441),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 443, DateTimeKind.Local).AddTicks(260),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(6057)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 443, DateTimeKind.Local).AddTicks(855)
                         },
                         new
                         {
                             CatalogBrandID = 5,
                             Brand = "Quilmes",
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(6688),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 443, DateTimeKind.Local).AddTicks(1463),
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 717, DateTimeKind.Local).AddTicks(7314)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 443, DateTimeKind.Local).AddTicks(2064)
                         });
                 });
 
@@ -105,65 +105,65 @@ namespace Catalog.DataAccess.Migrations
                 {
                     b.Property<int>("CatalogItemID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CatalogItemID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CatalogItemID"));
 
                     b.Property<int>("AvailableStock")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasDefaultValue(0);
 
                     b.Property<int>("CatalogBrandID")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int>("CatalogTypeID")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("date");
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("MaxStockThreshold")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasDefaultValue(1000);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("OnReorder")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
+                        .HasColumnType("bit")
                         .HasDefaultValue(false);
 
                     b.Property<string>("PictureFileName")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
+                        .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("placeholder.png");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("RestockThreshold")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("int")
                         .HasDefaultValue(10);
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("date");
@@ -187,7 +187,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 2,
                             CatalogTypeID = 2,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(3069),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 443, DateTimeKind.Local).AddTicks(8389),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Sin Azúcar 1.5l",
@@ -196,7 +196,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(3715)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 443, DateTimeKind.Local).AddTicks(8999)
                         },
                         new
                         {
@@ -205,7 +205,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 5,
                             CatalogTypeID = 5,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(4368),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 443, DateTimeKind.Local).AddTicks(9612),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Clásica 500ml",
@@ -214,7 +214,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(4983)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(217)
                         },
                         new
                         {
@@ -223,7 +223,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 3,
                             CatalogTypeID = 4,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(5623),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(816),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Tita",
@@ -232,7 +232,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(6246)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(1410)
                         },
                         new
                         {
@@ -241,7 +241,7 @@ namespace Catalog.DataAccess.Migrations
                             CatalogBrandID = 4,
                             CatalogTypeID = 3,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(6870),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(1999),
                             Description = "",
                             MaxStockThreshold = 1,
                             Name = "Ice Blast 8",
@@ -250,7 +250,7 @@ namespace Catalog.DataAccess.Migrations
                             Price = 0m,
                             RestockThreshold = 0,
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(7488)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(2597)
                         });
                 });
 
@@ -258,14 +258,14 @@ namespace Catalog.DataAccess.Migrations
                 {
                     b.Property<int>("CatalogTypeID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CatalogTypeID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CatalogTypeID"));
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("date");
@@ -273,12 +273,12 @@ namespace Catalog.DataAccess.Migrations
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("date");
@@ -292,46 +292,46 @@ namespace Catalog.DataAccess.Migrations
                         {
                             CatalogTypeID = 1,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 718, DateTimeKind.Local).AddTicks(9477),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(4604),
                             Type = "N/A",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(117)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(5216)
                         },
                         new
                         {
                             CatalogTypeID = 2,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(752),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(5824),
                             Type = "Gaseosas",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(1381)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(6427)
                         },
                         new
                         {
                             CatalogTypeID = 3,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(2016),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(7023),
                             Type = "Cigarrillos",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(2643)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(7618)
                         },
                         new
                         {
                             CatalogTypeID = 4,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(3275),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(8212),
                             Type = "Alfajores & Obleas",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(3903)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(8806)
                         },
                         new
                         {
                             CatalogTypeID = 5,
                             CreatedBy = "Fedex",
-                            CreatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(4540),
+                            CreatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(9401),
                             Type = "Cervezas",
                             UpdatedBy = "Fedex",
-                            UpdatedOn = new DateTime(2023, 1, 3, 19, 16, 52, 719, DateTimeKind.Local).AddTicks(5159)
+                            UpdatedOn = new DateTime(2023, 2, 10, 18, 9, 6, 444, DateTimeKind.Local).AddTicks(9993)
                         });
                 });
 

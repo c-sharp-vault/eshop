@@ -1,5 +1,7 @@
-﻿namespace Catalog.IntegrationTests.Initialization {
-	internal interface IHaveTestData {
-		void SetupTestData();
+﻿using System.Threading.Tasks;
+
+namespace Catalog.IntegrationTests.Initialization {
+	public interface IHaveTestData {
+		Task SetupTestData();
 	}
 }
