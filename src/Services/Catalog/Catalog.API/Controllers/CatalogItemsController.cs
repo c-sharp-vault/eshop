@@ -62,14 +62,15 @@ namespace Catalog.API.Controllers {
 			return BadRequest(response);
 		}
 
+		[IgnoreAntiforgeryToken]
 		[HttpPost("create-single")]
-		[ProducesResponseType(type: typeof(CreateSingleResponse), statusCode: (int) HttpStatusCode.Created)]
+		[ProducesResponseType(type: typeof(CreateSingleResponse), statusCode: (int) HttpStatusCode.OK)]
 		[ProducesResponseType(type: typeof(CreateSingleResponse), statusCode: (int) HttpStatusCode.BadRequest)]
-		public async Task<IActionResult> CreateSingleAsync(CatalogItemCreateSingleDTO catalogItemDTO) {
+		public IActionResult CreateSingleAsync(CatalogItemCreateSingleDTO catalogItemDTO) {
 
-			CreateSingleResponse response = await _catalogItemManager.CreateSingleAsync(catalogItemDTO);
+			CreateSingleResponse response = _catalogItemManager.CreateSingleAsync(catalogItemDTO).Result;
 
-			if (response.Success) Ok(response);
+			if (response.Success) return Ok(response);
 			return BadRequest(response);
 		}
 

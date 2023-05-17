@@ -8,8 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Catalog.IntegrationTests.Initialization {
-	internal static class TestDataInitializer {
-		private static async Task ClearData(CatalogDbContext dbContext) {
+	public static class TestDataInitializer {
+		public static async Task ClearData(CatalogDbContext dbContext) {
 			string[] entities = new string[] {
 				$"Catalog.{nameof(CatalogBrand)}",
 				$"Catalog.{nameof(CatalogItem)}",

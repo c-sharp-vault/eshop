@@ -1,4 +1,5 @@
 ﻿
+using Catalog.DataAccess.DTOs;
 using Catalog.DataAccess.Managers;
 using Catalog.IntegrationTests.Initialization;
 using Catalog.IntegrationTests.Services;
@@ -33,15 +34,57 @@ namespace Catalog.IntegrationTests.Services {
 				MaxDepth = 10
 			});
 
-		static string ToJson<TRequest>(TRequest request) where TRequest : RequestBase =>
+		static string ToJson<TRequest>(TRequest request) where TRequest : EntityTypeDTO =>
 			JsonSerializer.Serialize(request);
 
-		protected async Task<TResponse> RunAsync<TRequest, TResponse>(string endpoint, TRequest request, bool ensureSuccess = true, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
-			where TRequest : RequestBase
+		protected async Task<TResponse> GETAsync<TResponse>(string endpoint, string parameters, bool ensureSuccess = true, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+			where TResponse : class {
+			var response = await HTTPClient.GetAsync(string.Concat(endpoint, parameters));
+
+			if (ensureSuccess) response.EnsureSuccessStatusCode();
+
+			Assert.That(response.StatusCode, Is.EqualTo(expectedStatusCode));
+
+			var responseString = await response.Content.ReadAsStringAsync(GetCancellationToken());
+
+			return ToResponse<TResponse>(responseString);
+		}
+
+		protected async Task<TResponse> POSTAsync<TRequest, TResponse>(string endpoint, TRequest request, bool ensureSuccess = true, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+			where TRequest : EntityTypeDTO
 			where TResponse : class {
 			var jsonRequest = ToJson<TRequest>(request);
 
 			var response = await HTTPClient.PostAsync(endpoint, new StringContent(content: jsonRequest, encoding: Encoding.UTF8, mediaType: "application/json"));
+
+			if (ensureSuccess) response.EnsureSuccessStatusCode();
+
+			Assert.That(response.StatusCode, Is.EqualTo(expectedStatusCode));
+
+			var responseString = await response.Content.ReadAsStringAsync(GetCancellationToken());
+
+			return ToResponse<TResponse>(responseString);
+		}
+
+		protected async Task<TResponse> PUTAsync<TRequest, TResponse>(string endpoint, TRequest request, bool ensureSuccess = true, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+			where TRequest : EntityTypeDTO
+			where TResponse : class {
+			var jsonRequest = ToJson<TRequest>(request);
+
+			var response = await HTTPClient.PutAsync(endpoint, new StringContent(content: jsonRequest, encoding: Encoding.UTF8, mediaType: "application/json"));
+
+			if (ensureSuccess) response.EnsureSuccessStatusCode();
+
+			Assert.That(response.StatusCode, Is.EqualTo(expectedStatusCode));
+
+			var responseString = await response.Content.ReadAsStringAsync(GetCancellationToken());
+
+			return ToResponse<TResponse>(responseString);
+		}
+
+		protected async Task<TResponse> DELETEAsync<TResponse>(string endpoint, string parameters, bool ensureSuccess = true, HttpStatusCode expectedStatusCode = HttpStatusCode.OK)
+			where TResponse : class {
+			var response = await HTTPClient.DeleteAsync(string.Concat(endpoint, parameters));
 
 			if (ensureSuccess) response.EnsureSuccessStatusCode();
 
@@ -62,5 +105,10 @@ public abstract class APIEndpointTestBase<T> : APIEndpointTestBase where T : IHa
 	[OneTimeSetUp] 
 	public void OneTimeSetUp() { 
 		new T().SetupTestData();
+	}
+
+	[OneTimeTearDown]
+	public void OneTimeTearDown() {
+		new T().ClearData();
 	}
 }

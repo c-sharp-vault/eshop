@@ -1,17 +1,20 @@
 ﻿
 using Catalog.Core.Models;
-using System.Threading.Tasks;
 
 namespace Catalog.IntegrationTests.Initialization {
-	internal class CatalogItemEndpointData : TestDataBase {
+	public class CatalogItemEndpointData : TestDataBase {
 
 		protected override string[] Tables =>
 			new string[] {
-				 $"Catalog.{nameof(CatalogItem)}"
+				$"Catalog.{nameof(CatalogBrand)}s",
+				$"Catalog.{nameof(CatalogType)}s",
+				$"Catalog.{nameof(CatalogItem)}s"
 			};
 
-		protected override async Task SeedData() {
-			await ProcessInsert<CatalogItem>(TestData.CatalogItems);
+		protected override void SeedData() {
+			ProcessInsert<CatalogBrand>(TestData.CatalogBrands);
+			ProcessInsert<CatalogType>(TestData.CatalogTypes);
+			ProcessInsert<CatalogItem>(TestData.CatalogItems);
 		}
 	}
 }

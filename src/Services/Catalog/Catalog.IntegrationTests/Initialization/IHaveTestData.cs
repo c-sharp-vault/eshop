@@ -2,6 +2,7 @@
 
 namespace Catalog.IntegrationTests.Initialization {
 	public interface IHaveTestData {
-		Task SetupTestData();
+		void SetupTestData();
+		void ClearData();
 	}
 }

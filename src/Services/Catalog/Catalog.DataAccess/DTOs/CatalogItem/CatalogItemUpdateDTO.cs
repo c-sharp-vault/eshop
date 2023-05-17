@@ -1,4 +1,5 @@
 ﻿using Catalog.Core.Models;
+using Catalog.DataAccess.Managers;
 using System;
 
 namespace Catalog.DataAccess.DTOs.CatalogItem {

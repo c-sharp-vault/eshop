@@ -1,5 +1,6 @@
 ﻿using System;
 using Catalog.Infrastructure.Enums;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Catalog.Core.Models {
 	public class CatalogItem : Entity {
@@ -13,6 +14,7 @@ namespace Catalog.Core.Models {
 		private CatalogType _catalogType;
 		private CatalogBrand _catalogBrand;
 
+		[SetsRequiredMembers]
 		public CatalogItem() {
 			_name = string.Empty;
 			_description = string.Empty;

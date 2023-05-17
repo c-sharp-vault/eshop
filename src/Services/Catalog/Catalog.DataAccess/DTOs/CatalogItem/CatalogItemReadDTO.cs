@@ -8,9 +8,9 @@ namespace Catalog.DataAccess.DTOs.CatalogItem {
 		private string _description = string.Empty;
 		private decimal _price;
 		private string _pictureFileName = string.Empty;
-		private int _catalogTypeId;
+		private int _catalogTypeID;
 		private CatalogTypeReadDTO _catalogType = new CatalogTypeReadDTO();
-		private int _catalogBrandId;
+		private int _catalogBrandID;
 		private CatalogBrandReadDTO _catalogBrand = new CatalogBrandReadDTO();
 		private int _availableStock;
 		private int _restockThreshold;
@@ -39,9 +39,9 @@ namespace Catalog.DataAccess.DTOs.CatalogItem {
 			set { _pictureFileName = value; }
 		}
 
-		public int CatalogTypeId {
-			get => _catalogTypeId;
-			set => _catalogTypeId = value;
+		public int CatalogTypeID {
+			get => _catalogTypeID;
+			set => _catalogTypeID = value;
 		}
 
 		public CatalogTypeReadDTO CatalogType {
@@ -49,9 +49,9 @@ namespace Catalog.DataAccess.DTOs.CatalogItem {
 			set { _catalogType = value; }
 		}
 
-		public int CatalogBrandId {
-			get => _catalogBrandId;
-			set => _catalogBrandId = value;
+		public int CatalogBrandID {
+			get => _catalogBrandID;
+			set => _catalogBrandID = value;
 		}
 
 		public CatalogBrandReadDTO CatalogBrand {

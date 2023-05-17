@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Catalog.IntegrationTests.Initialization {
-	internal abstract class TestDataBase : IHaveTestData {
+	public abstract class TestDataBase : IHaveTestData {
 		private CatalogDbContext _dbContext;
 
 		CatalogDbContext GetDbContext() {
@@ -20,14 +20,14 @@ namespace Catalog.IntegrationTests.Initialization {
 			return _dbContext;
 		}
 
-		static async Task ClearData(CatalogDbContext context, string[] tables) {
+		static void ClearData(CatalogDbContext context, string[] tables) {
 			foreach (var table in tables) {
-				await context.Database.ExecuteSqlRawAsync($"DELETE FROM {table}");
-				await context.Database.ExecuteSqlRawAsync($"DBCC CHECKIDENT (\"{table}\", RESEED, 1)");
+				context.Database.ExecuteSqlRaw($"DELETE FROM {table}");
+				context.Database.ExecuteSqlRaw($"DBCC CHECKIDENT (\"{table}\", RESEED, 1)");
 			}
 		}
 
-		protected async Task ProcessInsert<TEntity>(List<TEntity> entities) {
+		protected void ProcessInsert<TEntity>(List<TEntity> entities) {
 			var dbContext = GetDbContext();
 
 			if (!entities.Any()) return;
@@ -40,31 +40,35 @@ namespace Catalog.IntegrationTests.Initialization {
 			}
 
 			IExecutionStrategy strategy = dbContext.Database.CreateExecutionStrategy();
-			await strategy.ExecuteAsync(async () => {
+			strategy.Execute(() => {
 				using (var transaction = dbContext.Database.BeginTransaction()) {
 					var entityType = dbContext.Model.FindEntityType(typeof(TEntity).FullName);
-					await dbContext.Database.ExecuteSqlRawAsync($"SET IDENTITY_INSERT {entityType.GetSchema()}.{entityType.GetTableName()} ON");
+					dbContext.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {entityType.GetSchema()}.{entityType.GetTableName()} ON");
 
 					entities.ForEach(record => dbContext.Add(record));
-					await dbContext.SaveChangesAsync();
+					dbContext.SaveChanges();
 
-					await dbContext.Database.ExecuteSqlRawAsync($"SET IDENTITY_INSERT {entityType.GetSchema()}.{entityType.GetTableName()} OFF");
+					dbContext.Database.ExecuteSqlRaw($"SET IDENTITY_INSERT {entityType.GetSchema()}.{entityType.GetTableName()} OFF");
 					transaction.Commit();
 				}
 			});
 		}
 
 		protected abstract string[] Tables { get; }
-		protected abstract Task SeedData();
+		protected abstract void SeedData();
 
-		protected async Task ClearAndReseedDatabase() {
-			if (Tables.Any()) await ClearData(GetDbContext(), Tables);
+		protected void ClearAndReseedDatabase() {
+			if (Tables.Any()) ClearData(GetDbContext(), Tables);
 
-			await SeedData();
+			SeedData();
 		}
 
-		public async Task SetupTestData() {
-			await ClearAndReseedDatabase();
+		public void ClearData() {
+			ClearData(GetDbContext(), Tables);
+		}
+
+		public void SetupTestData() {
+			ClearAndReseedDatabase();
 		}
 	}
 }
