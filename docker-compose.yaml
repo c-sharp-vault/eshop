@@ -1,0 +1,34 @@
+version: '1.0'
+
+services:
+    catalog-service:
+        image: catalog-service
+        build:
+            context: .
+            dockerfile: src/Services/Catalog/Dockerfile
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+        expose:
+            - '80'
+        ports:
+            - '5101:80'
+        depends_on:
+            - catalog-database
+
+    catalog-database:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=pa55word!
+        expose:
+            - '1433'
+        ports:
+            - '5434:1433'
+        volumes:
+            - catalog-database-data:/var/opt/mssql
+
+volumes:
+    catalog-database-data:
+
+networks:
+    catalog-database-net:

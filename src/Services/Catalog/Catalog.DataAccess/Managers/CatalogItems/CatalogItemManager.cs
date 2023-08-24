@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Catalog.API.Controllers;
 
 namespace Catalog.DataAccess.Managers.CatalogItems {
 
@@ -32,7 +33,7 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			GetSingleResponse response = new GetSingleResponse();
 
 			try {
-				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.GetByIDAsync(catalogItemID);
+				CatalogItem catalogItem = await _unitOfWork.CatalogItemRepository.GetSingleAsync(catalogItemID);
 				response.CatalogItem = _mapper.Map<CatalogItemReadDTO>(catalogItem);
 			} catch (Exception ex) {
 				response.Success = false;
@@ -47,7 +48,7 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			GetRangeResponse response = new GetRangeResponse();
 
 			try {
-				IEnumerable<CatalogItem> catalogItems = await _unitOfWork.CatalogItemRepository.GetAllAsync(pageSize, pageIndex, includeNested);
+				IEnumerable<CatalogItem> catalogItems = await _unitOfWork.CatalogItemRepository.GetRangeAsync(pageSize, pageIndex, includeNested);
 				response.CatalogItems = _mapper.Map<IEnumerable<CatalogItemReadDTO>>(catalogItems);
 			} catch (Exception ex) {
 				response.Success = false;
@@ -72,7 +73,11 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			return response;
 		}
 
-		public async Task<UpdateSingleResponse> UpdateSingleAsync(CatalogItemUpdateDTO catalogItemUpdateDTO) {
+		public Task<CreateRangeResponse> CreateRangeAsync(CatalogItemCreateRangeDTO catalogItemDTO) {
+            throw new NotImplementedException();
+        }
+
+		public async Task<UpdateSingleResponse> UpdateSingleAsync(CatalogItemUpdateSingleDTO catalogItemUpdateDTO) {
 
 			UpdateSingleResponse response = new UpdateSingleResponse();
 
@@ -87,6 +92,10 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 			return response;
 		}
 
+		public Task<UpdateRangeResponse> UpdateRangeAsync(CatalogItemUpdateRangeDTO catalogItemUpdateRangeDTO) {
+            throw new NotImplementedException();
+        }
+
 		public async Task<RemoveSingleResponse> RemoveSingleAsync(int catalogItemID) {
 
 			RemoveSingleResponse response = new RemoveSingleResponse();
@@ -100,5 +109,9 @@ namespace Catalog.DataAccess.Managers.CatalogItems {
 
 			return response;
 		}
-	}
+
+        public Task<RemoveRangeResponse> RemoveRangeAsync(int[] ids) {
+            throw new NotImplementedException();
+        }
+    }
 }

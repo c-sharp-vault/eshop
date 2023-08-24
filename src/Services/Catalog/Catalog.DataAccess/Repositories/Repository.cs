@@ -16,7 +16,7 @@ namespace Catalog.DataAccess.Repositories {
 			_catalogContext = catalogContext;
 		}
 
-		public virtual async Task<TEntity> GetByIDAsync(int id) {
+		public virtual async Task<TEntity> GetSingleAsync(int id) {
 			if (id == 0) 
 				throw new ArgumentOutOfRangeException(nameof(id), "Must be greater than zero");
 

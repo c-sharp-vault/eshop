@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Controllers {
-	public class CreateRangeResponse {
+﻿namespace Catalog.DataAccess.Managers.CatalogItems.Messages {
+	public class CreateRangeResponse : ResponseBase {
 	}
 }

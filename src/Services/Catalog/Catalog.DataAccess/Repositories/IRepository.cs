@@ -8,7 +8,7 @@ namespace Catalog.DataAccess.Repositories {
 	public interface IRepository<TEntity> where TEntity : class, IEntity {
 
 		// Read
-		Task<TEntity> GetByIDAsync(int id);
+		Task<TEntity> GetSingleAsync(int id);
 		Task<IEnumerable<TEntity>> GetAllAsync();
 		Task<bool> AnyAsync();
 		Task<bool> ExistsAsync(int id);

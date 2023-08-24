@@ -17,7 +17,7 @@ namespace Catalog.DataAccess.EntityTypeConfigurations {
 
 			builder.Property(x => x.Description).IsRequired(false).HasMaxLength(200);
 
-			builder.Property(x => x.Price).IsRequired(true);
+			builder.Property(x => x.Price).IsRequired(true).HasColumnType("decimal(18,2)");
 
 			builder.Property(x => x.PictureFileName).IsRequired(false).HasDefaultValue("placeholder.png");
 

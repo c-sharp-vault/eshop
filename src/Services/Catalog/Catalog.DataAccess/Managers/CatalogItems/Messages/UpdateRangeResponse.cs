@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Controllers {
-	public class UpdateRangeResponse {
+﻿namespace Catalog.DataAccess.Managers.CatalogItems.Messages {
+	public class UpdateRangeResponse : ResponseBase {
 	}
 }

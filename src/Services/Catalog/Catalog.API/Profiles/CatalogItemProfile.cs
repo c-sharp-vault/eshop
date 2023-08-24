@@ -25,7 +25,7 @@ namespace Catalog.API.Profiles {
 				.ForMember(src => src.UpdatedOn, dst => dst.Ignore())
 				.ReverseMap();
 
-			CreateMap<CatalogItemUpdateDTO, CatalogItem>()
+			CreateMap<CatalogItemUpdateSingleDTO, CatalogItem>()
 				.ForMember(src => src.CatalogType, dst => dst.Ignore())
 				.ForMember(src => src.CatalogBrand, dst => dst.Ignore())
 				.ForMember(src => src.CreatedBy, dst => dst.Ignore())

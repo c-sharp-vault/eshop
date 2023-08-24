@@ -1,5 +1,0 @@
-> Create Migration
-dotnet ef migrations add <MIGRATION_NAME>
-
-> Update DB
-dotnet ef database update

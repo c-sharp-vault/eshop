@@ -77,7 +77,7 @@ namespace Catalog.IntegrationTests.Services {
 		public async Task UpdateSingleCatalogItem() {
 			// Arrange
 			var catalogItem = TestData.CatalogItems.First();
-			var request = new CatalogItemUpdateDTO {
+			var request = new CatalogItemUpdateSingleDTO {
 				CatalogItemID = catalogItem.CatalogItemID,
 				Name = "New Name",
 				Description = "New Description",
@@ -92,7 +92,7 @@ namespace Catalog.IntegrationTests.Services {
 			};
 
 			// Act
-			var response = await PUTAsync<CatalogItemUpdateDTO, UpdateSingleResponse>(TestURLs.CatalogItem.UpdateSingleEndpoint, request);
+			var response = await PUTAsync<CatalogItemUpdateSingleDTO, UpdateSingleResponse>(TestURLs.CatalogItem.UpdateSingleEndpoint, request);
 
 			// Assert
 			Assert.IsNotNull(response);
@@ -135,7 +135,7 @@ namespace Catalog.IntegrationTests.Services {
 			Assert.AreEqual(entity.OnReorder, readDTO.OnReorder);
 		}
 
-		private void CheckEquality(CatalogItemUpdateDTO updateDTO, CatalogItemReadDTO readDTO) {
+		private void CheckEquality(CatalogItemUpdateSingleDTO updateDTO, CatalogItemReadDTO readDTO) {
 			Assert.AreEqual(updateDTO.Name, readDTO.Name);
 			Assert.AreEqual(updateDTO.Description, readDTO.Description);
 			Assert.AreEqual(updateDTO.Price, readDTO.Price);

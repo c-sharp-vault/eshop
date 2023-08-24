@@ -3,7 +3,7 @@ using Catalog.DataAccess.Managers;
 using System;
 
 namespace Catalog.DataAccess.DTOs.CatalogItem {
-	public class CatalogItemUpdateDTO : EntityTypeDTO {
+	public class CatalogItemUpdateSingleDTO : EntityTypeDTO {
 		private string _name = string.Empty;
 		private string _description = string.Empty;
 		private decimal _price;

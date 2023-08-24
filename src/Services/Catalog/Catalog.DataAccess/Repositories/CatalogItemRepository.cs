@@ -13,18 +13,19 @@ namespace Catalog.DataAccess.Repositories {
 
 		#region Fields
 
-		private readonly CatalogDbContext _catalogContext;
+		private readonly CatalogDbContext catalogContext;
 
 		#endregion
 
 		public CatalogItemRepository(CatalogDbContext catalogContext) : base(catalogContext) {
-			_catalogContext = catalogContext;
+			this.catalogContext = catalogContext;
 		}
 
 		public async Task<bool> NameExistsAsync(string name) =>
-			await _catalogContext.CatalogItems.AnyAsync(x => x.Name == name);
 
-		public override async Task<CatalogItem> GetByIDAsync(int id) {
+			await catalogContext.CatalogItems.AnyAsync(x => x.Name == name);
+
+		public override async Task<CatalogItem> GetSingleAsync(int id) {
 
 			if (id == 0) 
 				throw new ArgumentOutOfRangeException(nameof(id), "The provided ID must be a positive integer.");
@@ -32,21 +33,17 @@ namespace Catalog.DataAccess.Repositories {
 			if (!await ExistsAsync(id)) 
 				throw new RecordNotFoundException($"{nameof(CatalogItem)} entity with ID = {id} not found.");
 
-			CatalogItem catalogItem = await _catalogContext.CatalogItems.FindAsync(id);
-			await _catalogContext.Entry(catalogItem).Reference(x => x.CatalogBrand).LoadAsync();
-			await _catalogContext.Entry(catalogItem).Reference(x => x.CatalogType).LoadAsync();
+			CatalogItem catalogItem = await catalogContext.CatalogItems.FindAsync(id);
+			await catalogContext.Entry(catalogItem).Reference(x => x.CatalogBrand).LoadAsync();
+			await catalogContext.Entry(catalogItem).Reference(x => x.CatalogType).LoadAsync();
 
 			return catalogItem;
 		}
 
-		public async Task<IEnumerable<CatalogItem>> GetAllAsync(byte pageSize, byte pageIndex, bool includeNested) {
+		public async Task<IReadOnlyCollection<CatalogItem>> GetRangeAsync(byte pageSize, byte pageIndex, bool includeNested) {
+			IQueryable<CatalogItem> query = catalogContext.CatalogItems.OrderBy(x => x.CatalogItemID).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
 
-			IQueryable<CatalogItem> query = _catalogContext.CatalogItems.OrderBy(x => x.CatalogItemID)
-																		.Skip(pageSize * (pageIndex - 1))
-																		.Take(pageSize);
-
-			if (includeNested) query = query.Include(x => x.CatalogBrand)
-											.Include(x => x.CatalogType);
+			if (includeNested) query = query.Include(x => x.CatalogBrand).Include(x => x.CatalogType);
 
 			return await query.ToListAsync();
 		}
@@ -59,22 +56,22 @@ namespace Catalog.DataAccess.Repositories {
 			if (await NameExistsAsync(catalogItem.Name))
 				throw new ArgumentException($"{typeof(CatalogItem)} entity with Name = {catalogItem.Name} already exists.");
 
-			CatalogBrand catalogBrand = await _catalogContext.CatalogBrands.FindAsync(catalogItem.CatalogBrandID);
+			CatalogBrand catalogBrand = await catalogContext.CatalogBrands.FindAsync(catalogItem.CatalogBrandID);
 			if (catalogBrand == null)
 				throw new ArgumentException($"{nameof(CatalogBrand)} entity with ID = {catalogItem.CatalogBrandID} not found.");
 
-			CatalogType catalogType = await _catalogContext.CatalogTypes.FindAsync(catalogItem.CatalogTypeID);
+			CatalogType catalogType = await catalogContext.CatalogTypes.FindAsync(catalogItem.CatalogTypeID);
 			if (catalogType == null)
 				throw new ArgumentException($"{nameof(CatalogType)} entity with ID = {catalogItem.CatalogTypeID} not found.");
 
 			catalogItem.CatalogBrand = catalogBrand;
 			catalogItem.CatalogType = catalogType;
-			await _catalogContext.CatalogItems.AddAsync(catalogItem);
+			await catalogContext.CatalogItems.AddAsync(catalogItem);
 
-			if (await _catalogContext.SaveChangesAsync() == 0)
+			if (await catalogContext.SaveChangesAsync() == 0)
 				throw new DbUpdateException($"Failed trying to save new {typeof(CatalogItem)} into the database.");
 
-			return await GetByIDAsync(catalogItem.CatalogItemID);
+			return await GetSingleAsync(catalogItem.CatalogItemID);
 		}
 
 		public async Task<CatalogItem> UpdateAsync(CatalogItem catalogItemUpdateDTO) {
@@ -82,7 +79,7 @@ namespace Catalog.DataAccess.Repositories {
 			if (catalogItemUpdateDTO == null)
 				throw new ArgumentNullException(nameof(CatalogItem));
 
-			CatalogItem catalogItem = await _catalogContext.CatalogItems.FindAsync(catalogItemUpdateDTO.CatalogItemID);
+			CatalogItem catalogItem = await catalogContext.CatalogItems.FindAsync(catalogItemUpdateDTO.CatalogItemID);
 			if (catalogItem == null)
 				throw new ObjectNotFoundException($"{nameof(CatalogItem)} entity with ID = {catalogItemUpdateDTO.CatalogItemID} was not found.");
 
@@ -96,11 +93,11 @@ namespace Catalog.DataAccess.Repositories {
 					catalogItemUpdateDTO.CatalogTypeID,
 					$"Can't assing non-natural numbers to {nameof(CatalogType)}'s foreign key.");
 
-			CatalogBrand catalogBrand = await _catalogContext.CatalogBrands.FindAsync(catalogItemUpdateDTO.CatalogBrandID);
+			CatalogBrand catalogBrand = await catalogContext.CatalogBrands.FindAsync(catalogItemUpdateDTO.CatalogBrandID);
 			if (catalogBrand == null)
 				throw new ObjectNotFoundException($"{nameof(CatalogBrand)} entity with ID = {catalogItem.CatalogBrandID} was not found.");
 
-			CatalogType catalogType = await _catalogContext.CatalogTypes.FindAsync(catalogItemUpdateDTO.CatalogTypeID);
+			CatalogType catalogType = await catalogContext.CatalogTypes.FindAsync(catalogItemUpdateDTO.CatalogTypeID);
 			if (catalogType == null)
 				throw new ObjectNotFoundException($"{nameof(CatalogType)} entity with ID = {catalogItem.CatalogTypeID} was not found.");
 
@@ -119,7 +116,7 @@ namespace Catalog.DataAccess.Repositories {
 
 			//_unitOfWork.CatalogItemRepository.CatalogContext.Entry(catalogItem).CurrentValues.SetValues(catalogItemUpdateDTO);
 
-			if (await _catalogContext.SaveChangesAsync() == 0)
+			if (await catalogContext.SaveChangesAsync() == 0)
 				throw new DbUpdateException($"Failed trying to save updated {typeof(CatalogItem)} into the database.");
 
 			return catalogItem;
