@@ -12,6 +12,8 @@ services:
             - '80'
         ports:
             - '5101:80'
+        networks:
+            - catalog-database-net
         depends_on:
             - catalog-database
 
@@ -24,6 +26,8 @@ services:
             - '1433'
         ports:
             - '5434:1433'
+        networks:
+            - catalog-database-net
         volumes:
             - catalog-database-data:/var/opt/mssql
 
